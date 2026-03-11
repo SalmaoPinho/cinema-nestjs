@@ -40,18 +40,24 @@ export type PedidoMinAggregateOutputType = {
   id: number | null
   dataPedido: Date | null
   valorTotal: number | null
+  status: string | null
+  comprovanteUrl: string | null
 }
 
 export type PedidoMaxAggregateOutputType = {
   id: number | null
   dataPedido: Date | null
   valorTotal: number | null
+  status: string | null
+  comprovanteUrl: string | null
 }
 
 export type PedidoCountAggregateOutputType = {
   id: number
   dataPedido: number
   valorTotal: number
+  status: number
+  comprovanteUrl: number
   _all: number
 }
 
@@ -70,18 +76,24 @@ export type PedidoMinAggregateInputType = {
   id?: true
   dataPedido?: true
   valorTotal?: true
+  status?: true
+  comprovanteUrl?: true
 }
 
 export type PedidoMaxAggregateInputType = {
   id?: true
   dataPedido?: true
   valorTotal?: true
+  status?: true
+  comprovanteUrl?: true
 }
 
 export type PedidoCountAggregateInputType = {
   id?: true
   dataPedido?: true
   valorTotal?: true
+  status?: true
+  comprovanteUrl?: true
   _all?: true
 }
 
@@ -175,6 +187,8 @@ export type PedidoGroupByOutputType = {
   id: number
   dataPedido: Date
   valorTotal: number
+  status: string
+  comprovanteUrl: string | null
   _count: PedidoCountAggregateOutputType | null
   _avg: PedidoAvgAggregateOutputType | null
   _sum: PedidoSumAggregateOutputType | null
@@ -204,6 +218,8 @@ export type PedidoWhereInput = {
   id?: Prisma.IntFilter<"Pedido"> | number
   dataPedido?: Prisma.DateTimeFilter<"Pedido"> | Date | string
   valorTotal?: Prisma.FloatFilter<"Pedido"> | number
+  status?: Prisma.StringFilter<"Pedido"> | string
+  comprovanteUrl?: Prisma.StringNullableFilter<"Pedido"> | string | null
   ingressos?: Prisma.IngressoListRelationFilter
   itens?: Prisma.ItemPedidoListRelationFilter
 }
@@ -212,6 +228,8 @@ export type PedidoOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   dataPedido?: Prisma.SortOrder
   valorTotal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  comprovanteUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   ingressos?: Prisma.IngressoOrderByRelationAggregateInput
   itens?: Prisma.ItemPedidoOrderByRelationAggregateInput
 }
@@ -223,6 +241,8 @@ export type PedidoWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PedidoWhereInput | Prisma.PedidoWhereInput[]
   dataPedido?: Prisma.DateTimeFilter<"Pedido"> | Date | string
   valorTotal?: Prisma.FloatFilter<"Pedido"> | number
+  status?: Prisma.StringFilter<"Pedido"> | string
+  comprovanteUrl?: Prisma.StringNullableFilter<"Pedido"> | string | null
   ingressos?: Prisma.IngressoListRelationFilter
   itens?: Prisma.ItemPedidoListRelationFilter
 }, "id">
@@ -231,6 +251,8 @@ export type PedidoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   dataPedido?: Prisma.SortOrder
   valorTotal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  comprovanteUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PedidoCountOrderByAggregateInput
   _avg?: Prisma.PedidoAvgOrderByAggregateInput
   _max?: Prisma.PedidoMaxOrderByAggregateInput
@@ -245,11 +267,15 @@ export type PedidoScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Pedido"> | number
   dataPedido?: Prisma.DateTimeWithAggregatesFilter<"Pedido"> | Date | string
   valorTotal?: Prisma.FloatWithAggregatesFilter<"Pedido"> | number
+  status?: Prisma.StringWithAggregatesFilter<"Pedido"> | string
+  comprovanteUrl?: Prisma.StringNullableWithAggregatesFilter<"Pedido"> | string | null
 }
 
 export type PedidoCreateInput = {
   dataPedido?: Date | string
   valorTotal: number
+  status?: string
+  comprovanteUrl?: string | null
   ingressos?: Prisma.IngressoCreateNestedManyWithoutPedidosInput
   itens?: Prisma.ItemPedidoCreateNestedManyWithoutPedidoInput
 }
@@ -258,6 +284,8 @@ export type PedidoUncheckedCreateInput = {
   id?: number
   dataPedido?: Date | string
   valorTotal: number
+  status?: string
+  comprovanteUrl?: string | null
   ingressos?: Prisma.IngressoUncheckedCreateNestedManyWithoutPedidosInput
   itens?: Prisma.ItemPedidoUncheckedCreateNestedManyWithoutPedidoInput
 }
@@ -265,6 +293,8 @@ export type PedidoUncheckedCreateInput = {
 export type PedidoUpdateInput = {
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingressos?: Prisma.IngressoUpdateManyWithoutPedidosNestedInput
   itens?: Prisma.ItemPedidoUpdateManyWithoutPedidoNestedInput
 }
@@ -273,6 +303,8 @@ export type PedidoUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingressos?: Prisma.IngressoUncheckedUpdateManyWithoutPedidosNestedInput
   itens?: Prisma.ItemPedidoUncheckedUpdateManyWithoutPedidoNestedInput
 }
@@ -281,17 +313,23 @@ export type PedidoCreateManyInput = {
   id?: number
   dataPedido?: Date | string
   valorTotal: number
+  status?: string
+  comprovanteUrl?: string | null
 }
 
 export type PedidoUpdateManyMutationInput = {
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PedidoUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PedidoListRelationFilter = {
@@ -308,6 +346,8 @@ export type PedidoCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dataPedido?: Prisma.SortOrder
   valorTotal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  comprovanteUrl?: Prisma.SortOrder
 }
 
 export type PedidoAvgOrderByAggregateInput = {
@@ -319,12 +359,16 @@ export type PedidoMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dataPedido?: Prisma.SortOrder
   valorTotal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  comprovanteUrl?: Prisma.SortOrder
 }
 
 export type PedidoMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   dataPedido?: Prisma.SortOrder
   valorTotal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  comprovanteUrl?: Prisma.SortOrder
 }
 
 export type PedidoSumOrderByAggregateInput = {
@@ -392,6 +436,8 @@ export type PedidoUpdateOneRequiredWithoutItensNestedInput = {
 export type PedidoCreateWithoutIngressosInput = {
   dataPedido?: Date | string
   valorTotal: number
+  status?: string
+  comprovanteUrl?: string | null
   itens?: Prisma.ItemPedidoCreateNestedManyWithoutPedidoInput
 }
 
@@ -399,6 +445,8 @@ export type PedidoUncheckedCreateWithoutIngressosInput = {
   id?: number
   dataPedido?: Date | string
   valorTotal: number
+  status?: string
+  comprovanteUrl?: string | null
   itens?: Prisma.ItemPedidoUncheckedCreateNestedManyWithoutPedidoInput
 }
 
@@ -430,11 +478,15 @@ export type PedidoScalarWhereInput = {
   id?: Prisma.IntFilter<"Pedido"> | number
   dataPedido?: Prisma.DateTimeFilter<"Pedido"> | Date | string
   valorTotal?: Prisma.FloatFilter<"Pedido"> | number
+  status?: Prisma.StringFilter<"Pedido"> | string
+  comprovanteUrl?: Prisma.StringNullableFilter<"Pedido"> | string | null
 }
 
 export type PedidoCreateWithoutItensInput = {
   dataPedido?: Date | string
   valorTotal: number
+  status?: string
+  comprovanteUrl?: string | null
   ingressos?: Prisma.IngressoCreateNestedManyWithoutPedidosInput
 }
 
@@ -442,6 +494,8 @@ export type PedidoUncheckedCreateWithoutItensInput = {
   id?: number
   dataPedido?: Date | string
   valorTotal: number
+  status?: string
+  comprovanteUrl?: string | null
   ingressos?: Prisma.IngressoUncheckedCreateNestedManyWithoutPedidosInput
 }
 
@@ -464,6 +518,8 @@ export type PedidoUpdateToOneWithWhereWithoutItensInput = {
 export type PedidoUpdateWithoutItensInput = {
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingressos?: Prisma.IngressoUpdateManyWithoutPedidosNestedInput
 }
 
@@ -471,12 +527,16 @@ export type PedidoUncheckedUpdateWithoutItensInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ingressos?: Prisma.IngressoUncheckedUpdateManyWithoutPedidosNestedInput
 }
 
 export type PedidoUpdateWithoutIngressosInput = {
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itens?: Prisma.ItemPedidoUpdateManyWithoutPedidoNestedInput
 }
 
@@ -484,6 +544,8 @@ export type PedidoUncheckedUpdateWithoutIngressosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   itens?: Prisma.ItemPedidoUncheckedUpdateManyWithoutPedidoNestedInput
 }
 
@@ -491,6 +553,8 @@ export type PedidoUncheckedUpdateManyWithoutIngressosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   dataPedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  comprovanteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -537,6 +601,8 @@ export type PedidoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   dataPedido?: boolean
   valorTotal?: boolean
+  status?: boolean
+  comprovanteUrl?: boolean
   ingressos?: boolean | Prisma.Pedido$ingressosArgs<ExtArgs>
   itens?: boolean | Prisma.Pedido$itensArgs<ExtArgs>
   _count?: boolean | Prisma.PedidoCountOutputTypeDefaultArgs<ExtArgs>
@@ -546,21 +612,27 @@ export type PedidoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   dataPedido?: boolean
   valorTotal?: boolean
+  status?: boolean
+  comprovanteUrl?: boolean
 }, ExtArgs["result"]["pedido"]>
 
 export type PedidoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   dataPedido?: boolean
   valorTotal?: boolean
+  status?: boolean
+  comprovanteUrl?: boolean
 }, ExtArgs["result"]["pedido"]>
 
 export type PedidoSelectScalar = {
   id?: boolean
   dataPedido?: boolean
   valorTotal?: boolean
+  status?: boolean
+  comprovanteUrl?: boolean
 }
 
-export type PedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dataPedido" | "valorTotal", ExtArgs["result"]["pedido"]>
+export type PedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dataPedido" | "valorTotal" | "status" | "comprovanteUrl", ExtArgs["result"]["pedido"]>
 export type PedidoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ingressos?: boolean | Prisma.Pedido$ingressosArgs<ExtArgs>
   itens?: boolean | Prisma.Pedido$itensArgs<ExtArgs>
@@ -579,6 +651,8 @@ export type $PedidoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: number
     dataPedido: Date
     valorTotal: number
+    status: string
+    comprovanteUrl: string | null
   }, ExtArgs["result"]["pedido"]>
   composites: {}
 }
@@ -1007,6 +1081,8 @@ export interface PedidoFieldRefs {
   readonly id: Prisma.FieldRef<"Pedido", 'Int'>
   readonly dataPedido: Prisma.FieldRef<"Pedido", 'DateTime'>
   readonly valorTotal: Prisma.FieldRef<"Pedido", 'Float'>
+  readonly status: Prisma.FieldRef<"Pedido", 'String'>
+  readonly comprovanteUrl: Prisma.FieldRef<"Pedido", 'String'>
 }
     
 

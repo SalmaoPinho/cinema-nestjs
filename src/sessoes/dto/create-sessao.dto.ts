@@ -1,4 +1,4 @@
-import { IsInt, IsDateString } from 'class-validator';
+import { IsInt, IsDateString, IsNumber, Min } from 'class-validator';
 
 export class CreateSessaoDto {
     @IsInt()
@@ -9,6 +9,10 @@ export class CreateSessaoDto {
 
     @IsDateString()
     horarioExibicao: string;
+
+    @IsNumber()
+    @Min(0)
+    precoInteira: number;
 
     @IsInt()
     cinemaId: number;

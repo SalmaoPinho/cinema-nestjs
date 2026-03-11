@@ -1089,6 +1089,7 @@ export type FilmeScalarFieldEnum = (typeof FilmeScalarFieldEnum)[keyof typeof Fi
 export const SessaoScalarFieldEnum = {
   id: 'id',
   horarioExibicao: 'horarioExibicao',
+  precoInteira: 'precoInteira',
   filmeId: 'filmeId',
   salaId: 'salaId',
   cinemaId: 'cinemaId'
@@ -1099,9 +1100,9 @@ export type SessaoScalarFieldEnum = (typeof SessaoScalarFieldEnum)[keyof typeof 
 
 export const IngressoScalarFieldEnum = {
   id: 'id',
-  valorInteira: 'valorInteira',
-  valorMeia: 'valorMeia',
-  valorTotal: 'valorTotal',
+  assento: 'assento',
+  tipo: 'tipo',
+  valorPago: 'valorPago',
   sessaoId: 'sessaoId'
 } as const
 
@@ -1111,7 +1112,9 @@ export type IngressoScalarFieldEnum = (typeof IngressoScalarFieldEnum)[keyof typ
 export const PedidoScalarFieldEnum = {
   id: 'id',
   dataPedido: 'dataPedido',
-  valorTotal: 'valorTotal'
+  valorTotal: 'valorTotal',
+  status: 'status',
+  comprovanteUrl: 'comprovanteUrl'
 } as const
 
 export type PedidoScalarFieldEnum = (typeof PedidoScalarFieldEnum)[keyof typeof PedidoScalarFieldEnum]
@@ -1236,6 +1239,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoIngresso'
+ */
+export type EnumTipoIngressoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoIngresso'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoIngresso[]'
+ */
+export type ListEnumTipoIngressoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoIngresso[]'>
     
 
 /**

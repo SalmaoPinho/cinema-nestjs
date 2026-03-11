@@ -612,6 +612,13 @@
             font-weight: 700;
         }
 
+        .seat.selected-meia {
+            background: #2f9e44;
+            border-color: #2b8a3e;
+            color: #fff;
+            font-weight: 700;
+        }
+
         .seat.taken {
             background: #3a1a1a;
             border-color: #6b2a2a;
@@ -741,8 +748,6 @@
             <button class="nav-btn" onclick="showPage('filmes',this)"><span class="icon">🎬</span> Filmes</button>
             <button class="nav-btn" onclick="showPage('salas',this)"><span class="icon">🏛️</span> Salas</button>
             <button class="nav-btn" onclick="showPage('sessoes',this)"><span class="icon">🎭</span> Sessões</button>
-            <button class="nav-btn" onclick="showPage('ingressos',this)"><span class="icon">🎟️</span>
-                Ingressos</button>
             <button class="nav-btn" onclick="showPage('lanches',this)"><span class="icon">🍿</span> Lanches</button>
             <button class="nav-btn" style="margin-top:20px; border: 1px solid var(--gold); color:var(--gold)"
                 onclick="showPage('pedidos',this)"><span class="icon">🛒</span> PDV (Caixa)</button>
@@ -854,10 +859,10 @@
                     <div class="card">
                         <div class="card-title">➕ Cadastrar Sala</div>
                         <form id="salaForm">
-                            <div class="form-group"><label>Cinema (ID)</label><input id="salaCinemaId" type="number"
-                                    placeholder="ID do cinema"></div>
+                            <div class="form-group" style="display:none"><label>Cinema (ID)</label><input id="salaCinemaId" type="number"
+                                    value="1"></div>
                             <div class="form-group"><label>Número da Sala</label><input id="salaNumero" type="number"
-                                    placeholder="1"></div>
+                                    placeholder="Deixe vazio para automático"></div>
                             <div class="form-group"><label>Capacidade (total)</label><input id="salaCapacidade"
                                     type="number" placeholder="80"></div>
                             <div class="form-group"><label>Fileiras</label><input id="salaFileiras" type="number"
@@ -893,6 +898,8 @@
                                 </select></div>
                             <div class="form-group"><label>Horário</label><input id="sessaoHorario"
                                     type="datetime-local"></div>
+                            <div class="form-group"><label>Preço Base (Inteira R$)</label><input id="sessaoPreco"
+                                    type="number" step="0.01" min="0" placeholder="30.00"></div>
                             <button class="btn btn-primary" type="submit">✚ Agendar</button>
                         </form>
                     </div>
@@ -905,35 +912,7 @@
                 </div>
             </div>
 
-            <!-- INGRESSOS -->
-            <div id="page-ingressos" class="page">
-                <div class="page-header">
-                    <h1 class="page-title">🎟️ <span>Ingressos</span></h1>
-                </div>
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-title">➕ Emitir Ingresso</div>
-                        <form id="ingressoForm">
-                            <div class="form-group"><label>Sessão</label><select id="ingressoSessaoId">
-                                    <option value="">Selecione...</option>
-                                </select></div>
-                            <div class="form-group"><label>Valor Inteira (R$)</label><input id="ingressoInteira"
-                                    type="number" step="0.01" placeholder="30.00"></div>
-                            <div class="form-group"><label>Valor Meia (R$)</label><input id="ingressoMeia" type="number"
-                                    step="0.01" placeholder="15.00"></div>
-                            <div class="form-group"><label>Valor Total (R$)</label><input id="ingressoTotal"
-                                    type="number" step="0.01" placeholder="45.00"></div>
-                            <button class="btn btn-primary" type="submit">✚ Emitir</button>
-                        </form>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">📋 Ingressos</div>
-                        <div class="table-wrap">
-                            <div id="ingressos-list"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- LANCHES -->
             <div id="page-lanches" class="page">
@@ -981,12 +960,14 @@
                         <div class="card-title">🛍️ Montar Novo Pedido</div>
                         <div style="display:flex; gap:16px;">
                             <div style="flex:1;">
-                                <label>Ingressos Disponíveis</label>
-                                <select id="pdvIngresso" style="margin-bottom:8px">
-                                    <option value="">Selecione um ingresso...</option>
+                                <label>1. Escolha a Sessão</label>
+                                <select id="pdvSessao" style="margin-bottom:8px"
+                                    onchange="cart.ingressos=[]; updateCartUI();">
+                                    <option value="">Selecione a sessão...</option>
                                 </select>
-                                <button class="btn btn-outline" style="width:100%" onclick="addPdvIngresso()">+
-                                    Adicionar ao Carrinho</button>
+                                <label>2. Escolha os Assentos</label>
+                                <button class="btn btn-outline" style="width:100%" onclick="abrirMapaNoPdv()">🪑
+                                    Selecionar Assentos</button>
                             </div>
                             <div style="flex:1;">
                                 <label>Lanches da Vitrine</label>
@@ -1011,7 +992,7 @@
                                 <strong style="color:var(--gold)">Total Estimado:</strong>
                                 <strong id="pdvTotal" style="font-size:1.4rem; color:var(--text)">R$ 0,00</strong>
                             </div>
-                            <button class="btn btn-primary" style="width:100%; margin-top:12px; padding:14px"
+                            <button id="pdvFinalizarBtn" class="btn btn-primary" style="width:100%; margin-top:12px; padding:14px"
                                 onclick="finalizarPedido()">✅ FINALIZAR VENDA</button>
                         </div>
                     </div>
@@ -1045,7 +1026,10 @@
                     <div class="seat-dot dot-free"></div> Livre
                 </div>
                 <div class="seat-legend-item">
-                    <div class="seat-dot dot-selected"></div> Selecionado
+                    <div class="seat-dot dot-selected"></div> Inteira
+                </div>
+                <div class="seat-legend-item">
+                    <div style="background:#2f9e44; border:1px solid #2b8a3e" class="seat-dot"></div> Meia
                 </div>
                 <div class="seat-legend-item">
                     <div class="seat-dot dot-taken"></div> Ocupado
@@ -1053,6 +1037,7 @@
             </div>
             <div id="seatGrid"></div>
             <div class="seat-summary" id="seatSummary">Selecione assentos acima</div>
+            <div id="seatModalFooter" style="margin-top:16px"></div>
         </div>
     </div>
 
@@ -1080,13 +1065,23 @@
 
         const generoLabel = { ACAO: 'Ação', COMEDIA: 'Comédia', DRAMA: 'Drama', TERROR: 'Terror', ROMANCE: 'Romance', FICCAO_CIENTIFICA: 'Sci-Fi', ANIMACAO: 'Animação', DOCUMENTARIO: 'Documentário' };
 
+        // ── Estado Global ───────────────────────────────────────────────────
+        let selectedSeats = {}; // { 'A1': 'INTEIRA' }
+        let cart = { ingressos: [], lanches: [] };
+        let sessoesCache = [];
+
+        function closeModal() {
+            document.getElementById('seatModal').classList.remove('open');
+            selectedSeats = {};
+        }
+
         // ── Navegação ──────────────────────────────────────────────────────
         function showPage(name, btn) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('page-' + name).classList.add('active');
             btn.classList.add('active');
-            ({ dashboard: loadDashboard, filmes: loadFilmes, salas: loadSalas, sessoes: loadSessoes, ingressos: loadIngressos, lanches: loadLanches, pedidos: loadPedidos })[name]?.();
+            ({ dashboard: loadDashboard, filmes: loadFilmes, salas: loadSalas, sessoes: loadSessoes, lanches: loadLanches, pedidos: loadPedidos })[name]?.();
         }
 
         // ── Upload de Imagem ────────────────────────────────────────────────
@@ -1098,11 +1093,13 @@
             reader.readAsDataURL(file);
         }
 
-        async function uploadImagem(fileInput) {
+        async function uploadImagem(fileInput, folder = '') {
             if (!fileInput.files || !fileInput.files[0]) return null;
             const fd = new FormData();
             fd.append('file', fileInput.files[0]);
-            const r = await fetch(`${API}/upload`, { method: 'POST', body: fd });
+            let url = `${API}/upload`;
+            if (folder) url += `?folder=${folder}`;
+            const r = await fetch(url, { method: 'POST', body: fd });
             if (!r.ok) throw new Error('Erro no upload');
             const data = await r.json();
             return data.url;
@@ -1165,7 +1162,7 @@
             try {
                 let imagemUrl = null;
                 const fileInput = document.getElementById('filmeImgFile');
-                if (fileInput.files && fileInput.files[0]) imagemUrl = await uploadImagem(fileInput);
+                if (fileInput.files && fileInput.files[0]) imagemUrl = await uploadImagem(fileInput, 'filmes');
 
                 await api('POST', '/filmes', {
                     titulo: document.getElementById('filmeTitulo').value,
@@ -1192,7 +1189,94 @@
         }
 
         // ── SALAS + ASSENTOS ───────────────────────────────────────────────
-        let selectedSeats = new Set();
+
+        function openSeatMap(sala, sessaoId = null) {
+            selectedSeats = {};
+            const fileiras = sala.fileiras || 8;
+            const colunas = sala.colunas || 10;
+            document.getElementById('seatModalTitle').textContent = `Sala ${sala.numero} – Mapa de Assentos`;
+            // Adiciona botão de "Confirmar Seleção" se houver sessaoId (PDV)
+            const footer = document.getElementById('seatModalFooter');
+            footer.innerHTML = ''; 
+
+            if (sessaoId) {
+                document.getElementById('seatSummary').innerHTML = `Carregando assentos...`;
+                loadOcupados(sessaoId, sala);
+                
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-primary';
+                btn.style.width = '100%';
+                btn.innerHTML = '📥 Confirmar Seleção e Adicionar ao Carrinho';
+                btn.onclick = () => confirmarSelecaoPdv(sessaoId);
+                footer.appendChild(btn);
+            } else {
+                renderGrid(fileiras, colunas);
+            }
+            document.getElementById('seatModal').classList.add('open');
+        }
+
+        async function loadOcupados(sessaoId, sala) {
+            try {
+                const sessao = await api('GET', '/sessoes/' + sessaoId);
+                const ocupados = sessao.ingressos.map(i => i.assento);
+                renderGrid(sala.fileiras, sala.colunas, ocupados);
+            } catch (e) { toast('Erro ao carregar ocupados', 'error'); }
+        }
+
+        function renderGrid(fileiras, colunas, ocupados = []) {
+            const grid = document.getElementById('seatGrid');
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let html = '';
+            for (let r = 0; r < fileiras; r++) {
+                html += `<div class="seat-row"><div class="row-label">${letters[r] || r + 1}</div>`;
+                const mid = Math.floor(colunas / 2);
+                for (let c = 0; c < colunas; c++) {
+                    if (c === mid) html += `<div class="seat-gap"></div>`;
+                    const id = `${letters[r] || r + 1}${c + 1}`;
+                    const isTaken = ocupados.includes(id);
+                    html += `<div class="seat ${isTaken ? 'taken' : ''}" id="seat-${id}" 
+                              onclick="${isTaken ? '' : `toggleSeat('${id}')`}" 
+                              title="${isTaken ? 'Ocupado' : `Assento ${id}`}">${c + 1}</div>`;
+                }
+                html += `</div>`;
+            }
+            grid.innerHTML = html;
+            updateSeatSummary();
+        }
+
+        function toggleSeat(id) {
+            const el = document.getElementById('seat-' + id);
+            if (el.classList.contains('taken')) return;
+
+            if (!selectedSeats[id]) {
+                // Estado 0 -> 1: INTEIRA (Amarelo)
+                selectedSeats[id] = 'INTEIRA';
+                el.classList.add('selected');
+            } else if (selectedSeats[id] === 'INTEIRA') {
+                // Estado 1 -> 2: MEIA (Verde)
+                selectedSeats[id] = 'MEIA';
+                el.classList.remove('selected');
+                el.classList.add('selected-meia');
+            } else {
+                // Estado 2 -> 0: Desmarcar
+                delete selectedSeats[id];
+                el.classList.remove('selected-meia');
+            }
+            updateSeatSummary();
+        }
+
+        function updateSeatSummary() {
+            const sum = document.getElementById('seatSummary');
+            const keys = Object.keys(selectedSeats);
+            if (keys.length === 0) { sum.textContent = 'Clique nos assentos para selecionar (1x Inteira, 2x Meia)'; return; }
+
+            let txt = `<strong style="color:var(--gold)">${keys.length} selecionado(s):</strong><br>`;
+            keys.forEach(k => {
+                const label = selectedSeats[k] === 'INTEIRA' ? '<span style="color:var(--gold)">Inteira</span>' : '<span style="color:#69db7c">Meia</span>';
+                txt += ` Assento ${k} (${label}) |`;
+            });
+            sum.innerHTML = txt;
+        }
 
         async function loadSalas() {
             const el = document.getElementById('salas-list');
@@ -1206,7 +1290,7 @@
                 <td>${s.fileiras || 8}</td><td>${s.colunas || 10}</td>
                 <td><span class="badge badge-green">${s.capacidade}</span></td>
                 <td style="display:flex;gap:6px">
-                    <button class="btn btn-outline" onclick="openSeatMap(${JSON.stringify(s).replace(/"/g, '&quot;')})">🪑 Assentos</button>
+                    <button class="btn btn-outline" onclick="openSeatMap(${JSON.stringify(s).replace(/"/g, '&quot;')})">🪑 Ver Mapa</button>
                     <button class="btn btn-danger" onclick="deleteSala(${s.id})">🗑</button>
                 </td>
             </tr>`;
@@ -1215,63 +1299,55 @@
             } catch { el.innerHTML = renderEmpty('Erro ao carregar salas'); }
         }
 
-        function openSeatMap(sala) {
-            selectedSeats = new Set();
-            const fileiras = sala.fileiras || 8;
-            const colunas = sala.colunas || 10;
-            document.getElementById('seatModalTitle').textContent = `Sala ${sala.numero} – Mapa de Assentos`;
-            document.getElementById('seatModalSub').textContent = `${fileiras} fileiras × ${colunas} colunas · ${sala.capacidade} lugares`;
+        function abrirMapaNoPdv() {
+            const sessaoId = document.getElementById('pdvSessao').value;
+            if (!sessaoId) return toast('Selecione uma sessão primeiro', 'error');
 
-            const grid = document.getElementById('seatGrid');
-            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            let html = '';
-            for (let r = 0; r < fileiras; r++) {
-                html += `<div class="seat-row"><div class="row-label">${letters[r] || r + 1}</div>`;
-                // Corredor central no meio
-                const mid = Math.floor(colunas / 2);
-                for (let c = 0; c < colunas; c++) {
-                    if (c === mid) html += `<div class="seat-gap"></div>`;
-                    const id = `${letters[r] || r + 1}${c + 1}`;
-                    html += `<div class="seat" id="seat-${id}" onclick="toggleSeat('${id}')" title="Assento ${id}">${c + 1}</div>`;
-                }
-                html += `</div>`;
-            }
-            grid.innerHTML = html;
-            updateSeatSummary();
-            document.getElementById('seatModal').classList.add('open');
+            // Encontrar a sala desta sessão
+            // (Assumindo que temos as sessões carregadas globalmente ou buscamos agora)
+            api('GET', '/sessoes/' + sessaoId).then(sessao => {
+                openSeatMap(sessao.sala, sessao.id);
+            }).catch(() => toast('Erro ao carregar sessão', 'error'));
         }
 
-        function toggleSeat(id) {
-            const el = document.getElementById('seat-' + id);
-            if (el.classList.contains('taken')) return;
-            if (el.classList.contains('selected')) { el.classList.remove('selected'); selectedSeats.delete(id); }
-            else { el.classList.add('selected'); selectedSeats.add(id); }
-            updateSeatSummary();
-        }
+        function confirmarSelecaoPdv(sessaoId) {
+            const keys = Object.keys(selectedSeats);
+            if (keys.length === 0) return toast('Nenhum assento selecionado', 'error');
 
-        function updateSeatSummary() {
-            const sum = document.getElementById('seatSummary');
-            if (selectedSeats.size === 0) { sum.textContent = 'Clique nos assentos para selecionar'; return; }
-            sum.innerHTML = `<strong style="color:var(--gold)">${selectedSeats.size} assento(s) selecionado(s):</strong> ${[...selectedSeats].join(', ')}`;
-        }
+            keys.forEach(assento => {
+                const tipo = selectedSeats[assento];
+                cart.ingressos.push({ sessaoId: parseInt(sessaoId), assento, tipo });
+            });
 
-        function closeModal() {
-            document.getElementById('seatModal').classList.remove('open');
-            selectedSeats = new Set();
+            toast(`${keys.length} ingresso(s) adicionado(s)!`);
+            updateCartUI();
+            closeModal();
         }
 
         document.getElementById('salaForm').addEventListener('submit', async e => {
             e.preventDefault();
-            const fileiras = parseInt(document.getElementById('salaFileiras').value) || 8;
-            const colunas = parseInt(document.getElementById('salaColunas').value) || 10;
+            const num = document.getElementById('salaNumero').value;
+            const cap = parseInt(document.getElementById('salaCapacidade').value);
+            const fil = parseInt(document.getElementById('salaFileiras').value);
+            const col = parseInt(document.getElementById('salaColunas').value);
+
+            if (cap && cap > fil * col) {
+                return toast(`A capacidade (${cap}) não cabe no grid de ${fil}x${col}=${fil * col} assentos.`, 'error');
+            }
+
             try {
-                await api('POST', '/salas', {
+                const body = {
                     cinemaId: parseInt(document.getElementById('salaCinemaId').value),
-                    numero: parseInt(document.getElementById('salaNumero').value),
-                    capacidade: parseInt(document.getElementById('salaCapacidade').value) || fileiras * colunas,
-                    fileiras, colunas
-                });
-                toast('🏛️ Sala criada!'); e.target.reset(); loadSalas();
+                    capacidade: cap || (fil * col),
+                    fileiras: fil,
+                    colunas: col
+                };
+                if (num) body.numero = parseInt(num);
+
+                await api('POST', '/salas', body);
+                toast('🏛️ Sala salva!'); e.target.reset(); 
+                document.getElementById('salaCinemaId').value = "1";
+                loadSalas();
             } catch (err) { toast('❌ ' + err.message, 'error'); }
         });
 
@@ -1294,21 +1370,22 @@
                 salas.forEach(s => ssEl.innerHTML += `<option value="${s.id}">Sala ${s.numero} (${s.capacidade} lug.)</option>`);
 
                 if (!data.length) { el.innerHTML = renderEmpty('Nenhuma sessão'); return; }
-                let h = `<table><thead><tr><th>ID</th><th>Filme</th><th>Sala</th><th>Horário</th><th></th></tr></thead><tbody>`;
+                let h = `<table><thead><tr><th>ID</th><th>Filme</th><th>Sala</th><th>Preço Base</th><th>Horário</th><th></th></tr></thead><tbody>`;
                 data.forEach(s => {
-                    const filme = filmes.find(f => f.id === s.filmeId);
-                    const sala = salas.find(sl => sl.id === s.salaId);
-                    const thumb = filme?.imagemUrl ? `<img src="${filme.imagemUrl}" class="thumb" style="border-radius:4px;margin-right:8px" onerror="this.remove()">` : '🎬 ';
+                    const f = filmes.find(ff => ff.id === s.filmeId);
+                    const sa = salas.find(ss => ss.id === s.salaId);
+                    const thumb = f?.imagemUrl ? `<img src="${f.imagemUrl}" class="thumb" style="border-radius:4px;margin-right:8px;width:30px;height:40px;object-fit:cover" onerror="this.remove()">` : '🎬 ';
                     h += `<tr>
-                <td><span class="badge badge-gold">#${s.id}</span></td>
-                <td style="display:flex;align-items:center">${thumb}${filme?.titulo || '#' + s.filmeId}</td>
-                <td>Sala ${sala?.numero || s.salaId}</td>
+                <td>#${s.id}</td>
+                <td style="display:flex;align-items:center">${thumb}<strong>${f?.titulo || '?'}</strong></td>
+                <td>Sala ${sa?.numero || '?'}</td>
+                <td><span class="badge badge-gold">${fmtMoney(s.precoInteira)}</span></td>
                 <td>${fmtDate(s.horarioExibicao)}</td>
                 <td><button class="btn btn-danger" onclick="deleteSessao(${s.id})">🗑</button></td>
             </tr>`;
                 });
                 el.innerHTML = h + '</tbody></table>';
-            } catch { el.innerHTML = renderEmpty('Erro ao carregar sessões'); }
+            } catch (e) { console.error(e); el.innerHTML = renderEmpty('Erro ao carregar sessões'); }
         }
 
         document.getElementById('sessaoForm').addEventListener('submit', async e => {
@@ -1318,7 +1395,8 @@
                     filmeId: parseInt(document.getElementById('sessaoFilmeId').value),
                     salaId: parseInt(document.getElementById('sessaoSalaId').value),
                     horarioExibicao: new Date(document.getElementById('sessaoHorario').value).toISOString(),
-                    cinemaId: 1
+                    precoInteira: parseFloat(document.getElementById('sessaoPreco').value),
+                    cinemaId: 1 // Cinema padrão
                 });
                 toast('🎭 Sessão agendada!'); e.target.reset(); loadSessoes();
             } catch (err) { toast('❌ ' + err.message, 'error'); }
@@ -1331,54 +1409,7 @@
         }
 
         // ── INGRESSOS ──────────────────────────────────────────────────────
-        async function loadIngressos() {
-            const el = document.getElementById('ingressos-list');
-            try {
-                const [data, sessoes, filmes, salas] = await Promise.all([api('GET', '/ingressos'), api('GET', '/sessoes'), api('GET', '/filmes'), api('GET', '/salas')]);
-                const siEl = document.getElementById('ingressoSessaoId');
-                siEl.innerHTML = '<option value="">Selecione...</option>';
-                sessoes.forEach(s => {
-                    const f = filmes.find(fi => fi.id === s.filmeId);
-                    const sa = salas.find(sa => sa.id === s.salaId);
-                    siEl.innerHTML += `<option value="${s.id}">Sessão #${s.id} – ${f ? f.titulo : ''} (Sala ${sa ? sa.numero : ''}) – ${fmtDate(s.horarioExibicao)}</option>`;
-                });
 
-                if (!data.length) { el.innerHTML = renderEmpty('Nenhum ingresso'); return; }
-                let h = `<table><thead><tr><th>ID</th><th>Sessão</th><th>Inteira</th><th>Meia</th><th>Total</th><th></th></tr></thead><tbody>`;
-                data.forEach(i => {
-                    const s = sessoes.find(ss => ss.id === i.sessaoId);
-                    const f = s ? filmes.find(ff => ff.id === s.filmeId) : null;
-                    const sa = s ? salas.find(saa => saa.id === s.salaId) : null;
-                    h += `<tr>
-                <td><span class="badge badge-gold">#${i.id}</span></td>
-                <td><strong style="color:var(--text)">${f?.titulo || 'Sessão #' + i.sessaoId}</strong><br><small>Sala ${sa?.numero || '?'} – ${fmtDate(s?.horarioExibicao)}</small></td>
-                <td>${fmtMoney(i.valorInteira)}</td><td>${fmtMoney(i.valorMeia)}</td>
-                <td><span class="badge badge-green">${fmtMoney(i.valorTotal)}</span></td>
-                <td><button class="btn btn-danger" onclick="deleteIngresso(${i.id})">🗑</button></td>
-            </tr>`;
-                });
-                el.innerHTML = h + '</tbody></table>';
-            } catch { el.innerHTML = renderEmpty('Erro ao carregar ingressos'); }
-        }
-
-        document.getElementById('ingressoForm').addEventListener('submit', async e => {
-            e.preventDefault();
-            try {
-                await api('POST', '/ingressos', {
-                    sessaoId: parseInt(document.getElementById('ingressoSessaoId').value),
-                    valorInteira: parseFloat(document.getElementById('ingressoInteira').value),
-                    valorMeia: parseFloat(document.getElementById('ingressoMeia').value),
-                    valorTotal: parseFloat(document.getElementById('ingressoTotal').value)
-                });
-                toast('🎟️ Ingresso emitido!'); e.target.reset(); loadIngressos();
-            } catch (err) { toast('❌ ' + err.message, 'error'); }
-        });
-
-        async function deleteIngresso(id) {
-            if (!confirm('Cancelar ingresso?')) return;
-            try { await api('DELETE', '/ingressos/' + id); toast('🗑 Ingresso cancelado'); loadIngressos(); }
-            catch (err) { toast('❌ ' + err.message, 'error'); }
-        }
 
         // ── LANCHES ────────────────────────────────────────────────────────
         function lancheCard(l) {
@@ -1409,7 +1440,7 @@
             try {
                 let imagemUrl = null;
                 const fileInput = document.getElementById('lancheImgFile');
-                if (fileInput.files && fileInput.files[0]) imagemUrl = await uploadImagem(fileInput);
+                if (fileInput.files && fileInput.files[0]) imagemUrl = await uploadImagem(fileInput, 'lanches');
 
                 await api('POST', '/lanches', {
                     nome: document.getElementById('lancheNome').value,
@@ -1440,11 +1471,12 @@
                 const [data, todosIngressos, sessoes, catLanches, filmes, salas] = await Promise.all([
                     api('GET', '/pedidos'), api('GET', '/ingressos'), api('GET', '/sessoes'), api('GET', '/lanches'), api('GET', '/filmes'), api('GET', '/salas')
                 ]);
+                sessoesCache = sessoes;
 
                 // 1. Carregar histórico de pedidos
                 if (!data.length) { el.innerHTML = renderEmpty('Nenhuma venda registrada'); }
                 else {
-                    let h = `<table><thead><tr><th>Pedido</th><th>Data</th><th>Itens Comprados</th><th>Total</th></tr></thead><tbody>`;
+                    let h = `<table><thead><tr><th>Pedido</th><th>Data</th><th>Itens Comprados</th><th>Total</th><th>Status</th></tr></thead><tbody>`;
                     data.forEach(p => {
                         let itensStrs = [];
                         if (p.ingressos) {
@@ -1463,11 +1495,20 @@
                             });
                         }
 
+                        const statusBadge = p.status === 'PAGO'
+                            ? `<span class="badge badge-green" style="background:var(--green)">PAGO</span>`
+                            : `<span class="badge badge-red">PENDENTE</span>`;
+
+                        const actionBtn = p.status === 'PAGO'
+                            ? `<a href="${p.comprovanteUrl}" target="_blank" class="btn btn-outline" style="font-size:0.7rem; padding:4px 8px">📄 Recibo</a>`
+                            : `<button class="btn btn-primary" style="font-size:0.7rem; padding:4px 8px" onclick="pagarPedido(${p.id})">💲 Pagar</button>`;
+
                         h += `<tr>
                     <td><span class="badge badge-blue">#${p.id}</span></td>
                     <td>${fmtDate(p.dataPedido)}</td>
                     <td style="font-size:0.8rem; line-height:1.4">${itensStrs.join('<br>')}</td>
-                    <td><span class="badge badge-green">${fmtMoney(p.valorTotal)}</span></td>
+                    <td><span class="badge badge-gold" style="font-weight:bold">${fmtMoney(p.valorTotal)}</span></td>
+                    <td>${statusBadge}<br><div style="margin-top:4px">${actionBtn}</div></td>
                 </tr>`;
                     });
                     el.innerHTML = h + '</tbody></table>';
@@ -1481,16 +1522,15 @@
 
                 const ingressosDisponiveis = todosIngressos.filter(i => !ingressosVendidos.has(i.id));
 
-                const selIngresso = document.getElementById('pdvIngresso');
-                selIngresso.innerHTML = '<option value="">Selecione um ingresso...</option>';
-                ingressosDisponiveis.forEach(i => {
-                    const sessao = sessoes.find(s => s.id === i.sessaoId);
-                    const filme = sessao ? filmes.find(f => f.id === sessao.filmeId) : null;
-                    const sala = sessao ? salas.find(sa => sa.id === sessao.salaId) : null;
-                    const descSessao = filme ? `${filme.titulo} (Sala ${sala?.numero || '?'})` : `Sessão #${i.sessaoId}`;
-                    const label = `Ingresso #${i.id} - ${descSessao}`;
-
-                    selIngresso.innerHTML += `<option value="${i.id}" data-preco="${i.valorTotal}" data-label="${label}">${label} - ${fmtMoney(i.valorTotal)}</option>`;
+                // 2. Carregar Sessões p/ o PDV dropdown
+                const selSessao = document.getElementById('pdvSessao');
+                const sessaoIdAtual = selSessao.value;
+                selSessao.innerHTML = '<option value="">Selecione a sessão...</option>';
+                sessoes.forEach(s => {
+                    const f = filmes.find(fi => fi.id === s.filmeId);
+                    const sa = salas.find(sa => sa.id === s.salaId);
+                    const label = `${f?.titulo || 'Sessão #' + s.id} - Sala ${sa?.numero || '?'}`;
+                    selSessao.innerHTML += `<option value="${s.id}" ${s.id == sessaoIdAtual ? 'selected' : ''}>${label} (${fmtMoney(s.precoInteira)})</option>`;
                 });
 
                 const selLanche = document.getElementById('pdvLanche');
@@ -1498,83 +1538,120 @@
                 catLanches.forEach(l => {
                     selLanche.innerHTML += `<option value="${l.id}" data-preco="${l.preco}" data-label="${l.nome}">${l.nome} - ${fmtMoney(l.preco)}</option>`;
                 });
-
-            } catch { el.innerHTML = renderEmpty('Erro ao carregar módulo de vendas'); }
+            } catch (e) { console.error(e); el.innerHTML = renderEmpty('Erro ao carregar PDV'); }
         }
 
         function updateCartUI() {
             const list = document.getElementById('pdvCartList');
+            const totalEl = document.getElementById('pdvTotal');
+            const totalIntegrado = document.getElementById('pdvFinalizarBtn') || {}; 
+            
+            if (cart.ingressos.length === 0 && cart.lanches.length === 0) {
+                list.innerHTML = '<div style="color:var(--muted)">Carrinho vazio.</div>';
+                totalEl.textContent = 'R$ 0,00';
+                return;
+            }
+
+            let html = '<table style="font-size:0.75rem"><thead><tr><th>Item</th><th>Tipo</th><th>Preço</th><th></th></tr></thead><tbody>';
             let total = 0;
-            let html = '';
+            let ready = true;
 
-            pdvCart.ingressos.forEach((item, idx) => {
-                total += item.preco;
-                html += `<div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:6px 0">
-                    <span>🎟️ ${item.label}</span>
-                    <span>${fmtMoney(item.preco)} <button title="Remover" style="background:none;border:none;color:var(--red);cursor:pointer;margin-left:8px" onclick="pdvCart.ingressos.splice(${idx},1);updateCartUI()">✕</button></span>
-                </div>`;
+            cart.ingressos.forEach((ing, index) => {
+                const sessao = sessoesCache.find(s => s.id === ing.sessaoId);
+                let precoStr = 'Calculando...';
+                let precoNum = 0;
+                
+                if (sessao) {
+                    precoNum = ing.tipo === 'INTEIRA' ? sessao.precoInteira : sessao.precoInteira / 2;
+                    precoStr = fmtMoney(precoNum);
+                    total += precoNum;
+                } else {
+                    ready = false;
+                }
+
+                html += `<tr>
+                    <td>🎟️ Assento ${ing.assento}</td>
+                    <td><span class="badge ${ing.tipo === 'INTEIRA' ? 'badge-gold' : 'badge-green'}">${ing.tipo}</span></td>
+                    <td>${precoStr}</td>
+                    <td><button class="btn btn-danger" style="padding:2px 6px" onclick="removeFromCart('ingresso', ${index})">✕</button></td>
+                </tr>`;
             });
 
-            pdvCart.lanches.forEach((item, idx) => {
-                let subt = item.preco * item.quantidade;
-                total += subt;
-                html += `<div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:6px 0">
-                    <span>🍿 ${item.quantidade}x ${item.label}</span>
-                    <span>${fmtMoney(subt)} <button title="Remover" style="background:none;border:none;color:var(--red);cursor:pointer;margin-left:8px" onclick="pdvCart.lanches.splice(${idx},1);updateCartUI()">✕</button></span>
-                </div>`;
+            cart.lanches.forEach((l, index) => {
+                const sub = l.preco * l.quantidade;
+                total += sub;
+                html += `<tr>
+                    <td>🍿 ${l.quantidade}x ${l.nome}</td>
+                    <td>-</td>
+                    <td>${fmtMoney(sub)}</td>
+                    <td><button class="btn btn-danger" style="padding:2px 6px" onclick="removeFromCart('lanche', ${index})">✕</button></td>
+                </tr>`;
             });
 
-            if (!html) html = '<div style="color:var(--muted)">Carrinho vazio.</div>';
-            list.innerHTML = html;
-            document.getElementById('pdvTotal').textContent = fmtMoney(total);
+            list.innerHTML = html + '</tbody></table>';
+            totalEl.textContent = fmtMoney(total);
+            
+            // Habilitar/Desabilitar botão de finalizar
+            const btnFinalizar = document.getElementById('pdvFinalizarBtn');
+            if (btnFinalizar) {
+                btnFinalizar.disabled = !ready;
+                btnFinalizar.style.opacity = ready ? '1' : '0.5';
+                btnFinalizar.style.cursor = ready ? 'pointer' : 'not-allowed';
+            }
         }
 
-        function addPdvIngresso() {
-            const sel = document.getElementById('pdvIngresso');
-            if (!sel.value) return;
-            const id = parseInt(sel.value);
-            const preco = parseFloat(sel.options[sel.selectedIndex].dataset.preco);
-            const label = sel.options[sel.selectedIndex].dataset.label;
-            if (pdvCart.ingressos.find(i => i.id === id)) { toast('Ingresso já está no carrinho', 'error'); return; }
-            pdvCart.ingressos.push({ id, preco, label });
-            sel.value = "";
+        function removeFromCart(type, index) {
+            if (type === 'ingresso') cart.ingressos.splice(index, 1);
+            else cart.lanches.splice(index, 1);
             updateCartUI();
         }
 
-        function addPdvLanche() {
+        async function addPdvLanche() {
             const sel = document.getElementById('pdvLanche');
-            const qtd = parseInt(document.getElementById('pdvLancheQtd').value) || 1;
-            if (!sel.value || qtd < 1) return;
-            const id = parseInt(sel.value);
-            const label = sel.options[sel.selectedIndex].dataset.label;
-            const preco = parseFloat(sel.options[sel.selectedIndex].dataset.preco);
-
-            const existe = pdvCart.lanches.find(l => l.lancheId === id);
-            if (existe) existe.quantidade += qtd;
-            else pdvCart.lanches.push({ lancheId: id, quantidade: qtd, label, preco });
-
-            document.getElementById('pdvLancheQtd').value = "1";
-            sel.value = "";
+            if (!sel.value) return;
+            const opt = sel.options[sel.selectedIndex];
+            cart.lanches.push({
+                lancheId: parseInt(sel.value),
+                nome: opt.dataset.label,
+                preco: parseFloat(opt.dataset.preco),
+                quantidade: parseInt(document.getElementById('pdvLancheQtd').value) || 1
+            });
             updateCartUI();
         }
 
         async function finalizarPedido() {
-            if (pdvCart.ingressos.length === 0 && pdvCart.lanches.length === 0) {
-                return toast('O carrinho está vazio!', 'error');
-            }
-
+            if (cart.ingressos.length === 0 && cart.lanches.length === 0) return toast('Carrinho vazio!', 'error');
             try {
-                const payload = {
-                    ingressoIds: pdvCart.ingressos.map(i => i.id),
-                    lanches: pdvCart.lanches.map(l => ({ lancheId: l.lancheId, quantidade: l.quantidade }))
-                };
-
-                await api('POST', '/pedidos', payload);
-                toast('🎉 Venda finalizada com sucesso!');
-                pdvCart = { ingressos: [], lanches: [] };
+                // 1. Criar os Ingressos primeiro usando o novo formato
+                const ingressoIds = [];
+                for (const ing of cart.ingressos) {
+                    const payload = {
+                        sessaoId: ing.sessaoId,
+                        assento: ing.assento,
+                        tipo: ing.tipo
+                    };
+                    const res = await api('POST', '/ingressos', payload);
+                    ingressoIds.push(res.id);
+                }
+                // 2. Criar o Pedido
+                await api('POST', '/pedidos', {
+                    ingressoIds,
+                    lanches: cart.lanches.map(l => ({ lancheId: l.lancheId, quantidade: l.quantidade }))
+                });
+                toast('💰 Pedido Finalizado!');
+                cart = { ingressos: [], lanches: [] };
                 updateCartUI();
-                loadPedidos(); // recarrega a tabela de historico
-            } catch (e) { toast('❌ ' + e.message, 'error'); }
+                loadPedidos();
+            } catch (err) { toast('❌ ' + err.message, 'error'); }
+        }
+
+        async function pagarPedido(id) {
+            if (!confirm('Confirmar o Pagamento deste pedido?')) return;
+            try {
+                await api('PATCH', `/pedidos/${id}/pagar`);
+                toast('✅ Pagamento Aprovado e Comprovante Gerado!');
+                loadPedidos();
+            } catch (err) { toast('❌ Falha ao pagar: ' + err.message, 'error'); }
         }
 
         // Fechar modal ao clicar fora

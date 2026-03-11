@@ -4,9 +4,10 @@ export class CreateSalaDto {
     @IsInt()
     cinemaId: number;
 
+    @IsOptional()
     @IsInt()
     @Min(1)
-    numero: number;
+    numero?: number;
 
     @IsInt()
     @Min(1)

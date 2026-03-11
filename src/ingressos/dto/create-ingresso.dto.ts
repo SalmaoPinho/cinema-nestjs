@@ -1,18 +1,17 @@
-import { IsInt, IsNumber, Min } from 'class-validator';
+import { IsInt, IsString, IsEnum } from 'class-validator';
+
+export enum TipoIngresso {
+    INTEIRA = 'INTEIRA',
+    MEIA = 'MEIA',
+}
 
 export class CreateIngressoDto {
     @IsInt()
     sessaoId: number;
 
-    @IsNumber()
-    @Min(0)
-    valorInteira: number;
+    @IsString()
+    assento: string;
 
-    @IsNumber()
-    @Min(0)
-    valorMeia: number;
-
-    @IsNumber()
-    @Min(0)
-    valorTotal: number;
+    @IsEnum(TipoIngresso)
+    tipo: TipoIngresso;
 }

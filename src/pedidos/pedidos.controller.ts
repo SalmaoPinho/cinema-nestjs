@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, ParseIntPipe, Patch } from '@nestjs/common';
 import { PedidosService } from './pedidos.service';
 import { CreatePedidoDto } from './dto/create-pedido.dto';
 
@@ -19,5 +19,10 @@ export class PedidosController {
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id: number) {
         return this.pedidosService.findOne(id);
+    }
+
+    @Patch(':id/pagar')
+    pagar(@Param('id', ParseIntPipe) id: number) {
+        return this.pedidosService.pagar(id);
     }
 }

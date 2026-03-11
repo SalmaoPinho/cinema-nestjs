@@ -1,14 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateIngressoDto } from './dto/create-ingresso.dto';
+import { CreateIngressoDto, TipoIngresso } from './dto/create-ingresso.dto';
 import { UpdateIngressoDto } from './dto/update-ingresso.dto';
 
 @Injectable()
 export class IngressosService {
     constructor(private prisma: PrismaService) { }
 
-    create(dto: CreateIngressoDto) {
-        return this.prisma.ingresso.create({ data: dto });
+    async create(dto: CreateIngressoDto) {
+        const sessao = await this.prisma.sessao.findUnique({
+            where: { id: dto.sessaoId },
+        });
+
+        if (!sessao) {
+            throw new NotFoundException('Sessão não encontrada');
+        }
+
+        const valorPago =
+            dto.tipo === TipoIngresso.MEIA
+                ? sessao.precoInteira / 2
+                : sessao.precoInteira;
+
+        return this.prisma.ingresso.create({
+            data: {
+                ...dto,
+                valorPago,
+            },
+        });
     }
 
     findAll() {

@@ -21,3 +21,11 @@ export const Genero = {
 } as const
 
 export type Genero = (typeof Genero)[keyof typeof Genero]
+
+
+export const TipoIngresso = {
+  INTEIRA: 'INTEIRA',
+  MEIA: 'MEIA'
+} as const
+
+export type TipoIngresso = (typeof TipoIngresso)[keyof typeof TipoIngresso]

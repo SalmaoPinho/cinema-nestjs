@@ -28,6 +28,7 @@ export type AggregateSessao = {
 
 export type SessaoAvgAggregateOutputType = {
   id: number | null
+  precoInteira: number | null
   filmeId: number | null
   salaId: number | null
   cinemaId: number | null
@@ -35,6 +36,7 @@ export type SessaoAvgAggregateOutputType = {
 
 export type SessaoSumAggregateOutputType = {
   id: number | null
+  precoInteira: number | null
   filmeId: number | null
   salaId: number | null
   cinemaId: number | null
@@ -43,6 +45,7 @@ export type SessaoSumAggregateOutputType = {
 export type SessaoMinAggregateOutputType = {
   id: number | null
   horarioExibicao: Date | null
+  precoInteira: number | null
   filmeId: number | null
   salaId: number | null
   cinemaId: number | null
@@ -51,6 +54,7 @@ export type SessaoMinAggregateOutputType = {
 export type SessaoMaxAggregateOutputType = {
   id: number | null
   horarioExibicao: Date | null
+  precoInteira: number | null
   filmeId: number | null
   salaId: number | null
   cinemaId: number | null
@@ -59,6 +63,7 @@ export type SessaoMaxAggregateOutputType = {
 export type SessaoCountAggregateOutputType = {
   id: number
   horarioExibicao: number
+  precoInteira: number
   filmeId: number
   salaId: number
   cinemaId: number
@@ -68,6 +73,7 @@ export type SessaoCountAggregateOutputType = {
 
 export type SessaoAvgAggregateInputType = {
   id?: true
+  precoInteira?: true
   filmeId?: true
   salaId?: true
   cinemaId?: true
@@ -75,6 +81,7 @@ export type SessaoAvgAggregateInputType = {
 
 export type SessaoSumAggregateInputType = {
   id?: true
+  precoInteira?: true
   filmeId?: true
   salaId?: true
   cinemaId?: true
@@ -83,6 +90,7 @@ export type SessaoSumAggregateInputType = {
 export type SessaoMinAggregateInputType = {
   id?: true
   horarioExibicao?: true
+  precoInteira?: true
   filmeId?: true
   salaId?: true
   cinemaId?: true
@@ -91,6 +99,7 @@ export type SessaoMinAggregateInputType = {
 export type SessaoMaxAggregateInputType = {
   id?: true
   horarioExibicao?: true
+  precoInteira?: true
   filmeId?: true
   salaId?: true
   cinemaId?: true
@@ -99,6 +108,7 @@ export type SessaoMaxAggregateInputType = {
 export type SessaoCountAggregateInputType = {
   id?: true
   horarioExibicao?: true
+  precoInteira?: true
   filmeId?: true
   salaId?: true
   cinemaId?: true
@@ -194,6 +204,7 @@ export type SessaoGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type SessaoGroupByOutputType = {
   id: number
   horarioExibicao: Date
+  precoInteira: number
   filmeId: number
   salaId: number
   cinemaId: number | null
@@ -225,6 +236,7 @@ export type SessaoWhereInput = {
   NOT?: Prisma.SessaoWhereInput | Prisma.SessaoWhereInput[]
   id?: Prisma.IntFilter<"Sessao"> | number
   horarioExibicao?: Prisma.DateTimeFilter<"Sessao"> | Date | string
+  precoInteira?: Prisma.FloatFilter<"Sessao"> | number
   filmeId?: Prisma.IntFilter<"Sessao"> | number
   salaId?: Prisma.IntFilter<"Sessao"> | number
   cinemaId?: Prisma.IntNullableFilter<"Sessao"> | number | null
@@ -237,6 +249,7 @@ export type SessaoWhereInput = {
 export type SessaoOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   horarioExibicao?: Prisma.SortOrder
+  precoInteira?: Prisma.SortOrder
   filmeId?: Prisma.SortOrder
   salaId?: Prisma.SortOrder
   cinemaId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -252,6 +265,7 @@ export type SessaoWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SessaoWhereInput[]
   NOT?: Prisma.SessaoWhereInput | Prisma.SessaoWhereInput[]
   horarioExibicao?: Prisma.DateTimeFilter<"Sessao"> | Date | string
+  precoInteira?: Prisma.FloatFilter<"Sessao"> | number
   filmeId?: Prisma.IntFilter<"Sessao"> | number
   salaId?: Prisma.IntFilter<"Sessao"> | number
   cinemaId?: Prisma.IntNullableFilter<"Sessao"> | number | null
@@ -264,6 +278,7 @@ export type SessaoWhereUniqueInput = Prisma.AtLeast<{
 export type SessaoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   horarioExibicao?: Prisma.SortOrder
+  precoInteira?: Prisma.SortOrder
   filmeId?: Prisma.SortOrder
   salaId?: Prisma.SortOrder
   cinemaId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -280,6 +295,7 @@ export type SessaoScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SessaoScalarWhereWithAggregatesInput | Prisma.SessaoScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Sessao"> | number
   horarioExibicao?: Prisma.DateTimeWithAggregatesFilter<"Sessao"> | Date | string
+  precoInteira?: Prisma.FloatWithAggregatesFilter<"Sessao"> | number
   filmeId?: Prisma.IntWithAggregatesFilter<"Sessao"> | number
   salaId?: Prisma.IntWithAggregatesFilter<"Sessao"> | number
   cinemaId?: Prisma.IntNullableWithAggregatesFilter<"Sessao"> | number | null
@@ -287,6 +303,7 @@ export type SessaoScalarWhereWithAggregatesInput = {
 
 export type SessaoCreateInput = {
   horarioExibicao: Date | string
+  precoInteira?: number
   filme: Prisma.FilmeCreateNestedOneWithoutSessoesInput
   sala: Prisma.SalaCreateNestedOneWithoutSessoesInput
   cinema?: Prisma.CinemaCreateNestedOneWithoutSessoesInput
@@ -296,6 +313,7 @@ export type SessaoCreateInput = {
 export type SessaoUncheckedCreateInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   filmeId: number
   salaId: number
   cinemaId?: number | null
@@ -304,6 +322,7 @@ export type SessaoUncheckedCreateInput = {
 
 export type SessaoUpdateInput = {
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filme?: Prisma.FilmeUpdateOneRequiredWithoutSessoesNestedInput
   sala?: Prisma.SalaUpdateOneRequiredWithoutSessoesNestedInput
   cinema?: Prisma.CinemaUpdateOneWithoutSessoesNestedInput
@@ -313,6 +332,7 @@ export type SessaoUpdateInput = {
 export type SessaoUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filmeId?: Prisma.IntFieldUpdateOperationsInput | number
   salaId?: Prisma.IntFieldUpdateOperationsInput | number
   cinemaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -322,6 +342,7 @@ export type SessaoUncheckedUpdateInput = {
 export type SessaoCreateManyInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   filmeId: number
   salaId: number
   cinemaId?: number | null
@@ -329,11 +350,13 @@ export type SessaoCreateManyInput = {
 
 export type SessaoUpdateManyMutationInput = {
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type SessaoUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filmeId?: Prisma.IntFieldUpdateOperationsInput | number
   salaId?: Prisma.IntFieldUpdateOperationsInput | number
   cinemaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -352,6 +375,7 @@ export type SessaoOrderByRelationAggregateInput = {
 export type SessaoCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   horarioExibicao?: Prisma.SortOrder
+  precoInteira?: Prisma.SortOrder
   filmeId?: Prisma.SortOrder
   salaId?: Prisma.SortOrder
   cinemaId?: Prisma.SortOrder
@@ -359,6 +383,7 @@ export type SessaoCountOrderByAggregateInput = {
 
 export type SessaoAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  precoInteira?: Prisma.SortOrder
   filmeId?: Prisma.SortOrder
   salaId?: Prisma.SortOrder
   cinemaId?: Prisma.SortOrder
@@ -367,6 +392,7 @@ export type SessaoAvgOrderByAggregateInput = {
 export type SessaoMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   horarioExibicao?: Prisma.SortOrder
+  precoInteira?: Prisma.SortOrder
   filmeId?: Prisma.SortOrder
   salaId?: Prisma.SortOrder
   cinemaId?: Prisma.SortOrder
@@ -375,6 +401,7 @@ export type SessaoMaxOrderByAggregateInput = {
 export type SessaoMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   horarioExibicao?: Prisma.SortOrder
+  precoInteira?: Prisma.SortOrder
   filmeId?: Prisma.SortOrder
   salaId?: Prisma.SortOrder
   cinemaId?: Prisma.SortOrder
@@ -382,6 +409,7 @@ export type SessaoMinOrderByAggregateInput = {
 
 export type SessaoSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  precoInteira?: Prisma.SortOrder
   filmeId?: Prisma.SortOrder
   salaId?: Prisma.SortOrder
   cinemaId?: Prisma.SortOrder
@@ -518,6 +546,14 @@ export type SessaoUncheckedUpdateManyWithoutFilmeNestedInput = {
   deleteMany?: Prisma.SessaoScalarWhereInput | Prisma.SessaoScalarWhereInput[]
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type SessaoCreateNestedOneWithoutIngressosInput = {
   create?: Prisma.XOR<Prisma.SessaoCreateWithoutIngressosInput, Prisma.SessaoUncheckedCreateWithoutIngressosInput>
   connectOrCreate?: Prisma.SessaoCreateOrConnectWithoutIngressosInput
@@ -534,6 +570,7 @@ export type SessaoUpdateOneRequiredWithoutIngressosNestedInput = {
 
 export type SessaoCreateWithoutCinemaInput = {
   horarioExibicao: Date | string
+  precoInteira?: number
   filme: Prisma.FilmeCreateNestedOneWithoutSessoesInput
   sala: Prisma.SalaCreateNestedOneWithoutSessoesInput
   ingressos?: Prisma.IngressoCreateNestedManyWithoutSessaoInput
@@ -542,6 +579,7 @@ export type SessaoCreateWithoutCinemaInput = {
 export type SessaoUncheckedCreateWithoutCinemaInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   filmeId: number
   salaId: number
   ingressos?: Prisma.IngressoUncheckedCreateNestedManyWithoutSessaoInput
@@ -579,6 +617,7 @@ export type SessaoScalarWhereInput = {
   NOT?: Prisma.SessaoScalarWhereInput | Prisma.SessaoScalarWhereInput[]
   id?: Prisma.IntFilter<"Sessao"> | number
   horarioExibicao?: Prisma.DateTimeFilter<"Sessao"> | Date | string
+  precoInteira?: Prisma.FloatFilter<"Sessao"> | number
   filmeId?: Prisma.IntFilter<"Sessao"> | number
   salaId?: Prisma.IntFilter<"Sessao"> | number
   cinemaId?: Prisma.IntNullableFilter<"Sessao"> | number | null
@@ -586,6 +625,7 @@ export type SessaoScalarWhereInput = {
 
 export type SessaoCreateWithoutSalaInput = {
   horarioExibicao: Date | string
+  precoInteira?: number
   filme: Prisma.FilmeCreateNestedOneWithoutSessoesInput
   cinema?: Prisma.CinemaCreateNestedOneWithoutSessoesInput
   ingressos?: Prisma.IngressoCreateNestedManyWithoutSessaoInput
@@ -594,6 +634,7 @@ export type SessaoCreateWithoutSalaInput = {
 export type SessaoUncheckedCreateWithoutSalaInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   filmeId: number
   cinemaId?: number | null
   ingressos?: Prisma.IngressoUncheckedCreateNestedManyWithoutSessaoInput
@@ -627,6 +668,7 @@ export type SessaoUpdateManyWithWhereWithoutSalaInput = {
 
 export type SessaoCreateWithoutFilmeInput = {
   horarioExibicao: Date | string
+  precoInteira?: number
   sala: Prisma.SalaCreateNestedOneWithoutSessoesInput
   cinema?: Prisma.CinemaCreateNestedOneWithoutSessoesInput
   ingressos?: Prisma.IngressoCreateNestedManyWithoutSessaoInput
@@ -635,6 +677,7 @@ export type SessaoCreateWithoutFilmeInput = {
 export type SessaoUncheckedCreateWithoutFilmeInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   salaId: number
   cinemaId?: number | null
   ingressos?: Prisma.IngressoUncheckedCreateNestedManyWithoutSessaoInput
@@ -668,6 +711,7 @@ export type SessaoUpdateManyWithWhereWithoutFilmeInput = {
 
 export type SessaoCreateWithoutIngressosInput = {
   horarioExibicao: Date | string
+  precoInteira?: number
   filme: Prisma.FilmeCreateNestedOneWithoutSessoesInput
   sala: Prisma.SalaCreateNestedOneWithoutSessoesInput
   cinema?: Prisma.CinemaCreateNestedOneWithoutSessoesInput
@@ -676,6 +720,7 @@ export type SessaoCreateWithoutIngressosInput = {
 export type SessaoUncheckedCreateWithoutIngressosInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   filmeId: number
   salaId: number
   cinemaId?: number | null
@@ -699,6 +744,7 @@ export type SessaoUpdateToOneWithWhereWithoutIngressosInput = {
 
 export type SessaoUpdateWithoutIngressosInput = {
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filme?: Prisma.FilmeUpdateOneRequiredWithoutSessoesNestedInput
   sala?: Prisma.SalaUpdateOneRequiredWithoutSessoesNestedInput
   cinema?: Prisma.CinemaUpdateOneWithoutSessoesNestedInput
@@ -707,6 +753,7 @@ export type SessaoUpdateWithoutIngressosInput = {
 export type SessaoUncheckedUpdateWithoutIngressosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filmeId?: Prisma.IntFieldUpdateOperationsInput | number
   salaId?: Prisma.IntFieldUpdateOperationsInput | number
   cinemaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -715,12 +762,14 @@ export type SessaoUncheckedUpdateWithoutIngressosInput = {
 export type SessaoCreateManyCinemaInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   filmeId: number
   salaId: number
 }
 
 export type SessaoUpdateWithoutCinemaInput = {
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filme?: Prisma.FilmeUpdateOneRequiredWithoutSessoesNestedInput
   sala?: Prisma.SalaUpdateOneRequiredWithoutSessoesNestedInput
   ingressos?: Prisma.IngressoUpdateManyWithoutSessaoNestedInput
@@ -729,6 +778,7 @@ export type SessaoUpdateWithoutCinemaInput = {
 export type SessaoUncheckedUpdateWithoutCinemaInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filmeId?: Prisma.IntFieldUpdateOperationsInput | number
   salaId?: Prisma.IntFieldUpdateOperationsInput | number
   ingressos?: Prisma.IngressoUncheckedUpdateManyWithoutSessaoNestedInput
@@ -737,6 +787,7 @@ export type SessaoUncheckedUpdateWithoutCinemaInput = {
 export type SessaoUncheckedUpdateManyWithoutCinemaInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filmeId?: Prisma.IntFieldUpdateOperationsInput | number
   salaId?: Prisma.IntFieldUpdateOperationsInput | number
 }
@@ -744,12 +795,14 @@ export type SessaoUncheckedUpdateManyWithoutCinemaInput = {
 export type SessaoCreateManySalaInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   filmeId: number
   cinemaId?: number | null
 }
 
 export type SessaoUpdateWithoutSalaInput = {
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filme?: Prisma.FilmeUpdateOneRequiredWithoutSessoesNestedInput
   cinema?: Prisma.CinemaUpdateOneWithoutSessoesNestedInput
   ingressos?: Prisma.IngressoUpdateManyWithoutSessaoNestedInput
@@ -758,6 +811,7 @@ export type SessaoUpdateWithoutSalaInput = {
 export type SessaoUncheckedUpdateWithoutSalaInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filmeId?: Prisma.IntFieldUpdateOperationsInput | number
   cinemaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ingressos?: Prisma.IngressoUncheckedUpdateManyWithoutSessaoNestedInput
@@ -766,6 +820,7 @@ export type SessaoUncheckedUpdateWithoutSalaInput = {
 export type SessaoUncheckedUpdateManyWithoutSalaInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   filmeId?: Prisma.IntFieldUpdateOperationsInput | number
   cinemaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -773,12 +828,14 @@ export type SessaoUncheckedUpdateManyWithoutSalaInput = {
 export type SessaoCreateManyFilmeInput = {
   id?: number
   horarioExibicao: Date | string
+  precoInteira?: number
   salaId: number
   cinemaId?: number | null
 }
 
 export type SessaoUpdateWithoutFilmeInput = {
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   sala?: Prisma.SalaUpdateOneRequiredWithoutSessoesNestedInput
   cinema?: Prisma.CinemaUpdateOneWithoutSessoesNestedInput
   ingressos?: Prisma.IngressoUpdateManyWithoutSessaoNestedInput
@@ -787,6 +844,7 @@ export type SessaoUpdateWithoutFilmeInput = {
 export type SessaoUncheckedUpdateWithoutFilmeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   salaId?: Prisma.IntFieldUpdateOperationsInput | number
   cinemaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   ingressos?: Prisma.IngressoUncheckedUpdateManyWithoutSessaoNestedInput
@@ -795,6 +853,7 @@ export type SessaoUncheckedUpdateWithoutFilmeInput = {
 export type SessaoUncheckedUpdateManyWithoutFilmeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   horarioExibicao?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  precoInteira?: Prisma.FloatFieldUpdateOperationsInput | number
   salaId?: Prisma.IntFieldUpdateOperationsInput | number
   cinemaId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
@@ -833,6 +892,7 @@ export type SessaoCountOutputTypeCountIngressosArgs<ExtArgs extends runtime.Type
 export type SessaoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   horarioExibicao?: boolean
+  precoInteira?: boolean
   filmeId?: boolean
   salaId?: boolean
   cinemaId?: boolean
@@ -846,6 +906,7 @@ export type SessaoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type SessaoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   horarioExibicao?: boolean
+  precoInteira?: boolean
   filmeId?: boolean
   salaId?: boolean
   cinemaId?: boolean
@@ -857,6 +918,7 @@ export type SessaoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type SessaoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   horarioExibicao?: boolean
+  precoInteira?: boolean
   filmeId?: boolean
   salaId?: boolean
   cinemaId?: boolean
@@ -868,12 +930,13 @@ export type SessaoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type SessaoSelectScalar = {
   id?: boolean
   horarioExibicao?: boolean
+  precoInteira?: boolean
   filmeId?: boolean
   salaId?: boolean
   cinemaId?: boolean
 }
 
-export type SessaoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "horarioExibicao" | "filmeId" | "salaId" | "cinemaId", ExtArgs["result"]["sessao"]>
+export type SessaoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "horarioExibicao" | "precoInteira" | "filmeId" | "salaId" | "cinemaId", ExtArgs["result"]["sessao"]>
 export type SessaoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   filme?: boolean | Prisma.FilmeDefaultArgs<ExtArgs>
   sala?: boolean | Prisma.SalaDefaultArgs<ExtArgs>
@@ -903,6 +966,7 @@ export type $SessaoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     horarioExibicao: Date
+    precoInteira: number
     filmeId: number
     salaId: number
     cinemaId: number | null
@@ -1335,6 +1399,7 @@ export interface Prisma__SessaoClient<T, Null = never, ExtArgs extends runtime.T
 export interface SessaoFieldRefs {
   readonly id: Prisma.FieldRef<"Sessao", 'Int'>
   readonly horarioExibicao: Prisma.FieldRef<"Sessao", 'DateTime'>
+  readonly precoInteira: Prisma.FieldRef<"Sessao", 'Float'>
   readonly filmeId: Prisma.FieldRef<"Sessao", 'Int'>
   readonly salaId: Prisma.FieldRef<"Sessao", 'Int'>
   readonly cinemaId: Prisma.FieldRef<"Sessao", 'Int'>

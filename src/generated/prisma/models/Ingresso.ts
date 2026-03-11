@@ -28,41 +28,37 @@ export type AggregateIngresso = {
 
 export type IngressoAvgAggregateOutputType = {
   id: number | null
-  valorInteira: number | null
-  valorMeia: number | null
-  valorTotal: number | null
+  valorPago: number | null
   sessaoId: number | null
 }
 
 export type IngressoSumAggregateOutputType = {
   id: number | null
-  valorInteira: number | null
-  valorMeia: number | null
-  valorTotal: number | null
+  valorPago: number | null
   sessaoId: number | null
 }
 
 export type IngressoMinAggregateOutputType = {
   id: number | null
-  valorInteira: number | null
-  valorMeia: number | null
-  valorTotal: number | null
+  assento: string | null
+  tipo: $Enums.TipoIngresso | null
+  valorPago: number | null
   sessaoId: number | null
 }
 
 export type IngressoMaxAggregateOutputType = {
   id: number | null
-  valorInteira: number | null
-  valorMeia: number | null
-  valorTotal: number | null
+  assento: string | null
+  tipo: $Enums.TipoIngresso | null
+  valorPago: number | null
   sessaoId: number | null
 }
 
 export type IngressoCountAggregateOutputType = {
   id: number
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: number
+  tipo: number
+  valorPago: number
   sessaoId: number
   _all: number
 }
@@ -70,41 +66,37 @@ export type IngressoCountAggregateOutputType = {
 
 export type IngressoAvgAggregateInputType = {
   id?: true
-  valorInteira?: true
-  valorMeia?: true
-  valorTotal?: true
+  valorPago?: true
   sessaoId?: true
 }
 
 export type IngressoSumAggregateInputType = {
   id?: true
-  valorInteira?: true
-  valorMeia?: true
-  valorTotal?: true
+  valorPago?: true
   sessaoId?: true
 }
 
 export type IngressoMinAggregateInputType = {
   id?: true
-  valorInteira?: true
-  valorMeia?: true
-  valorTotal?: true
+  assento?: true
+  tipo?: true
+  valorPago?: true
   sessaoId?: true
 }
 
 export type IngressoMaxAggregateInputType = {
   id?: true
-  valorInteira?: true
-  valorMeia?: true
-  valorTotal?: true
+  assento?: true
+  tipo?: true
+  valorPago?: true
   sessaoId?: true
 }
 
 export type IngressoCountAggregateInputType = {
   id?: true
-  valorInteira?: true
-  valorMeia?: true
-  valorTotal?: true
+  assento?: true
+  tipo?: true
+  valorPago?: true
   sessaoId?: true
   _all?: true
 }
@@ -197,9 +189,9 @@ export type IngressoGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type IngressoGroupByOutputType = {
   id: number
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo: $Enums.TipoIngresso
+  valorPago: number
   sessaoId: number
   _count: IngressoCountAggregateOutputType | null
   _avg: IngressoAvgAggregateOutputType | null
@@ -228,9 +220,9 @@ export type IngressoWhereInput = {
   OR?: Prisma.IngressoWhereInput[]
   NOT?: Prisma.IngressoWhereInput | Prisma.IngressoWhereInput[]
   id?: Prisma.IntFilter<"Ingresso"> | number
-  valorInteira?: Prisma.FloatFilter<"Ingresso"> | number
-  valorMeia?: Prisma.FloatFilter<"Ingresso"> | number
-  valorTotal?: Prisma.FloatFilter<"Ingresso"> | number
+  assento?: Prisma.StringFilter<"Ingresso"> | string
+  tipo?: Prisma.EnumTipoIngressoFilter<"Ingresso"> | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFilter<"Ingresso"> | number
   sessaoId?: Prisma.IntFilter<"Ingresso"> | number
   sessao?: Prisma.XOR<Prisma.SessaoScalarRelationFilter, Prisma.SessaoWhereInput>
   pedidos?: Prisma.PedidoListRelationFilter
@@ -238,9 +230,9 @@ export type IngressoWhereInput = {
 
 export type IngressoOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  valorInteira?: Prisma.SortOrder
-  valorMeia?: Prisma.SortOrder
-  valorTotal?: Prisma.SortOrder
+  assento?: Prisma.SortOrder
+  tipo?: Prisma.SortOrder
+  valorPago?: Prisma.SortOrder
   sessaoId?: Prisma.SortOrder
   sessao?: Prisma.SessaoOrderByWithRelationInput
   pedidos?: Prisma.PedidoOrderByRelationAggregateInput
@@ -248,22 +240,23 @@ export type IngressoOrderByWithRelationInput = {
 
 export type IngressoWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  sessaoId_assento?: Prisma.IngressoSessaoIdAssentoCompoundUniqueInput
   AND?: Prisma.IngressoWhereInput | Prisma.IngressoWhereInput[]
   OR?: Prisma.IngressoWhereInput[]
   NOT?: Prisma.IngressoWhereInput | Prisma.IngressoWhereInput[]
-  valorInteira?: Prisma.FloatFilter<"Ingresso"> | number
-  valorMeia?: Prisma.FloatFilter<"Ingresso"> | number
-  valorTotal?: Prisma.FloatFilter<"Ingresso"> | number
+  assento?: Prisma.StringFilter<"Ingresso"> | string
+  tipo?: Prisma.EnumTipoIngressoFilter<"Ingresso"> | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFilter<"Ingresso"> | number
   sessaoId?: Prisma.IntFilter<"Ingresso"> | number
   sessao?: Prisma.XOR<Prisma.SessaoScalarRelationFilter, Prisma.SessaoWhereInput>
   pedidos?: Prisma.PedidoListRelationFilter
-}, "id">
+}, "id" | "sessaoId_assento">
 
 export type IngressoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  valorInteira?: Prisma.SortOrder
-  valorMeia?: Prisma.SortOrder
-  valorTotal?: Prisma.SortOrder
+  assento?: Prisma.SortOrder
+  tipo?: Prisma.SortOrder
+  valorPago?: Prisma.SortOrder
   sessaoId?: Prisma.SortOrder
   _count?: Prisma.IngressoCountOrderByAggregateInput
   _avg?: Prisma.IngressoAvgOrderByAggregateInput
@@ -277,65 +270,65 @@ export type IngressoScalarWhereWithAggregatesInput = {
   OR?: Prisma.IngressoScalarWhereWithAggregatesInput[]
   NOT?: Prisma.IngressoScalarWhereWithAggregatesInput | Prisma.IngressoScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Ingresso"> | number
-  valorInteira?: Prisma.FloatWithAggregatesFilter<"Ingresso"> | number
-  valorMeia?: Prisma.FloatWithAggregatesFilter<"Ingresso"> | number
-  valorTotal?: Prisma.FloatWithAggregatesFilter<"Ingresso"> | number
+  assento?: Prisma.StringWithAggregatesFilter<"Ingresso"> | string
+  tipo?: Prisma.EnumTipoIngressoWithAggregatesFilter<"Ingresso"> | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatWithAggregatesFilter<"Ingresso"> | number
   sessaoId?: Prisma.IntWithAggregatesFilter<"Ingresso"> | number
 }
 
 export type IngressoCreateInput = {
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
   sessao: Prisma.SessaoCreateNestedOneWithoutIngressosInput
   pedidos?: Prisma.PedidoCreateNestedManyWithoutIngressosInput
 }
 
 export type IngressoUncheckedCreateInput = {
   id?: number
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
   sessaoId: number
   pedidos?: Prisma.PedidoUncheckedCreateNestedManyWithoutIngressosInput
 }
 
 export type IngressoUpdateInput = {
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   sessao?: Prisma.SessaoUpdateOneRequiredWithoutIngressosNestedInput
   pedidos?: Prisma.PedidoUpdateManyWithoutIngressosNestedInput
 }
 
 export type IngressoUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   sessaoId?: Prisma.IntFieldUpdateOperationsInput | number
   pedidos?: Prisma.PedidoUncheckedUpdateManyWithoutIngressosNestedInput
 }
 
 export type IngressoCreateManyInput = {
   id?: number
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
   sessaoId: number
 }
 
 export type IngressoUpdateManyMutationInput = {
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type IngressoUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   sessaoId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -349,43 +342,44 @@ export type IngressoOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type IngressoSessaoIdAssentoCompoundUniqueInput = {
+  sessaoId: number
+  assento: string
+}
+
 export type IngressoCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  valorInteira?: Prisma.SortOrder
-  valorMeia?: Prisma.SortOrder
-  valorTotal?: Prisma.SortOrder
+  assento?: Prisma.SortOrder
+  tipo?: Prisma.SortOrder
+  valorPago?: Prisma.SortOrder
   sessaoId?: Prisma.SortOrder
 }
 
 export type IngressoAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  valorInteira?: Prisma.SortOrder
-  valorMeia?: Prisma.SortOrder
-  valorTotal?: Prisma.SortOrder
+  valorPago?: Prisma.SortOrder
   sessaoId?: Prisma.SortOrder
 }
 
 export type IngressoMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  valorInteira?: Prisma.SortOrder
-  valorMeia?: Prisma.SortOrder
-  valorTotal?: Prisma.SortOrder
+  assento?: Prisma.SortOrder
+  tipo?: Prisma.SortOrder
+  valorPago?: Prisma.SortOrder
   sessaoId?: Prisma.SortOrder
 }
 
 export type IngressoMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  valorInteira?: Prisma.SortOrder
-  valorMeia?: Prisma.SortOrder
-  valorTotal?: Prisma.SortOrder
+  assento?: Prisma.SortOrder
+  tipo?: Prisma.SortOrder
+  valorPago?: Prisma.SortOrder
   sessaoId?: Prisma.SortOrder
 }
 
 export type IngressoSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  valorInteira?: Prisma.SortOrder
-  valorMeia?: Prisma.SortOrder
-  valorTotal?: Prisma.SortOrder
+  valorPago?: Prisma.SortOrder
   sessaoId?: Prisma.SortOrder
 }
 
@@ -431,12 +425,8 @@ export type IngressoUncheckedUpdateManyWithoutSessaoNestedInput = {
   deleteMany?: Prisma.IngressoScalarWhereInput | Prisma.IngressoScalarWhereInput[]
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
+export type EnumTipoIngressoFieldUpdateOperationsInput = {
+  set?: $Enums.TipoIngresso
 }
 
 export type IngressoCreateNestedManyWithoutPedidosInput = {
@@ -478,17 +468,17 @@ export type IngressoUncheckedUpdateManyWithoutPedidosNestedInput = {
 }
 
 export type IngressoCreateWithoutSessaoInput = {
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
   pedidos?: Prisma.PedidoCreateNestedManyWithoutIngressosInput
 }
 
 export type IngressoUncheckedCreateWithoutSessaoInput = {
   id?: number
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
   pedidos?: Prisma.PedidoUncheckedCreateNestedManyWithoutIngressosInput
 }
 
@@ -523,24 +513,24 @@ export type IngressoScalarWhereInput = {
   OR?: Prisma.IngressoScalarWhereInput[]
   NOT?: Prisma.IngressoScalarWhereInput | Prisma.IngressoScalarWhereInput[]
   id?: Prisma.IntFilter<"Ingresso"> | number
-  valorInteira?: Prisma.FloatFilter<"Ingresso"> | number
-  valorMeia?: Prisma.FloatFilter<"Ingresso"> | number
-  valorTotal?: Prisma.FloatFilter<"Ingresso"> | number
+  assento?: Prisma.StringFilter<"Ingresso"> | string
+  tipo?: Prisma.EnumTipoIngressoFilter<"Ingresso"> | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFilter<"Ingresso"> | number
   sessaoId?: Prisma.IntFilter<"Ingresso"> | number
 }
 
 export type IngressoCreateWithoutPedidosInput = {
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
   sessao: Prisma.SessaoCreateNestedOneWithoutIngressosInput
 }
 
 export type IngressoUncheckedCreateWithoutPedidosInput = {
   id?: number
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
   sessaoId: number
 }
 
@@ -567,53 +557,53 @@ export type IngressoUpdateManyWithWhereWithoutPedidosInput = {
 
 export type IngressoCreateManySessaoInput = {
   id?: number
-  valorInteira: number
-  valorMeia: number
-  valorTotal: number
+  assento: string
+  tipo?: $Enums.TipoIngresso
+  valorPago: number
 }
 
 export type IngressoUpdateWithoutSessaoInput = {
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   pedidos?: Prisma.PedidoUpdateManyWithoutIngressosNestedInput
 }
 
 export type IngressoUncheckedUpdateWithoutSessaoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   pedidos?: Prisma.PedidoUncheckedUpdateManyWithoutIngressosNestedInput
 }
 
 export type IngressoUncheckedUpdateManyWithoutSessaoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type IngressoUpdateWithoutPedidosInput = {
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   sessao?: Prisma.SessaoUpdateOneRequiredWithoutIngressosNestedInput
 }
 
 export type IngressoUncheckedUpdateWithoutPedidosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   sessaoId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type IngressoUncheckedUpdateManyWithoutPedidosInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  valorInteira?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorMeia?: Prisma.FloatFieldUpdateOperationsInput | number
-  valorTotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  assento?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
+  valorPago?: Prisma.FloatFieldUpdateOperationsInput | number
   sessaoId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -650,9 +640,9 @@ export type IngressoCountOutputTypeCountPedidosArgs<ExtArgs extends runtime.Type
 
 export type IngressoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  valorInteira?: boolean
-  valorMeia?: boolean
-  valorTotal?: boolean
+  assento?: boolean
+  tipo?: boolean
+  valorPago?: boolean
   sessaoId?: boolean
   sessao?: boolean | Prisma.SessaoDefaultArgs<ExtArgs>
   pedidos?: boolean | Prisma.Ingresso$pedidosArgs<ExtArgs>
@@ -661,31 +651,31 @@ export type IngressoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 
 export type IngressoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  valorInteira?: boolean
-  valorMeia?: boolean
-  valorTotal?: boolean
+  assento?: boolean
+  tipo?: boolean
+  valorPago?: boolean
   sessaoId?: boolean
   sessao?: boolean | Prisma.SessaoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ingresso"]>
 
 export type IngressoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  valorInteira?: boolean
-  valorMeia?: boolean
-  valorTotal?: boolean
+  assento?: boolean
+  tipo?: boolean
+  valorPago?: boolean
   sessaoId?: boolean
   sessao?: boolean | Prisma.SessaoDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["ingresso"]>
 
 export type IngressoSelectScalar = {
   id?: boolean
-  valorInteira?: boolean
-  valorMeia?: boolean
-  valorTotal?: boolean
+  assento?: boolean
+  tipo?: boolean
+  valorPago?: boolean
   sessaoId?: boolean
 }
 
-export type IngressoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "valorInteira" | "valorMeia" | "valorTotal" | "sessaoId", ExtArgs["result"]["ingresso"]>
+export type IngressoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "assento" | "tipo" | "valorPago" | "sessaoId", ExtArgs["result"]["ingresso"]>
 export type IngressoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessao?: boolean | Prisma.SessaoDefaultArgs<ExtArgs>
   pedidos?: boolean | Prisma.Ingresso$pedidosArgs<ExtArgs>
@@ -706,9 +696,9 @@ export type $IngressoPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    valorInteira: number
-    valorMeia: number
-    valorTotal: number
+    assento: string
+    tipo: $Enums.TipoIngresso
+    valorPago: number
     sessaoId: number
   }, ExtArgs["result"]["ingresso"]>
   composites: {}
@@ -1136,9 +1126,9 @@ export interface Prisma__IngressoClient<T, Null = never, ExtArgs extends runtime
  */
 export interface IngressoFieldRefs {
   readonly id: Prisma.FieldRef<"Ingresso", 'Int'>
-  readonly valorInteira: Prisma.FieldRef<"Ingresso", 'Float'>
-  readonly valorMeia: Prisma.FieldRef<"Ingresso", 'Float'>
-  readonly valorTotal: Prisma.FieldRef<"Ingresso", 'Float'>
+  readonly assento: Prisma.FieldRef<"Ingresso", 'String'>
+  readonly tipo: Prisma.FieldRef<"Ingresso", 'TipoIngresso'>
+  readonly valorPago: Prisma.FieldRef<"Ingresso", 'Float'>
   readonly sessaoId: Prisma.FieldRef<"Ingresso", 'Int'>
 }
     
