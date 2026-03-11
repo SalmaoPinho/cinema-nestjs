@@ -1,11 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -13,18 +9,102 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+// ─── Enum ────────────────────────────────────────────────────────────────────
+
+enum Genero {
+  ACAO
+  COMEDIA
+  DRAMA
+  TERROR
+  ROMANCE
+  FICCAO_CIENTIFICA
+  ANIMACAO
+  DOCUMENTARIO
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+// ─── Modelos ──────────────────────────────────────────────────────────────────
+
+model Cinema {
+  id       Int      @id @default(autoincrement())
+  nome     String
+  endereco String
+  salas    Sala[]
+  filmes   Filme[]
+  sessoes  Sessao[]
+}
+
+model Sala {
+  id         Int      @id @default(autoincrement())
+  numero     Int
+  capacidade Int
+  fileiras   Int      @default(8)
+  colunas    Int      @default(10)
+  cinemaId   Int
+  cinema     Cinema   @relation(fields: [cinemaId], references: [id])
+  sessoes    Sessao[]
+}
+
+model Filme {
+  id                 Int      @id @default(autoincrement())
+  titulo             String
+  sinopse            String
+  classificacao      String
+  duracao            Int      // duração em minutos
+  elenco             String
+  genero             Genero
+  dataIniciaExibicao DateTime
+  dataFinalExibicao  DateTime
+  imagemUrl          String?
+  cinemaId           Int?
+  cinema             Cinema?  @relation(fields: [cinemaId], references: [id])
+  sessoes            Sessao[]
+}
+
+model Sessao {
+  id              Int       @id @default(autoincrement())
+  horarioExibicao DateTime
+  filmeId         Int
+  filme           Filme     @relation(fields: [filmeId], references: [id])
+  salaId          Int
+  sala            Sala      @relation(fields: [salaId], references: [id])
+  cinemaId        Int?
+  cinema          Cinema?   @relation(fields: [cinemaId], references: [id])
+  ingressos       Ingresso[]
+}
+
+model Ingresso {
+  id           Int       @id @default(autoincrement())
+  valorInteira Float
+  valorMeia    Float
+  valorTotal   Float
+  sessaoId     Int
+  sessao       Sessao    @relation(fields: [sessaoId], references: [id])
+  pedidos      Pedido[]  @relation("PedidoIngressos")
+}
+
+model Pedido {
+  id         Int           @id @default(autoincrement())
+  dataPedido DateTime      @default(now())
+  valorTotal Float
+  ingressos  Ingresso[]    @relation("PedidoIngressos")
+  itens      ItemPedido[]
+}
+
+model ItemPedido {
+  id            Int    @id @default(autoincrement())
+  quantidade    Int
+  subtotal      Float
+  pedidoId      Int
+  pedido        Pedido @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  lancheId      Int
+  lanche        Lanche @relation(fields: [lancheId], references: [id])
+}
+
+model Lanche {
+  id          Int    @id @default(autoincrement())
+  nome        String
+  descricao   String
+  preco       Float
+  imagemUrl   String?
+  itens       ItemPedido[]
 }
