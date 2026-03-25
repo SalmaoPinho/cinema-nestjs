@@ -10,15 +10,19 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Garantir que exista um Cinema padrão (evita erro de chave estrangeira nas Salas/Sessões)
-  const prisma = app.get(PrismaService);
-  if ((await prisma.cinema.count()) === 0) {
-    await prisma.cinema.create({
-      data: {
-        nome: 'CineManager Principal',
-        endereco: 'Av. Paulista, 1000 - São Paulo, SP',
-      },
-    });
-    console.log(' Cinema padrão (ID: 1) criado no banco de dados!');
+  try {
+    const prisma = app.get(PrismaService);
+    if ((await prisma.cinema.count()) === 0) {
+      await prisma.cinema.create({
+        data: {
+          nome: 'CineManager Principal',
+          endereco: 'Av. Paulista, 1000 - São Paulo, SP',
+        },
+      });
+      console.log('✅ Cinema padrão (ID: 1) criado no banco de dados!');
+    }
+  } catch (err) {
+    console.warn('⚠️  Banco de dados não disponível no boot (cinema padrão não verificado):', err.message);
   }
 
   // Ativar validação global dos DTOs (class-validator)

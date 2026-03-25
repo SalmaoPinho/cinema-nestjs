@@ -261,6 +261,7 @@ export type SalaOrderByWithRelationInput = {
 
 export type SalaWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  cinemaId_numero?: Prisma.SalaCinemaIdNumeroCompoundUniqueInput
   AND?: Prisma.SalaWhereInput | Prisma.SalaWhereInput[]
   OR?: Prisma.SalaWhereInput[]
   NOT?: Prisma.SalaWhereInput | Prisma.SalaWhereInput[]
@@ -271,7 +272,7 @@ export type SalaWhereUniqueInput = Prisma.AtLeast<{
   cinemaId?: Prisma.IntFilter<"Sala"> | number
   cinema?: Prisma.XOR<Prisma.CinemaScalarRelationFilter, Prisma.CinemaWhereInput>
   sessoes?: Prisma.SessaoListRelationFilter
-}, "id">
+}, "id" | "cinemaId_numero">
 
 export type SalaOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -370,6 +371,11 @@ export type SalaListRelationFilter = {
 
 export type SalaOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type SalaCinemaIdNumeroCompoundUniqueInput = {
+  cinemaId: number
+  numero: number
 }
 
 export type SalaCountOrderByAggregateInput = {

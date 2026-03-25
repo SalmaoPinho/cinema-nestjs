@@ -1,16 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../generated/prisma/client';
 
 @Injectable()
-export class PrismaService extends PrismaClient {
+export class PrismaService extends PrismaClient implements OnModuleInit {
     constructor() {
-        const databaseUrl = process.env.DATABASE_URL;
-        if (!databaseUrl)
+        if (!process.env.DATABASE_URL)
             throw new Error('DATABASE_URL não definida');
 
-        // Em algumas versões é "connectionString" em vez de "url".
-        const adapter = new PrismaPg({ connectionString: databaseUrl });
+        const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
         super({ adapter });
+    }
+
+    async onModuleInit() {
+        await this.$connect();
     }
 }

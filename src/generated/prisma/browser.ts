@@ -57,3 +57,18 @@ export type ItemPedido = Prisma.ItemPedidoModel
  * 
  */
 export type Lanche = Prisma.LancheModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Profile
+ * 
+ */
+export type Profile = Prisma.ProfileModel
+/**
+ * Model Address
+ * 
+ */
+export type Address = Prisma.AddressModel
