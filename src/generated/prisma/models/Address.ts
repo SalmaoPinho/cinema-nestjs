@@ -27,37 +27,33 @@ export type AggregateAddress = {
 }
 
 export type AddressAvgAggregateOutputType = {
-  id: number | null
   number: number | null
-  userId: number | null
 }
 
 export type AddressSumAggregateOutputType = {
-  id: number | null
   number: number | null
-  userId: number | null
 }
 
 export type AddressMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   street: string | null
   number: number | null
   city: string | null
   state: string | null
   zipCode: string | null
-  userId: number | null
+  userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type AddressMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   street: string | null
   number: number | null
   city: string | null
   state: string | null
   zipCode: string | null
-  userId: number | null
+  userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -77,15 +73,11 @@ export type AddressCountAggregateOutputType = {
 
 
 export type AddressAvgAggregateInputType = {
-  id?: true
   number?: true
-  userId?: true
 }
 
 export type AddressSumAggregateInputType = {
-  id?: true
   number?: true
-  userId?: true
 }
 
 export type AddressMinAggregateInputType = {
@@ -212,13 +204,13 @@ export type AddressGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 export type AddressGroupByOutputType = {
-  id: number
+  id: string
   street: string
   number: number
   city: string
   state: string
   zipCode: string
-  userId: number
+  userId: string
   createdAt: Date
   updatedAt: Date
   _count: AddressCountAggregateOutputType | null
@@ -247,13 +239,13 @@ export type AddressWhereInput = {
   AND?: Prisma.AddressWhereInput | Prisma.AddressWhereInput[]
   OR?: Prisma.AddressWhereInput[]
   NOT?: Prisma.AddressWhereInput | Prisma.AddressWhereInput[]
-  id?: Prisma.IntFilter<"Address"> | number
+  id?: Prisma.StringFilter<"Address"> | string
   street?: Prisma.StringFilter<"Address"> | string
   number?: Prisma.IntFilter<"Address"> | number
   city?: Prisma.StringFilter<"Address"> | string
   state?: Prisma.StringFilter<"Address"> | string
   zipCode?: Prisma.StringFilter<"Address"> | string
-  userId?: Prisma.IntFilter<"Address"> | number
+  userId?: Prisma.StringFilter<"Address"> | string
   createdAt?: Prisma.DateTimeFilter<"Address"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Address"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -273,8 +265,8 @@ export type AddressOrderByWithRelationInput = {
 }
 
 export type AddressWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
-  userId?: number
+  id?: string
+  userId?: string
   AND?: Prisma.AddressWhereInput | Prisma.AddressWhereInput[]
   OR?: Prisma.AddressWhereInput[]
   NOT?: Prisma.AddressWhereInput | Prisma.AddressWhereInput[]
@@ -309,41 +301,43 @@ export type AddressScalarWhereWithAggregatesInput = {
   AND?: Prisma.AddressScalarWhereWithAggregatesInput | Prisma.AddressScalarWhereWithAggregatesInput[]
   OR?: Prisma.AddressScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AddressScalarWhereWithAggregatesInput | Prisma.AddressScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Address"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Address"> | string
   street?: Prisma.StringWithAggregatesFilter<"Address"> | string
   number?: Prisma.IntWithAggregatesFilter<"Address"> | number
   city?: Prisma.StringWithAggregatesFilter<"Address"> | string
   state?: Prisma.StringWithAggregatesFilter<"Address"> | string
   zipCode?: Prisma.StringWithAggregatesFilter<"Address"> | string
-  userId?: Prisma.IntWithAggregatesFilter<"Address"> | number
+  userId?: Prisma.StringWithAggregatesFilter<"Address"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Address"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Address"> | Date | string
 }
 
 export type AddressCreateInput = {
+  id?: string
   street: string
   number: number
   city: string
   state: string
   zipCode: string
-  createdAt: Date | string
-  updatedAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutAddressInput
 }
 
 export type AddressUncheckedCreateInput = {
-  id?: number
+  id?: string
   street: string
   number: number
   city: string
   state: string
   zipCode: string
-  userId: number
-  createdAt: Date | string
-  updatedAt: Date | string
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AddressUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
@@ -355,30 +349,31 @@ export type AddressUpdateInput = {
 }
 
 export type AddressUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AddressCreateManyInput = {
-  id?: number
+  id?: string
   street: string
   number: number
   city: string
   state: string
   zipCode: string
-  userId: number
-  createdAt: Date | string
-  updatedAt: Date | string
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AddressUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
@@ -389,13 +384,13 @@ export type AddressUpdateManyMutationInput = {
 }
 
 export type AddressUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
   state?: Prisma.StringFieldUpdateOperationsInput | string
   zipCode?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -418,9 +413,7 @@ export type AddressCountOrderByAggregateInput = {
 }
 
 export type AddressAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   number?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type AddressMaxOrderByAggregateInput = {
@@ -448,9 +441,7 @@ export type AddressMinOrderByAggregateInput = {
 }
 
 export type AddressSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   number?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type AddressCreateNestedOneWithoutUserInput = {
@@ -486,24 +477,25 @@ export type AddressUncheckedUpdateOneWithoutUserNestedInput = {
 }
 
 export type AddressCreateWithoutUserInput = {
+  id?: string
   street: string
   number: number
   city: string
   state: string
   zipCode: string
-  createdAt: Date | string
-  updatedAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AddressUncheckedCreateWithoutUserInput = {
-  id?: number
+  id?: string
   street: string
   number: number
   city: string
   state: string
   zipCode: string
-  createdAt: Date | string
-  updatedAt: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type AddressCreateOrConnectWithoutUserInput = {
@@ -523,6 +515,7 @@ export type AddressUpdateToOneWithWhereWithoutUserInput = {
 }
 
 export type AddressUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
@@ -533,7 +526,7 @@ export type AddressUpdateWithoutUserInput = {
 }
 
 export type AddressUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   street?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   city?: Prisma.StringFieldUpdateOperationsInput | string
@@ -613,13 +606,13 @@ export type $AddressPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     street: string
     number: number
     city: string
     state: string
     zipCode: string
-    userId: number
+    userId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["address"]>
@@ -1046,13 +1039,13 @@ export interface Prisma__AddressClient<T, Null = never, ExtArgs extends runtime.
  * Fields of the Address model
  */
 export interface AddressFieldRefs {
-  readonly id: Prisma.FieldRef<"Address", 'Int'>
+  readonly id: Prisma.FieldRef<"Address", 'String'>
   readonly street: Prisma.FieldRef<"Address", 'String'>
   readonly number: Prisma.FieldRef<"Address", 'Int'>
   readonly city: Prisma.FieldRef<"Address", 'String'>
   readonly state: Prisma.FieldRef<"Address", 'String'>
   readonly zipCode: Prisma.FieldRef<"Address", 'String'>
-  readonly userId: Prisma.FieldRef<"Address", 'Int'>
+  readonly userId: Prisma.FieldRef<"Address", 'String'>
   readonly createdAt: Prisma.FieldRef<"Address", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Address", 'DateTime'>
 }

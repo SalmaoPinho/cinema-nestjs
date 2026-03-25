@@ -122,33 +122,33 @@ model Lanche {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String
+  id String @id @default(uuid())
+  email String @unique
   password String
   name String
   profile Profile @relation(fields: [profileId], references: [id])
-  profileId Int
+  profileId String
   address Address?
-  createdAt DateTime
-  updatedAt DateTime
-
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 }
 model Profile{
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   name String
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   users User[]
 }
 model Address {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   street String
   number Int
   city String
   state String
   zipCode String
   user User @relation(fields: [userId],references: [id])
-  userId Int @unique
-  createdAt DateTime
-  updatedAt DateTime
+  userId String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 import { PrismaService } from './prisma/prisma.service';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -28,6 +29,15 @@ async function bootstrap() {
   // Ativar validação global dos DTOs (class-validator)
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
+  // Configuração do Swagger
+  const config = new DocumentBuilder()
+    .setTitle('Cinema REST API')
+    .setDescription('API RESTful para gerenciar Cinema')
+    .setVersion('1.0')
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, documentFactory);
+
   // Servir arquivos estáticos da pasta public (funciona em dev e prod)
   const publicPath = process.env.NODE_ENV === 'production'
     ? join(__dirname, '..', 'public')
@@ -38,7 +48,6 @@ async function bootstrap() {
   const PORT = process.env.PORT ?? 3000;
   await app.listen(PORT);
   console.log(` App is running on http://localhost:${PORT}`);
+  console.log(` Swagger Docs available at http://localhost:${PORT}/api/docs`);
 }
 bootstrap();
-
- 

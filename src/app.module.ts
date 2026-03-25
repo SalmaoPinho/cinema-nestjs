@@ -8,6 +8,11 @@ import { IngressosModule } from './ingressos/ingressos.module';
 import { UploadModule } from './upload/upload.module';
 import { LanchesModule } from './lanches/lanches.module';
 import { PedidosModule } from './pedidos/pedidos.module';
+import { ProfileModule } from './profile/profile.module';
+import { AddressModule } from './address/address.module';
+import { UsersModule } from './users/users.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +23,11 @@ import { PedidosModule } from './pedidos/pedidos.module';
     UploadModule,
     LanchesModule,
     PedidosModule,
+    ProfileModule,
+    AddressModule,
+    UsersModule,
+    PrismaModule,
+    AuthModule,
   ],
 
 

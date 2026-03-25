@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -12,21 +12,32 @@ export class UsersService {
     }
 
     findAll() {
-        return this.prisma.user.findMany();
+        return this.prisma.user.findMany({ where: { deletedAt: null } });
     }
 
-    findOne(id: number) {
-        return this.prisma.user.findUnique({ where: { id } });
+    async findOne(id: string) {
+        const user = await this.prisma.user.findFirst({ where: { id, deletedAt: null } });
+        if (!user) throw new NotFoundException('User not found');
+        return user;
     }
 
-    update(id: number, updateUserDto: UpdateUserDto) {
+    async update(id: string, updateUserDto: UpdateUserDto) {
+        const user = await this.prisma.user.findFirst({ where: { id, deletedAt: null } });
+        if (!user) throw new NotFoundException('User not found');
+        
         return this.prisma.user.update({
             where: { id },
             data: updateUserDto,
         });
     }
 
-    remove(id: number) {
-        return this.prisma.user.delete({ where: { id } });
+    async remove(id: string) {
+        const user = await this.prisma.user.findFirst({ where: { id, deletedAt: null } });
+        if (!user) throw new NotFoundException('User not found');
+
+        return this.prisma.user.update({
+            where: { id },
+            data: { deletedAt: new Date() },
+        });
     }
 }
