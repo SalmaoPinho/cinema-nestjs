@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – CineManager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --surface: #13131a;
+            --card: #1c1c28;
+            --border: #2e2e42;
+            --gold: #f5c518;
+            --gold-d: #c9a000;
+            --text: #e8e8f0;
+            --muted: #6e6e8a;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at top right, rgba(245, 197, 24, 0.05), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(245, 197, 24, 0.05), transparent 40%);
+        }
+
+        .login-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 16px rgba(245, 197, 24, 0.5));
+            margin-bottom: 12px;
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { filter: drop-shadow(0 0 12px rgba(245, 197, 24, 0.3)); transform: scale(0.98); }
+            to { filter: drop-shadow(0 0 24px rgba(245, 197, 24, 0.6)); transform: scale(1.02); }
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--gold);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(245, 197, 24, 0.15);
+            background: #191924;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gold);
+            color: #0a0a0f;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            background: var(--gold-d);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(201, 160, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .error-msg {
+            background: rgba(224, 49, 49, 0.15);
+            color: #ff8787;
+            border: 1px solid rgba(224, 49, 49, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="logo-container">
+            <div class="logo-icon">🎬</div>
+            <div class="logo-text">Cine<span>Manager</span></div>
+        </div>
+
+        <div class="error-msg" id="errorMsg">E-mail ou senha inválidos.</div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label>E-mail de Acesso</label>
+                <input type="email" id="email" placeholder="nome@email.com" required>
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn" id="loginBtn">Entrar no Sistema</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
+            const errorMsg = document.getElementById('errorMsg');
+
+            btn.innerText = 'Autenticando...';
+            errorMsg.style.display = 'none';
+
+            try {
+                const res = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem('cinemanager_token', data.access_token);
+                    window.location.href = '/';
+                } else {
+                    errorMsg.style.display = 'block';
+                }
+            } catch (err) {
+                errorMsg.innerText = 'Erro de comunicação com o servidor.';
+                errorMsg.style.display = 'block';
+            } finally {
+                btn.innerText = 'Entrar no Sistema';
+            }
+        });
+
+        // Se já tem token, pulamos o login
+        if (localStorage.getItem('cinemanager_token')) {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

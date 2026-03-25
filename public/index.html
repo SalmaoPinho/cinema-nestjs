@@ -4,6 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Bloqueio de Frontend: Redireciona para o login se não hover token salvo
+        if (!localStorage.getItem('cinemanager_token')) {
+            window.location.href = '/login.html';
+        }
+
+        // Interceptador para injetar o Token em todos os fetchs do Dashboard (Opcional caso a UI não os faça, mas previne)
+        const __fetch = window.fetch;
+        window.fetch = async (...args) => {
+            let [resource, config] = args;
+            config = config || {};
+            config.headers = config.headers || {};
+            const token = localStorage.getItem('cinemanager_token');
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`;
+            }
+            const response = await __fetch(resource, config);
+            if (response.status === 401) {
+                localStorage.removeItem('cinemanager_token');
+                window.location.href = '/login.html';
+            }
+            return response;
+        };
+    </script>
     <title>CineManager – Sistema de Cinema</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -751,7 +775,16 @@
             <button class="nav-btn" onclick="showPage('lanches',this)"><span class="icon">🍿</span> Lanches</button>
             <button class="nav-btn" style="margin-top:20px; border: 1px solid var(--gold); color:var(--gold)"
                 onclick="showPage('pedidos',this)"><span class="icon">🛒</span> PDV (Caixa)</button>
+            <button class="nav-btn" style="margin-top:20px; border: 1px solid var(--border); color:var(--muted)"
+                onclick="logout()"><span class="icon">🚪</span> Sair</button>
         </nav>
+
+        <script>
+            function logout() {
+                localStorage.removeItem('cinemanager_token');
+                window.location.href = '/login.html';
+            }
+        </script>
 
         <main>
 
