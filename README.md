@@ -1,98 +1,155 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Cinema NestJS API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST para gerenciamento de cinema com NestJS, Prisma e PostgreSQL.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Stack
 
-## Description
+- NestJS
+- Prisma ORM
+- PostgreSQL (Docker)
+- Swagger (OpenAPI)
+- Class Validator
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## O que cada stack faz
 
-## Project setup
+- NestJS: framework backend que organiza a API em modulos, controllers e services, com injecao de dependencia e estrutura escalavel.
+- Prisma ORM: camada de acesso ao banco com tipagem forte, CRUD facil e gerenciamento de migracoes.
+- PostgreSQL (Docker): banco de dados relacional onde os dados ficam persistidos; o Docker simplifica subir e manter o ambiente.
+- Swagger (OpenAPI): documentacao interativa da API para visualizar e testar endpoints no navegador.
+- class-validator: valida os DTOs de entrada para garantir dados corretos antes de chegar na regra de negocio.
+- class-transformer: transforma payloads em objetos tipados e ajuda na serializacao/deserializacao dos dados.
 
-```bash
-$ npm install
-```
+## Requisitos
 
-## Compile and run the project
+- Node.js 18+
+- npm
+- Docker e Docker Compose
+
+## Configuracao do ambiente
+
+1. Instalar dependencias:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+2. Subir o banco PostgreSQL via Docker:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker compose up -d
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+3. Confirmar se o container subiu:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker ps
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Container esperado: `cinema-postgres` na porta `5432`.
 
-## Resources
+4. Verificar `DATABASE_URL` no arquivo `.env`:
 
-Check out a few resources that may come in handy when working with NestJS:
+```env
+DATABASE_URL="postgresql://cinema:cinema123@localhost:5432/cinema_db?schema=public"
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Prisma
 
-## Support
+1. Aplicar migracoes:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+npx prisma migrate dev
+```
 
-## Stay in touch
+2. (Opcional) Abrir Prisma Studio:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+npx prisma studio
+```
 
-## License
+## Executar a API
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Modo desenvolvimento:
+
+```bash
+npm run start:dev
+```
+
+A API sobe por padrao em:
+
+- `http://localhost:3000`
+
+## Acessar Swagger e pagina HTML
+
+Com a API rodando:
+
+- Swagger: `http://localhost:3000/api/docs`
+- Pagina publica: `http://localhost:3000/index.html`
+
+Observacao: o projeto ja esta configurado para servir arquivos estaticos da pasta `public` via `src/main.ts`.
+
+## Fluxo rapido (comandos em ordem)
+
+```bash
+npm install
+docker compose up -d
+npx prisma migrate dev
+npm run start:dev
+```
+
+Depois acesse:
+
+- `http://localhost:3000/api/docs`
+- `http://localhost:3000/index.html`
+
+## Scripts uteis
+
+```bash
+npm run start
+npm run start:dev
+npm run start:prod
+npm run build
+npm run test
+npm run test:e2e
+npm run lint
+```
+
+## Troubleshooting
+
+### Erro: "The table public.Profile does not exist"
+
+Esse erro indica que o Prisma Client tentou consultar a tabela `Profile`, mas ela nao existe no banco conectado.
+
+Checklist:
+
+1. O model `Profile` esta no `prisma/schema.prisma`.
+2. O banco correto esta no `.env` (`DATABASE_URL`).
+3. A migracao foi aplicada no mesmo banco:
+
+```bash
+npx prisma migrate dev
+```
+
+4. Se o schema mudou e ficou inconsistente, resetar (apaga dados locais):
+
+```bash
+npx prisma migrate reset
+```
+
+5. Regenerar client, se necessario:
+
+```bash
+npx prisma generate
+```
+
+### Docker esta rodando, mas nao abre a API
+
+- Docker sobe apenas o banco. A API NestJS precisa estar rodando com `npm run start:dev`.
+- Verifique se a porta 3000 esta livre.
+
+## Estrutura relevante
+
+- `prisma/schema.prisma`: modelos e relacoes
+- `src/main.ts`: bootstrap, Swagger e arquivos estaticos
+- `public/index.html`: pagina publica
+- `docker-compose.yml`: servico do PostgreSQL

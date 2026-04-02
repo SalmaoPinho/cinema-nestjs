@@ -1,0 +1,156 @@
+generator client {
+  provider     = "prisma-client-js"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enum ────────────────────────────────────────────────────────────────────
+
+enum Genero {
+  ACAO
+  COMEDIA
+  DRAMA
+  TERROR
+  ROMANCE
+  FICCAO_CIENTIFICA
+  ANIMACAO
+  DOCUMENTARIO
+}
+
+enum TipoIngresso {
+  INTEIRA
+  MEIA
+}
+
+// ─── Modelos ──────────────────────────────────────────────────────────────────
+
+model Cinema {
+  id       Int      @id @default(autoincrement())
+  nome     String
+  endereco String
+  salas    Sala[]
+  filmes   Filme[]
+  sessoes  Sessao[]
+}
+
+model Sala {
+  id         Int      @id @default(autoincrement())
+  numero     Int
+  capacidade Int
+  fileiras   Int      @default(8)
+  colunas    Int      @default(10)
+  cinemaId   Int
+  cinema     Cinema   @relation(fields: [cinemaId], references: [id])
+  sessoes    Sessao[]
+
+  @@unique([cinemaId, numero])
+}
+
+model Filme {
+  id                 Int      @id @default(autoincrement())
+  titulo             String
+  sinopse            String
+  classificacao      String
+  duracao            Int // duração em minutos
+  elenco             String
+  genero             Genero
+  dataIniciaExibicao DateTime
+  dataFinalExibicao  DateTime
+  imagemUrl          String?
+  cinemaId           Int?
+  cinema             Cinema?  @relation(fields: [cinemaId], references: [id])
+  sessoes            Sessao[]
+}
+
+model Sessao {
+  id              Int        @id @default(autoincrement())
+  horarioExibicao DateTime
+  precoInteira    Float      @default(0) // Preço base da sessão
+  filmeId         Int
+  filme           Filme      @relation(fields: [filmeId], references: [id])
+  salaId          Int
+  sala            Sala       @relation(fields: [salaId], references: [id])
+  cinemaId        Int?
+  cinema          Cinema?    @relation(fields: [cinemaId], references: [id])
+  ingressos       Ingresso[]
+}
+
+model Ingresso {
+  id        Int          @id @default(autoincrement())
+  assento   String // Ex: "A1", "B5"
+  tipo      TipoIngresso @default(INTEIRA)
+  valorPago Float
+  sessaoId  Int
+  sessao    Sessao       @relation(fields: [sessaoId], references: [id])
+  pedidos   Pedido[]     @relation("PedidoIngressos")
+
+  @@unique([sessaoId, assento]) // Não permite vender o mesmo assento na mesma sessão
+}
+
+model Pedido {
+  id             Int          @id @default(autoincrement())
+  dataPedido     DateTime     @default(now())
+  valorTotal     Float
+  status         String       @default("PENDENTE")
+  comprovanteUrl String?
+  ingressos      Ingresso[]   @relation("PedidoIngressos")
+  itens          ItemPedido[]
+}
+
+model ItemPedido {
+  id         Int    @id @default(autoincrement())
+  quantidade Int
+  subtotal   Float
+  pedidoId   Int
+  pedido     Pedido @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  lancheId   Int
+  lanche     Lanche @relation(fields: [lancheId], references: [id])
+}
+
+model Lanche {
+  id        Int          @id @default(autoincrement())
+  nome      String
+  descricao String
+  preco     Float
+  imagemUrl String?
+  itens     ItemPedido[]
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  name      String
+  profile   Profile   @relation(fields: [profileId], references: [id])
+  profileId String
+  address   Address?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Profile {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]
+}
+
+model Address {
+  id        String   @id @default(uuid())
+  street    String
+  number    Int
+  city      String
+  state     String
+  zipCode   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
