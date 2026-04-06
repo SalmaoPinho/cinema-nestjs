@@ -9,6 +9,8 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.setGlobalPrefix('api');
+
 
   // Garantir que exista um Cinema padrão (evita erro de chave estrangeira nas Salas/Sessões)
   try {

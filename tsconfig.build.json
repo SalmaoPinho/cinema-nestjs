@@ -8,6 +8,7 @@
     "src/users/**",
     "src/user.service.ts",
     "src/post.service.ts",
-    "src/prisma.service.ts"
+    "src/prisma.service.ts",
+    "frontend"
   ]
 }
