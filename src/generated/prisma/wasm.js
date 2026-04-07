@@ -36,11 +36,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.19.2
+ * Prisma Client JS version: 6.19.3
  * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 Prisma.prismaVersion = {
-  client: "6.19.2",
+  client: "6.19.3",
   engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
@@ -105,7 +105,8 @@ exports.Prisma.SalaScalarFieldEnum = {
   capacidade: 'capacidade',
   fileiras: 'fileiras',
   colunas: 'colunas',
-  cinemaId: 'cinemaId'
+  cinemaId: 'cinemaId',
+  ativo: 'ativo'
 };
 
 exports.Prisma.FilmeScalarFieldEnum = {
@@ -119,7 +120,8 @@ exports.Prisma.FilmeScalarFieldEnum = {
   dataIniciaExibicao: 'dataIniciaExibicao',
   dataFinalExibicao: 'dataFinalExibicao',
   imagemUrl: 'imagemUrl',
-  cinemaId: 'cinemaId'
+  cinemaId: 'cinemaId',
+  ativo: 'ativo'
 };
 
 exports.Prisma.SessaoScalarFieldEnum = {
@@ -128,7 +130,8 @@ exports.Prisma.SessaoScalarFieldEnum = {
   precoInteira: 'precoInteira',
   filmeId: 'filmeId',
   salaId: 'salaId',
-  cinemaId: 'cinemaId'
+  cinemaId: 'cinemaId',
+  ativo: 'ativo'
 };
 
 exports.Prisma.IngressoScalarFieldEnum = {
@@ -136,7 +139,9 @@ exports.Prisma.IngressoScalarFieldEnum = {
   assento: 'assento',
   tipo: 'tipo',
   valorPago: 'valorPago',
-  sessaoId: 'sessaoId'
+  sessaoId: 'sessaoId',
+  ativo: 'ativo',
+  reembolsado: 'reembolsado'
 };
 
 exports.Prisma.PedidoScalarFieldEnum = {
@@ -144,7 +149,9 @@ exports.Prisma.PedidoScalarFieldEnum = {
   dataPedido: 'dataPedido',
   valorTotal: 'valorTotal',
   status: 'status',
-  comprovanteUrl: 'comprovanteUrl'
+  comprovanteUrl: 'comprovanteUrl',
+  comprovanteReembolsoUrl: 'comprovanteReembolsoUrl',
+  userId: 'userId'
 };
 
 exports.Prisma.ItemPedidoScalarFieldEnum = {
@@ -152,7 +159,8 @@ exports.Prisma.ItemPedidoScalarFieldEnum = {
   quantidade: 'quantidade',
   subtotal: 'subtotal',
   pedidoId: 'pedidoId',
-  lancheId: 'lancheId'
+  lancheId: 'lancheId',
+  reembolsado: 'reembolsado'
 };
 
 exports.Prisma.LancheScalarFieldEnum = {
@@ -160,7 +168,8 @@ exports.Prisma.LancheScalarFieldEnum = {
   nome: 'nome',
   descricao: 'descricao',
   preco: 'preco',
-  imagemUrl: 'imagemUrl'
+  imagemUrl: 'imagemUrl',
+  ativo: 'ativo'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -169,6 +178,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   name: 'name',
   profileId: 'profileId',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -247,7 +257,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Samuel\\Documents\\GitHub\\backp\\cinema-nestjs\\src\\generated\\prisma",
+      "value": "C:\\Users\\Samuel\\Documents\\git\\cinema-nestjs\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -259,24 +269,43 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "linux-arm64-openssl-3.0.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "linux-arm64-openssl-1.1.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-1.1.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Samuel\\Documents\\GitHub\\backp\\cinema-nestjs\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Samuel\\Documents\\git\\cinema-nestjs\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
-  "clientVersion": "6.19.2",
+  "clientVersion": "6.19.3",
   "engineVersion": "c2990dca591cba766e3b7ef5d9e8a84796e47ab7",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -285,13 +314,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider     = \"prisma-client-js\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// ─── Enum ────────────────────────────────────────────────────────────────────\n\nenum Genero {\n  ACAO\n  COMEDIA\n  DRAMA\n  TERROR\n  ROMANCE\n  FICCAO_CIENTIFICA\n  ANIMACAO\n  DOCUMENTARIO\n}\n\nenum TipoIngresso {\n  INTEIRA\n  MEIA\n}\n\n// ─── Modelos ──────────────────────────────────────────────────────────────────\n\nmodel Cinema {\n  id       Int      @id @default(autoincrement())\n  nome     String\n  endereco String\n  salas    Sala[]\n  filmes   Filme[]\n  sessoes  Sessao[]\n}\n\nmodel Sala {\n  id         Int      @id @default(autoincrement())\n  numero     Int\n  capacidade Int\n  fileiras   Int      @default(8)\n  colunas    Int      @default(10)\n  cinemaId   Int\n  cinema     Cinema   @relation(fields: [cinemaId], references: [id])\n  sessoes    Sessao[]\n\n  @@unique([cinemaId, numero])\n}\n\nmodel Filme {\n  id                 Int      @id @default(autoincrement())\n  titulo             String\n  sinopse            String\n  classificacao      String\n  duracao            Int // duração em minutos\n  elenco             String\n  genero             Genero\n  dataIniciaExibicao DateTime\n  dataFinalExibicao  DateTime\n  imagemUrl          String?\n  cinemaId           Int?\n  cinema             Cinema?  @relation(fields: [cinemaId], references: [id])\n  sessoes            Sessao[]\n}\n\nmodel Sessao {\n  id              Int        @id @default(autoincrement())\n  horarioExibicao DateTime\n  precoInteira    Float      @default(0) // Preço base da sessão\n  filmeId         Int\n  filme           Filme      @relation(fields: [filmeId], references: [id])\n  salaId          Int\n  sala            Sala       @relation(fields: [salaId], references: [id])\n  cinemaId        Int?\n  cinema          Cinema?    @relation(fields: [cinemaId], references: [id])\n  ingressos       Ingresso[]\n}\n\nmodel Ingresso {\n  id        Int          @id @default(autoincrement())\n  assento   String // Ex: \"A1\", \"B5\"\n  tipo      TipoIngresso @default(INTEIRA)\n  valorPago Float\n  sessaoId  Int\n  sessao    Sessao       @relation(fields: [sessaoId], references: [id])\n  pedidos   Pedido[]     @relation(\"PedidoIngressos\")\n\n  @@unique([sessaoId, assento]) // Não permite vender o mesmo assento na mesma sessão\n}\n\nmodel Pedido {\n  id             Int          @id @default(autoincrement())\n  dataPedido     DateTime     @default(now())\n  valorTotal     Float\n  status         String       @default(\"PENDENTE\")\n  comprovanteUrl String?\n  ingressos      Ingresso[]   @relation(\"PedidoIngressos\")\n  itens          ItemPedido[]\n}\n\nmodel ItemPedido {\n  id         Int    @id @default(autoincrement())\n  quantidade Int\n  subtotal   Float\n  pedidoId   Int\n  pedido     Pedido @relation(fields: [pedidoId], references: [id], onDelete: Cascade)\n  lancheId   Int\n  lanche     Lanche @relation(fields: [lancheId], references: [id])\n}\n\nmodel Lanche {\n  id        Int          @id @default(autoincrement())\n  nome      String\n  descricao String\n  preco     Float\n  imagemUrl String?\n  itens     ItemPedido[]\n}\n\nmodel User {\n  id        String    @id @default(uuid())\n  email     String    @unique\n  password  String\n  name      String\n  profile   Profile   @relation(fields: [profileId], references: [id])\n  profileId String\n  address   Address?\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n}\n\nmodel Profile {\n  id        String   @id @default(uuid())\n  name      String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  users     User[]\n}\n\nmodel Address {\n  id        String   @id @default(uuid())\n  street    String\n  number    Int\n  city      String\n  state     String\n  zipCode   String\n  user      User     @relation(fields: [userId], references: [id])\n  userId    String   @unique\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "00c65815884c8ff750a2f35e2ef7ae053ac024f647b5f3c8904c300587d5006d",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  moduleFormat  = \"cjs\"\n  binaryTargets = [\"native\", \"windows\", \"linux-arm64-openssl-3.0.x\", \"linux-arm64-openssl-1.1.x\", \"debian-openssl-3.0.x\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// ─── Enum ────────────────────────────────────────────────────────────────────\n\nenum Genero {\n  ACAO\n  COMEDIA\n  DRAMA\n  TERROR\n  ROMANCE\n  FICCAO_CIENTIFICA\n  ANIMACAO\n  DOCUMENTARIO\n}\n\nenum TipoIngresso {\n  INTEIRA\n  MEIA\n}\n\n// ─── Modelos ──────────────────────────────────────────────────────────────────\n\nmodel Cinema {\n  id       Int      @id @default(autoincrement())\n  nome     String\n  endereco String\n  salas    Sala[]\n  filmes   Filme[]\n  sessoes  Sessao[]\n}\n\nmodel Sala {\n  id         Int      @id @default(autoincrement())\n  numero     Int\n  capacidade Int\n  fileiras   Int      @default(8)\n  colunas    Int      @default(10)\n  cinemaId   Int\n  cinema     Cinema   @relation(fields: [cinemaId], references: [id])\n  sessoes    Sessao[]\n  ativo      Boolean  @default(true)\n\n  @@unique([cinemaId, numero])\n}\n\nmodel Filme {\n  id                 Int      @id @default(autoincrement())\n  titulo             String\n  sinopse            String\n  classificacao      String\n  duracao            Int // duração em minutos\n  elenco             String\n  genero             Genero\n  dataIniciaExibicao DateTime\n  dataFinalExibicao  DateTime\n  imagemUrl          String?\n  cinemaId           Int?\n  cinema             Cinema?  @relation(fields: [cinemaId], references: [id])\n  sessoes            Sessao[]\n  ativo              Boolean  @default(true)\n}\n\nmodel Sessao {\n  id              Int        @id @default(autoincrement())\n  horarioExibicao DateTime\n  precoInteira    Float      @default(0) // Preço base da sessão\n  filmeId         Int\n  filme           Filme      @relation(fields: [filmeId], references: [id], onDelete: Cascade)\n  salaId          Int\n  sala            Sala       @relation(fields: [salaId], references: [id], onDelete: Cascade)\n  cinemaId        Int?\n  cinema          Cinema?    @relation(fields: [cinemaId], references: [id], onDelete: Cascade)\n  ingressos       Ingresso[]\n  ativo           Boolean    @default(true)\n}\n\nmodel Ingresso {\n  id          Int          @id @default(autoincrement())\n  assento     String // Ex: \"A1\", \"B5\"\n  tipo        TipoIngresso @default(INTEIRA)\n  valorPago   Float\n  sessaoId    Int\n  sessao      Sessao       @relation(fields: [sessaoId], references: [id], onDelete: Cascade)\n  pedidos     Pedido[]     @relation(\"PedidoIngressos\")\n  ativo       Boolean      @default(true)\n  reembolsado Boolean      @default(false)\n\n  @@unique([sessaoId, assento]) // Não permite vender o mesmo assento na mesma sessão\n}\n\nmodel Pedido {\n  id                      Int          @id @default(autoincrement())\n  dataPedido              DateTime     @default(now())\n  valorTotal              Float\n  status                  String       @default(\"PENDENTE\")\n  comprovanteUrl          String?\n  comprovanteReembolsoUrl String?\n  ingressos               Ingresso[]   @relation(\"PedidoIngressos\")\n  itens                   ItemPedido[]\n  userId                  String?\n  user                    User?        @relation(fields: [userId], references: [id])\n}\n\nmodel ItemPedido {\n  id          Int     @id @default(autoincrement())\n  quantidade  Int\n  subtotal    Float\n  pedidoId    Int\n  pedido      Pedido  @relation(fields: [pedidoId], references: [id], onDelete: Cascade)\n  lancheId    Int\n  lanche      Lanche  @relation(fields: [lancheId], references: [id])\n  reembolsado Boolean @default(false)\n}\n\nmodel Lanche {\n  id        Int          @id @default(autoincrement())\n  nome      String\n  descricao String\n  preco     Float\n  imagemUrl String?\n  itens     ItemPedido[]\n  ativo     Boolean      @default(true)\n}\n\nmodel User {\n  id        String    @id @default(uuid())\n  email     String    @unique\n  password  String\n  name      String\n  profile   Profile   @relation(fields: [profileId], references: [id])\n  profileId String\n  address   Address?\n  role      String    @default(\"CUSTOMER\")\n  pedidos   Pedido[]\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n}\n\nmodel Profile {\n  id        String   @id @default(uuid())\n  name      String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  users     User[]\n}\n\nmodel Address {\n  id        String   @id @default(uuid())\n  street    String\n  number    Int\n  city      String\n  state     String\n  zipCode   String\n  user      User     @relation(fields: [userId], references: [id])\n  userId    String   @unique\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n",
+  "inlineSchemaHash": "be4890612e08e296b5033c357803a7d4f26a89c5012a090e859dbe66253df544",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Cinema\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nome\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"endereco\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"salas\",\"kind\":\"object\",\"type\":\"Sala\",\"relationName\":\"CinemaToSala\"},{\"name\":\"filmes\",\"kind\":\"object\",\"type\":\"Filme\",\"relationName\":\"CinemaToFilme\"},{\"name\":\"sessoes\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"CinemaToSessao\"}],\"dbName\":null},\"Sala\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"numero\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"capacidade\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"fileiras\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"colunas\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinemaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinema\",\"kind\":\"object\",\"type\":\"Cinema\",\"relationName\":\"CinemaToSala\"},{\"name\":\"sessoes\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"SalaToSessao\"}],\"dbName\":null},\"Filme\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"titulo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sinopse\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"classificacao\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"duracao\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"elenco\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genero\",\"kind\":\"enum\",\"type\":\"Genero\"},{\"name\":\"dataIniciaExibicao\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"dataFinalExibicao\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"imagemUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"cinemaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinema\",\"kind\":\"object\",\"type\":\"Cinema\",\"relationName\":\"CinemaToFilme\"},{\"name\":\"sessoes\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"FilmeToSessao\"}],\"dbName\":null},\"Sessao\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"horarioExibicao\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"precoInteira\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"filmeId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"filme\",\"kind\":\"object\",\"type\":\"Filme\",\"relationName\":\"FilmeToSessao\"},{\"name\":\"salaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sala\",\"kind\":\"object\",\"type\":\"Sala\",\"relationName\":\"SalaToSessao\"},{\"name\":\"cinemaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinema\",\"kind\":\"object\",\"type\":\"Cinema\",\"relationName\":\"CinemaToSessao\"},{\"name\":\"ingressos\",\"kind\":\"object\",\"type\":\"Ingresso\",\"relationName\":\"IngressoToSessao\"}],\"dbName\":null},\"Ingresso\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"assento\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tipo\",\"kind\":\"enum\",\"type\":\"TipoIngresso\"},{\"name\":\"valorPago\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"sessaoId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sessao\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"IngressoToSessao\"},{\"name\":\"pedidos\",\"kind\":\"object\",\"type\":\"Pedido\",\"relationName\":\"PedidoIngressos\"}],\"dbName\":null},\"Pedido\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dataPedido\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"valorTotal\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"comprovanteUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ingressos\",\"kind\":\"object\",\"type\":\"Ingresso\",\"relationName\":\"PedidoIngressos\"},{\"name\":\"itens\",\"kind\":\"object\",\"type\":\"ItemPedido\",\"relationName\":\"ItemPedidoToPedido\"}],\"dbName\":null},\"ItemPedido\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"quantidade\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"subtotal\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"pedidoId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"pedido\",\"kind\":\"object\",\"type\":\"Pedido\",\"relationName\":\"ItemPedidoToPedido\"},{\"name\":\"lancheId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"lanche\",\"kind\":\"object\",\"type\":\"Lanche\",\"relationName\":\"ItemPedidoToLanche\"}],\"dbName\":null},\"Lanche\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nome\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descricao\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"preco\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"imagemUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"itens\",\"kind\":\"object\",\"type\":\"ItemPedido\",\"relationName\":\"ItemPedidoToLanche\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profile\",\"kind\":\"object\",\"type\":\"Profile\",\"relationName\":\"ProfileToUser\"},{\"name\":\"profileId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"address\",\"kind\":\"object\",\"type\":\"Address\",\"relationName\":\"AddressToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Profile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ProfileToUser\"}],\"dbName\":null},\"Address\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"street\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"city\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"zipCode\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AddressToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Cinema\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nome\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"endereco\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"salas\",\"kind\":\"object\",\"type\":\"Sala\",\"relationName\":\"CinemaToSala\"},{\"name\":\"filmes\",\"kind\":\"object\",\"type\":\"Filme\",\"relationName\":\"CinemaToFilme\"},{\"name\":\"sessoes\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"CinemaToSessao\"}],\"dbName\":null},\"Sala\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"numero\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"capacidade\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"fileiras\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"colunas\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinemaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinema\",\"kind\":\"object\",\"type\":\"Cinema\",\"relationName\":\"CinemaToSala\"},{\"name\":\"sessoes\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"SalaToSessao\"},{\"name\":\"ativo\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Filme\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"titulo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sinopse\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"classificacao\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"duracao\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"elenco\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genero\",\"kind\":\"enum\",\"type\":\"Genero\"},{\"name\":\"dataIniciaExibicao\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"dataFinalExibicao\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"imagemUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"cinemaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinema\",\"kind\":\"object\",\"type\":\"Cinema\",\"relationName\":\"CinemaToFilme\"},{\"name\":\"sessoes\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"FilmeToSessao\"},{\"name\":\"ativo\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Sessao\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"horarioExibicao\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"precoInteira\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"filmeId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"filme\",\"kind\":\"object\",\"type\":\"Filme\",\"relationName\":\"FilmeToSessao\"},{\"name\":\"salaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sala\",\"kind\":\"object\",\"type\":\"Sala\",\"relationName\":\"SalaToSessao\"},{\"name\":\"cinemaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"cinema\",\"kind\":\"object\",\"type\":\"Cinema\",\"relationName\":\"CinemaToSessao\"},{\"name\":\"ingressos\",\"kind\":\"object\",\"type\":\"Ingresso\",\"relationName\":\"IngressoToSessao\"},{\"name\":\"ativo\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Ingresso\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"assento\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tipo\",\"kind\":\"enum\",\"type\":\"TipoIngresso\"},{\"name\":\"valorPago\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"sessaoId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sessao\",\"kind\":\"object\",\"type\":\"Sessao\",\"relationName\":\"IngressoToSessao\"},{\"name\":\"pedidos\",\"kind\":\"object\",\"type\":\"Pedido\",\"relationName\":\"PedidoIngressos\"},{\"name\":\"ativo\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"reembolsado\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Pedido\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dataPedido\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"valorTotal\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"comprovanteUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"comprovanteReembolsoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ingressos\",\"kind\":\"object\",\"type\":\"Ingresso\",\"relationName\":\"PedidoIngressos\"},{\"name\":\"itens\",\"kind\":\"object\",\"type\":\"ItemPedido\",\"relationName\":\"ItemPedidoToPedido\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"PedidoToUser\"}],\"dbName\":null},\"ItemPedido\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"quantidade\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"subtotal\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"pedidoId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"pedido\",\"kind\":\"object\",\"type\":\"Pedido\",\"relationName\":\"ItemPedidoToPedido\"},{\"name\":\"lancheId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"lanche\",\"kind\":\"object\",\"type\":\"Lanche\",\"relationName\":\"ItemPedidoToLanche\"},{\"name\":\"reembolsado\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Lanche\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nome\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descricao\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"preco\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"imagemUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"itens\",\"kind\":\"object\",\"type\":\"ItemPedido\",\"relationName\":\"ItemPedidoToLanche\"},{\"name\":\"ativo\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"profile\",\"kind\":\"object\",\"type\":\"Profile\",\"relationName\":\"ProfileToUser\"},{\"name\":\"profileId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"address\",\"kind\":\"object\",\"type\":\"Address\",\"relationName\":\"AddressToUser\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pedidos\",\"kind\":\"object\",\"type\":\"Pedido\",\"relationName\":\"PedidoToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Profile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ProfileToUser\"}],\"dbName\":null},\"Address\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"street\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"city\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"zipCode\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AddressToUser\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

@@ -30,7 +30,7 @@ export class IngressosService {
     }
 
     findAll() {
-        return this.prisma.ingresso.findMany({ include: { sessao: true } });
+        return this.prisma.ingresso.findMany({ where: { ativo: true }, include: { sessao: true } });
     }
 
     findOne(id: number) {
@@ -42,6 +42,6 @@ export class IngressosService {
     }
 
     remove(id: number) {
-        return this.prisma.ingresso.delete({ where: { id } });
+        return this.prisma.ingresso.update({ where: { id }, data: { ativo: false } });
     }
 }

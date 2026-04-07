@@ -27,6 +27,50 @@
             }
             return response;
         };
+
+        // Extrai a role do token JWT
+        function getUserRole() {
+            try {
+                const tk = localStorage.getItem('cinemanager_token');
+                if (!tk) return 'ADMIN';
+                const payload = JSON.parse(atob(tk.split('.')[1]));
+                return payload.role || 'ADMIN';
+            } catch { return 'ADMIN'; }
+        }
+        
+        window.USER_ROLE = getUserRole();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.USER_ROLE === 'CUSTOMER') {
+                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+                
+                // Mudar comportamento do botão de Venda no PDV para Reservar
+                const pdvBtn = document.getElementById('pdvFinalizarBtn');
+                if (pdvBtn) {
+                    pdvBtn.innerHTML = '<i class="bi bi-calendar-check fs-5 me-2"></i> Reservar Ingressos';
+                    pdvBtn.classList.replace('btn-primary', 'btn-info');
+                }
+                
+                // Trocar textos para contexto de cliente
+                document.getElementById('pdvTitle').innerHTML = '<i class="bi bi-ticket-perforated me-2"></i>Comprar Ingressos';
+                document.getElementById('histTitle').innerHTML = '<i class="bi bi-clock-history me-2"></i>Meus Pedidos';
+                
+                // Esconder cards de admin do dashboard
+                document.getElementById('dashAdminCards').style.display = 'none';
+
+                // Mostrar botões de cliente no hero
+                document.querySelectorAll('.customer-only').forEach(el => el.style.display = 'inline-block');
+                
+                // Expandir as listas onde o form administrativo foi escondido
+                document.querySelectorAll('.page-list-col').forEach(el => {
+                    el.classList.remove('col-lg-8');
+                    el.classList.add('col-12');
+                });
+            } else {
+                 // É admin, esconder o que for só de cliente
+                 document.querySelectorAll('.customer-only').forEach(el => el.style.display = 'none');
+            }
+        });
     </script>
     <title>CineWeb - 123 Filmes</title>
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700&display=swap"
@@ -62,8 +106,35 @@
             --shadow-color: rgba(79, 195, 247, 0.3);
             --frutiger-bggradient: linear-gradient(135deg, rgba(15, 80, 200, 0.75) 0%, rgba(0, 20, 80, 0.9) 100%);
             --frutiger-gradientdark: linear-gradient(135deg, #0052cc 0%, #001a44 100%);
+            /* Aliases used throughout the UI */
+            --card: rgba(255, 255, 255, 0.97);
+            --muted: #5f6368;
         }
 
+        /* ── System-wide Custom Scrollbars ── */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+            background: transparent;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+            border: 3px solid transparent; /* fake padding */
+            background-clip: padding-box;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-d);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+
+        /* ── Page switching ─────────────────────────────────────────── */
+        .page { display: none; }
+        .page.active { display: block; }
         body {
             background: var(--frutiger-bggradient), url('https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_63.jpg') center/cover fixed no-repeat;
             min-height: 100vh;
@@ -100,10 +171,15 @@
         .navbar-brand {
             font-weight: 800;
             font-size: 1.5rem;
+            color: var(--frutiger-blue) !important;
         }
 
         .navbar-brand span {
-            color: var(--frutiger-lime);
+            color: var(--frutiger-cyan);
+        }
+
+        .navbar-brand i {
+            color: var(--frutiger-blue);
         }
 
         .nav-link {
@@ -234,18 +310,28 @@
         }
 
         .badge-gold {
-            background: rgba(245, 197, 24, .15);
-            color: var(--gold);
+            background: #f5c518;
+            color: #1a1c1e;
         }
 
         .badge-green {
-            background: rgba(47, 158, 68, .15);
-            color: #69db7c;
+            background: #2f9e44;
+            color: white;
         }
 
         .badge-blue {
-            background: rgba(51, 154, 240, .15);
-            color: #74c0fc;
+            background: #1971c2;
+            color: white;
+        }
+
+        .badge-red {
+            background: #e03131;
+            color: white;
+        }
+        
+        .badge-gray {
+            background: #adb5bd;
+            color: #1a1c1e;
         }
 
         /* MOVIE CARDS */
@@ -267,6 +353,115 @@
         .movie-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+        }
+
+        /* SESSION GALLERY */
+        .sessoes-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .session-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: transform .3s, box-shadow .3s;
+            position: relative;
+        }
+
+        .session-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0, 119, 255, 0.25);
+            z-index: 10;
+        }
+
+        .session-card-poster {
+            height: 280px;
+            position: relative;
+            background: #000;
+        }
+
+        .session-card-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+            transition: opacity .3s;
+        }
+
+        .session-card:hover .session-card-poster img {
+            opacity: 1;
+        }
+
+        .session-card-info {
+            padding: 16px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), #fff);
+            position: relative;
+        }
+
+        .sc-time-badge {
+            position: absolute;
+            top: -20px;
+            right: 16px;
+            background: var(--frutiger-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.9rem;
+        }
+
+        .sc-movie-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: var(--frutiger-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sc-meta {
+            font-size: 0.75rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sc-room-pill {
+            background: var(--surface);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--frutiger-blue);
+        }
+
+        .sc-actions {
+            margin-top: 12px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .sc-btn-map {
+            flex: 1;
+            padding: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 8px;
+            background: var(--frutiger-light);
+            color: var(--frutiger-blue);
+            border: 1px solid var(--frutiger-blue);
+            transition: all .2s;
+        }
+
+        .sc-btn-map:hover {
+            background: var(--frutiger-blue);
+            color: white;
         }
 
         .movie-poster {
@@ -311,9 +506,9 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, .8);
+            background: rgba(0, 20, 80, 0.4);
             backdrop-filter: blur(4px);
-            z-index: 200;
+            z-index: 2000;
             display: none;
             align-items: center;
             justify-content: center;
@@ -323,14 +518,27 @@
             display: flex;
         }
 
+        .modal-overlay.open .modal {
+            display: block;
+        }
+
         .modal {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
+            background: rgba(230, 245, 255, 0.85); /* Translucent light blue */
+            backdrop-filter: blur(15px) saturate(180%);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
             padding: 32px;
-            max-width: 90vw;
-            max-height: 90vh;
+            max-width: 650px;
+            width: 100%;
+            max-height: 85vh;
             overflow: auto;
+            box-shadow: 0 15px 40px rgba(0, 80, 200, 0.2);
+            color: var(--frutiger-blue);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
         }
 
         .modal-header {
@@ -380,17 +588,18 @@
         }
 
         .dot-free {
-            background: #2e3a4e;
-            border: 1px solid #4a6080;
+            background: linear-gradient(180deg, #ffffff 0%, #e0f0ff 100%);
+            border: 1px solid rgba(0, 80, 200, 0.4);
         }
 
         .dot-selected {
-            background: var(--gold);
+            background: linear-gradient(180deg, #ffed4a 0%, #f1c40f 100%);
+            border: 1px solid #d4ac0d;
         }
 
         .dot-taken {
-            background: #3a1a1a;
-            border: 1px solid #6b2a2a;
+            background: linear-gradient(180deg, #ffe3e3 0%, #fa5252 100%);
+            border: 1px solid #e03131;
         }
 
         .screen-bar {
@@ -425,44 +634,52 @@
         }
 
         .seat {
-            width: 34px;
-            height: 34px;
-            border-radius: 6px 6px 4px 4px;
-            border: 1px solid #4a6080;
-            background: #2e3a4e;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px 8px 4px 4px;
+            border: 1px solid rgba(0, 80, 200, 0.4);
+            background: linear-gradient(180deg, #ffffff 0%, #e0f0ff 100%);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: all .15s;
+            transition: all .2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: .65rem;
-            color: var(--muted);
+            font-size: .75rem;
+            color: var(--frutiger-blue);
+            font-weight: 600;
         }
 
         .seat:hover {
-            background: #3d5070;
-            border-color: var(--gold);
+            background: linear-gradient(180deg, #ffffff 0%, #b3dcff 100%);
+            transform: translateY(-2px);
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.9), 0 4px 8px rgba(0, 80, 200, 0.2);
+            border-color: var(--frutiger-cyan);
         }
 
         .seat.selected {
-            background: var(--gold);
-            border-color: var(--gold-d);
-            color: #0a0a0f;
-            font-weight: 700;
+            background: linear-gradient(180deg, #ffed4a 0%, #f1c40f 100%);
+            border-color: #d4ac0d;
+            color: #4a3e03;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 2px 5px rgba(241, 196, 15, 0.4);
         }
 
         .seat.selected-meia {
-            background: #2f9e44;
+            background: linear-gradient(180deg, #69db7c 0%, #2f9e44 100%);
             border-color: #2b8a3e;
-            color: #fff;
-            font-weight: 700;
+            color: #ffffff;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 2px 5px rgba(47, 158, 68, 0.4);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .seat.taken {
-            background: #3a1a1a;
-            border-color: #6b2a2a;
-            color: #6b2a2a;
+            background: linear-gradient(180deg, #ffe3e3 0%, #fa5252 100%);
+            border-color: #e03131;
+            color: white;
             cursor: not-allowed;
+            opacity: 0.8;
+            box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .seat-gap {
@@ -538,6 +755,25 @@
             background: white !important;
             color: var(--text-dark) !important;
         }
+
+        /* ── Dropdown Arrows & Spinners styling ── */
+        select, .form-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230052cc' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 14px center !important;
+            background-size: 14px !important;
+            padding-right: 40px !important;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1; /* Always show the spin buttons */
+            cursor: pointer;
+            height: 34px; /* Taller arrows */
+        }    
 
         label {
             color: var(--text-dark) !important;
@@ -620,12 +856,69 @@
             object-fit: cover;
             background: var(--surface);
         }
+
+        /* Image upload box */
+        .img-upload-box {
+            position: relative;
+            border: 2px dashed var(--frutiger-blue);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            background: white;
+        }
+
+        .img-upload-box input[type=file] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            padding: 0;
+            border: none;
+        }
+
+        .img-upload-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 16px;
+            color: var(--text-muted);
+            font-size: .82rem;
+            min-height: 80px;
+        }
+
+        /* Poster aspect ratio: 2:3 */
+        .img-preview-poster {
+            display: none;
+            width: 100%;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Square aspect ratio: 1:1 */
+        .img-preview-square {
+            display: none;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Hide hint when preview is showing */
+        .img-upload-box.has-preview .img-upload-hint { display: none; }
+        .img-upload-box.has-preview .img-preview-poster,
+        .img-upload-box.has-preview .img-preview-square { display: block; }
     </style>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-pill sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light navbar-pill sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" onclick="showPage('dashboard')">
                 <i class="bi bi-camera-reels me-2"></i>CineWeb <span>123</span>
@@ -638,10 +931,10 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="#" onclick="showPage('dashboard', this)">Início</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item admin-only">
                         <a class="nav-link" href="#" onclick="showPage('filmes', this)">Filmes</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item admin-only">
                         <a class="nav-link" href="#" onclick="showPage('salas', this)">Salas</a>
                     </li>
                     <li class="nav-item">
@@ -651,14 +944,14 @@
                         <a class="nav-link" href="#" onclick="showPage('lanches', this)">Lanches</a>
                     </li>
                     <li class="nav-item ms-lg-3">
-                        <button class="btn btn-light rounded-pill px-4 fw-bold text-primary"
-                            onclick="showPage('pedidos')">
+                        <button class="btn btn-outline-primary rounded-pill px-4 fw-bold shadow-sm"
+                            onclick="showPage('pedidos')" style="border-width: 2px;">
                             <i class="bi bi-cart4 me-2"></i>PDV
                         </button>
                     </li>
-                    <li class="nav-item">
-                        <button class="btn btn-outline-light rounded-pill border-0" onclick="logout()">
-                            <i class="bi bi-box-arrow-left"></i>
+                    <li class="nav-item ms-lg-2">
+                        <button class="btn btn-outline-danger rounded-pill px-3 shadow-sm border-0" onclick="logout()" title="Sair do Sistema">
+                            <i class="bi bi-box-arrow-right fs-5"></i>
                         </button>
                     </li>
                 </ul>
@@ -685,15 +978,19 @@
                             CineWeb</h1>
                         <p class="lead opacity-75 mb-4">Sua plataforma 123 Filmes para gestão completa de cinema.</p>
                         <div class="d-flex gap-3 justify-content-center">
-                            <button class="btn btn-light btn-lg px-4" onclick="showPage('filmes')"><i
+                            <button class="btn btn-light btn-lg px-4 admin-only" onclick="showPage('filmes')"><i
                                     class="bi bi-film me-2"></i>Filmes</button>
+                            <button class="btn btn-light btn-lg px-4 customer-only" style="display:none" onclick="showPage('sessoes')"><i
+                                    class="bi bi-calendar3 me-2"></i>Ver Sessões</button>
+                            <button class="btn btn-outline-light btn-lg px-4 customer-only" style="display:none" onclick="showPage('lanches')"><i
+                                    class="bi bi-cup-hot me-2"></i>Cardápio / Snacks</button>
                             <button class="btn btn-outline-light btn-lg px-4" onclick="showPage('pedidos')"><i
                                     class="bi bi-cart4 me-2"></i>Vender Agora</button>
                         </div>
                     </div>
                 </section>
 
-                <div class="container bg-primary">
+                <div class="container bg-primary" id="dashAdminCards">
                     <div class="row g-4 mb-5">
                         <div class="col-md-4">
                             <div class="card h-100 p-4" onclick="showPage('filmes')" style="cursor:pointer">
@@ -761,7 +1058,7 @@
                     <div class="row g-4">
                         <div class="col-lg-4">
                             <div class="card p-4 h-100">
-                                <div class="card-title fw-bold">➕ Cadastrar Filme</div>
+                                <div class="card-title fw-bold"><i class="bi bi-plus-circle me-2"></i>Cadastrar Filme</div>
                                 <form id="filmeForm">
                                     <div class="form-group"><label>Título</label><input id="filmeTitulo"
                                             placeholder="Ex: Avatar..." required></div>
@@ -802,8 +1099,8 @@
                                         <div class="img-upload-box" id="filmeUploadBox">
                                             <input type="file" id="filmeImgFile" accept="image/*"
                                                 onchange="previewImg(this,'filmeImgPreview','filmeUploadBox')">
-                                            <div class="img-upload-hint"><span>🖼️</span>Clique para selecionar</div>
-                                            <img id="filmeImgPreview" class="img-preview" alt="preview">
+                                            <div class="img-upload-hint"><span><i class="bi bi-image me-1"></i></span>Clique para selecionar imagem do poster</div>
+                                            <img id="filmeImgPreview" class="img-preview-poster" alt="preview poster">
                                         </div>
                                     </div>
                                     <button class="btn btn-primary w-100" type="submit">✚ Salvar Filme</button>
@@ -812,7 +1109,7 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="card p-4 h-100">
-                                <div class="card-title fw-bold">🎬 Filmes Cadastrados</div>
+                                <div class="card-title fw-bold"><i class="bi bi-film me-2"></i>Filmes Cadastrados</div>
                                 <div id="filmes-list" class="movies-grid"></div>
                             </div>
                         </div>
@@ -829,7 +1126,7 @@
                     <div class="row g-4">
                         <div class="col-lg-4">
                             <div class="card p-4">
-                                <div class="card-title fw-bold">➕ Cadastrar Sala</div>
+                                <div class="card-title fw-bold"><i class="bi bi-plus-circle me-2"></i>Cadastrar Sala</div>
                                 <form id="salaForm">
                                     <div class="form-group" style="display:none"><input id="salaCinemaId" type="number"
                                             value="1"></div>
@@ -847,7 +1144,7 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="card p-4">
-                                <div class="card-title fw-bold">🏛️ Salas – clique para ver assentos</div>
+                                <div class="card-title fw-bold"><i class="bi bi-door-open me-2"></i>Salas – clique para ver assentos</div>
                                 <div id="salas-list"></div>
                             </div>
                         </div>
@@ -863,9 +1160,9 @@
                         </h1>
                     </div>
                     <div class="row g-4">
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 admin-only">
                             <div class="card p-4">
-                                <div class="card-title fw-bold">➕ Agendar Sessão</div>
+                                <div class="card-title fw-bold"><i class="bi bi-plus-circle me-2"></i>Agendar Sessão</div>
                                 <form id="sessaoForm">
                                     <div class="form-group"><label>Filme</label><select id="sessaoFilmeId">
                                             <option value="">Selecione...</option>
@@ -881,9 +1178,12 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 page-list-col">
                             <div class="card p-4">
-                                <div class="card-title fw-bold">🎭 Sessões Agendadas</div>
+                                <div class="card-title fw-bold mb-4"><i class="bi bi-play-btn me-2"></i>Destaques do Dia</div>
+                                <div id="sessoes-gallery" class="sessoes-gallery mb-5"></div>
+
+                                <div class="card-title fw-bold"><i class="bi bi-calendar-event me-2"></i>Sessões Agendadas</div>
                                 <div id="sessoes-list"></div>
                             </div>
                         </div>
@@ -898,7 +1198,7 @@
                         <h1 class="page-title fw-bold text-white mb-0"><i class="bi bi-cup-hot me-2"></i>Bomboniere</h1>
                     </div>
                     <div class="row g-4">
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 admin-only">
                             <div class="card p-4">
                                 <form id="lancheForm">
                                     <div class="form-group"><label>Nome</label><input id="lancheNome"
@@ -919,15 +1219,15 @@
                                         <div class="img-upload-box" id="lancheUploadBox">
                                             <input type="file" id="lancheImgFile" accept="image/*"
                                                 onchange="previewImg(this,'lancheImgPreview','lancheUploadBox')">
-                                            <div class="img-upload-hint"><span>🍿</span>Clique para selecionar</div>
-                                            <img id="lancheImgPreview" class="img-preview" alt="preview">
+                                            <div class="img-upload-hint"><span><i class="bi bi-cup-straw me-1"></i></span>Clique para selecionar imagem do lanche</div>
+                                            <img id="lancheImgPreview" class="img-preview-square" alt="preview lanche">
                                         </div>
                                     </div>
                                     <button class="btn btn-primary w-100" type="submit">✚ Salvar</button>
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-8 page-list-col">
                             <div class="card p-4">
                                 <div id="lanches-list" class="movies-grid"></div>
                             </div>
@@ -940,19 +1240,24 @@
             <div id="page-pedidos" class="page">
                 <div class="container bg-primary">
                     <div class="page-header mb-4">
-                        <h1 class="page-title fw-bold text-white mb-0"><i class="bi bi-cart-check me-2"></i>PDV - Vendas
+                        <h1 class="page-title fw-bold text-white mb-0" id="pdvTitle"><i class="bi bi-cart-check me-2"></i>PDV - Vendas
                         </h1>
                     </div>
                     <div class="row g-4">
                         <div class="col-lg-7">
                             <div class="card p-4 mb-4">
-                                <div class="card-title fw-bold">🎞️ Passo 1: Sessão</div>
-                                <select id="pdvSessao" class="form-select-lg py-3" onchange="abrirMapaNoPdv()">
-                                    <option value="">-- Selecione o Filme e Horário --</option>
-                                </select>
+                                <div class="card-title fw-bold"><i class="bi bi-camera-reels me-2"></i>Passo 1: Sessão</div>
+                                <div style="display:flex; gap:10px;">
+                                    <select id="pdvSessao" class="form-select-lg py-3 flex-grow-1" onchange="abrirMapaNoPdv()">
+                                        <option value="">-- Selecione o Filme e Horário --</option>
+                                    </select>
+                                    <button class="btn btn-outline-primary" style="white-space:nowrap; border-width: 2px; font-weight: bold;" onclick="abrirMapaNoPdv()">
+                                        <i class="bi bi-grid-3x3-gap-fill me-1"></i> Escolher Assentos
+                                    </button>
+                                </div>
                             </div>
                             <div class="card p-4">
-                                <div class="card-title fw-bold">🍿 Passo 2: Bomboniere</div>
+                                <div class="card-title fw-bold"><i class="bi bi-cup-straw me-2"></i>Passo 2: Bomboniere</div>
                                 <div style="display:flex;gap:10px;margin-bottom:20px">
                                     <select id="pdvLanche" class="form-select">
                                         <option value="">Selecione um lanche...</option>
@@ -974,15 +1279,15 @@
                                 <div class="d-flex justify-content-between h4 fw-bold border-top pt-3">
                                     <span>Total:</span><span id="pdvTotal" class="text-success">R$ 0,00</span>
                                 </div>
-                                <button id="pdvFinalizarBtn" class="btn btn-primary btn-lg w-100 mt-4 py-3"
-                                    onclick="finalizarPedido()">🛒 Finalizar Venda</button>
-                                <button class="btn btn-outline-secondary w-100 mt-2"
-                                    onclick="limparCarrinho()">Limpar</button>
+                                <button id="pdvFinalizarBtn" class="btn btn-primary btn-lg w-100 mt-4 py-3 fw-bold shadow-sm"
+                                    onclick="finalizarPedido()"><i class="bi bi-cart-check fs-5 me-2"></i> Finalizar Venda</button>
+                                <button class="btn btn-outline-secondary w-100 mt-2 fw-bold"
+                                    onclick="limparCarrinho()"><i class="bi bi-trash fs-5 me-1"></i> Limpar</button>
                             </div>
                         </div>
                     </div>
                     <div class="card mt-4 p-4">
-                        <div class="card-title fw-bold">📜 Histórico de Vendas</div>
+                        <div class="card-title fw-bold" id="histTitle"><i class="bi bi-clock-history me-2"></i>Histórico de Vendas</div>
                         <div id="pedidos-list"></div>
                     </div>
                 </div>
@@ -1001,6 +1306,17 @@
             </div>
             <div class="screen-label">TELA / SCREEN</div>
             <div class="screen-bar"></div>
+            <div style="text-align: center; margin-bottom: 25px;">
+                <div style="background: rgba(255, 255, 255, 0.6); padding: 10px 20px; border-radius: 40px; border: 2px solid white; box-shadow: 0 6px 15px rgba(0, 80, 200, 0.1); display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px;">
+                    <strong style="color: var(--frutiger-blue);"><i class="bi bi-ticket-perforated me-1"></i> Tipo de Ingresso:</strong>
+                    <label style="cursor: pointer; color: var(--text-dark); background: white; padding: 6px 16px; border-radius: 30px; border: 1px solid rgba(0,80,200,0.1); margin: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                        <input type="radio" name="tipoIngressoGlobal" value="INTEIRA" checked> <i class="bi bi-circle-fill text-warning mx-1"></i> Inteira
+                    </label>
+                    <label style="cursor: pointer; color: var(--text-dark); background: white; padding: 6px 16px; border-radius: 30px; border: 1px solid rgba(0,80,200,0.1); margin: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                        <input type="radio" name="tipoIngressoGlobal" value="MEIA"> <i class="bi bi-circle-fill text-success mx-1"></i> Meia
+                    </label>
+                </div>
+            </div>
             <div class="seat-legend">
                 <div class="seat-legend-item">
                     <div class="seat-dot dot-free"></div> Livre
@@ -1009,7 +1325,7 @@
                     <div class="seat-dot dot-selected"></div> Inteira
                 </div>
                 <div class="seat-legend-item">
-                    <div style="background:#2f9e44; border:1px solid #2b8a3e" class="seat-dot"></div> Meia
+                    <div style="background: linear-gradient(180deg, #69db7c 0%, #2f9e44 100%); border: 1px solid #2b8a3e" class="seat-dot"></div> Meia
                 </div>
                 <div class="seat-legend-item">
                     <div class="seat-dot dot-taken"></div> Ocupado
@@ -1029,17 +1345,25 @@
         // ── Utils ─────────────────────────────────────────────────────────
         function toast(msg, type = 'success') {
             const el = document.getElementById('toast');
-            el.textContent = msg; el.className = `show ${type}`;
+            el.innerHTML = msg; el.className = `show ${type}`;
             setTimeout(() => el.className = '', 3500);
         }
-        function renderEmpty(msg) { return `<div class="empty"><div class="empty-icon">🔍</div><p>${msg}</p></div>`; }
+        function renderEmpty(msg) { return `<div class="empty"><div class="empty-icon"><i class="bi bi-search"></i></div><p>${msg}</p></div>`; }
         function fmtDate(d) { if (!d) return '–'; return new Date(d).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
         function fmtMoney(v) { return 'R$ ' + Number(v || 0).toFixed(2).replace('.', ','); }
         async function api(method, path, body) {
             const opts = { method, headers: { 'Content-Type': 'application/json' } };
             if (body) opts.body = JSON.stringify(body);
             const r = await fetch(API + path, opts);
-            if (!r.ok) throw new Error(await r.text());
+            if (!r.ok) {
+                const text = await r.text();
+                try {
+                    const json = JSON.parse(text);
+                    throw new Error(json.message || text);
+                } catch(e) {
+                    throw new Error(e.message || text);
+                }
+            }
             return r.status === 204 ? null : r.json();
         }
 
@@ -1070,8 +1394,12 @@
         function previewImg(input, previewId, boxId) {
             const file = input.files[0]; if (!file) return;
             const preview = document.getElementById(previewId);
+            const box = document.getElementById(boxId);
             const reader = new FileReader();
-            reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; };
+            reader.onload = e => {
+                preview.src = e.target.result;
+                if (box) box.classList.add('has-preview');
+            };
             reader.readAsDataURL(file);
         }
 
@@ -1109,9 +1437,9 @@
         function posterImg(f, size = 'full') {
             const ph = `<div class="movie-poster" style="font-size:${size === 'full' ? '4rem' : '2rem'
                 };display:flex;align-items:center;justify-content:center;aspect-ratio:${size === 'full' ? '2/3' : '1/1'
-                };background:var(--surface)">🎬</div>`;
+                };background:var(--surface)"><i class="bi bi-film"></i></div>`;
             if (!f.imagemUrl) return ph;
-            return `<div class="movie-poster"><img src="${f.imagemUrl}" alt="${f.titulo}" onerror="this.parentElement.innerHTML='🎬'"></div>`;
+            return `<div class="movie-poster"><img src="${f.imagemUrl}" alt="${f.titulo}" onerror="this.parentElement.innerHTML='<i class=\\'bi bi-film\\'></i>'"></div>`;
         }
 
         function movieCard(f, withDelete = true) {
@@ -1124,7 +1452,7 @@
                 <span style="background:rgba(245,197,24,.12);color:var(--gold);padding:2px 6px;border-radius:4px;font-size:.68rem">${f.classificacao}</span>
             </div>
             ${withDelete ? `<div class="movie-actions">
-                <button class="btn btn-danger" onclick="deleteFilme(${f.id})">🗑</button>
+                <button class="btn btn-danger" onclick="deleteFilme(${f.id})"><i class="bi bi-trash"></i></button>
             </div>`: ''}
         </div>
     </div>`;
@@ -1162,7 +1490,7 @@
                     dataFinalExibicao: new Date(document.getElementById('filmeFim').value).toISOString(),
                     imagemUrl
                 });
-                toast('🎬 Filme cadastrado!');
+                toast('<i class="bi bi-check-circle me-1"></i> Filme cadastrado!');
                 e.target.reset();
                 document.getElementById('filmeImgPreview').style.display = 'none';
                 loadFilmes();
@@ -1171,13 +1499,13 @@
 
         async function deleteFilme(id) {
             if (!confirm('Remover este filme?')) return;
-            try { await api('DELETE', '/filmes/' + id); toast('🗑 Filme removido'); loadFilmes(); }
+            try { await api('DELETE', '/filmes/' + id); toast('<i class="bi bi-check-circle me-1"></i> Filme removido'); loadFilmes(); }
             catch (err) { toast('❌ ' + err.message, 'error'); }
         }
 
         // ── SALAS + ASSENTOS ───────────────────────────────────────────────
 
-        function openSeatMap(sala, sessaoId = null) {
+        function openSeatMap(sala, sessaoId = null, isViewOnly = false) {
             selectedSeats = {};
             const fileiras = sala.fileiras || 8;
             const colunas = sala.colunas || 10;
@@ -1187,30 +1515,41 @@
             footer.innerHTML = '';
 
             if (sessaoId) {
-                document.getElementById('seatSummary').innerHTML = `Carregando assentos...`;
-                loadOcupados(sessaoId, sala);
+                if (!isViewOnly) {
+                    cart.ingressos.forEach(ing => {
+                        if (ing.sessaoId === parseInt(sessaoId)) {
+                            selectedSeats[ing.assento] = ing.tipo;
+                        }
+                    });
+                }
 
-                const btn = document.createElement('button');
-                btn.className = 'btn btn-primary';
-                btn.style.width = '100%';
-                btn.innerHTML = '📥 Confirmar Seleção e Adicionar ao Carrinho';
-                btn.onclick = () => confirmarSelecaoPdv(sessaoId);
-                footer.appendChild(btn);
+                document.getElementById('seatSummary').innerHTML = isViewOnly ? 'Visualização do mapa da sessão' : 'Carregando assentos...';
+                loadOcupados(sessaoId, sala, isViewOnly);
+
+                if (!isViewOnly) {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn btn-primary fw-bold shadow-sm';
+                    btn.style.width = '100%';
+                    btn.style.padding = '12px';
+                    btn.innerHTML = '<i class="bi bi-cart-plus me-2 fs-5"></i> Confirmar Seleção e Adicionar ao Carrinho';
+                    btn.onclick = () => confirmarSelecaoPdv(sessaoId);
+                    footer.appendChild(btn);
+                }
             } else {
-                renderGrid(fileiras, colunas);
+                renderGrid(fileiras, colunas, [], isViewOnly);
             }
             document.getElementById('seatModal').classList.add('open');
         }
 
-        async function loadOcupados(sessaoId, sala) {
+        async function loadOcupados(sessaoId, sala, isViewOnly = false) {
             try {
                 const sessao = await api('GET', '/sessoes/' + sessaoId);
                 const ocupados = sessao.ingressos.map(i => i.assento);
-                renderGrid(sala.fileiras, sala.colunas, ocupados);
+                renderGrid(sala.fileiras, sala.colunas, ocupados, isViewOnly);
             } catch (e) { toast('Erro ao carregar ocupados', 'error'); }
         }
 
-        function renderGrid(fileiras, colunas, ocupados = []) {
+        function renderGrid(fileiras, colunas, ocupados = [], isViewOnly = false) {
             const grid = document.getElementById('seatGrid');
             const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             let html = '';
@@ -1221,13 +1560,19 @@
                     if (c === mid) html += `<div class="seat-gap"></div>`;
                     const id = `${letters[r] || r + 1}${c + 1}`;
                     const isTaken = ocupados.includes(id);
-                    html += `<div class="seat ${isTaken ? 'taken' : ''}" id="seat-${id}" 
-                              onclick="${isTaken ? '' : `toggleSeat('${id}')`}" 
+                    const sel = selectedSeats[id];
+                    let selClass = '';
+                    if (sel === 'INTEIRA') selClass = 'selected';
+                    if (sel === 'MEIA') selClass = 'selected-meia';
+
+                    html += `<div class="seat ${isTaken ? 'taken' : ''} ${selClass}" id="seat-${id}" 
+                              onclick="${(isTaken || isViewOnly) ? '' : `toggleSeat('${id}')`}" 
                               title="${isTaken ? 'Ocupado' : `Assento ${id}`}">${c + 1}</div>`;
                 }
                 html += `</div>`;
             }
             grid.innerHTML = html;
+            if (isViewOnly) return;
             updateSeatSummary();
         }
 
@@ -1235,19 +1580,16 @@
             const el = document.getElementById('seat-' + id);
             if (el.classList.contains('taken')) return;
 
-            if (!selectedSeats[id]) {
-                // Estado 0 -> 1: INTEIRA (Amarelo)
-                selectedSeats[id] = 'INTEIRA';
-                el.classList.add('selected');
-            } else if (selectedSeats[id] === 'INTEIRA') {
-                // Estado 1 -> 2: MEIA (Verde)
-                selectedSeats[id] = 'MEIA';
-                el.classList.remove('selected');
-                el.classList.add('selected-meia');
-            } else {
-                // Estado 2 -> 0: Desmarcar
+            if (selectedSeats[id]) {
+                // If currently selected, deselect it
                 delete selectedSeats[id];
-                el.classList.remove('selected-meia');
+                el.classList.remove('selected', 'selected-meia');
+            } else {
+                // Select it with the currently chosen type
+                const radio = document.querySelector('input[name="tipoIngressoGlobal"]:checked');
+                const tipoSelecionado = radio ? radio.value : 'INTEIRA';
+                selectedSeats[id] = tipoSelecionado;
+                el.classList.add(tipoSelecionado === 'INTEIRA' ? 'selected' : 'selected-meia');
             }
             updateSeatSummary();
         }
@@ -1255,7 +1597,7 @@
         function updateSeatSummary() {
             const sum = document.getElementById('seatSummary');
             const keys = Object.keys(selectedSeats);
-            if (keys.length === 0) { sum.textContent = 'Clique nos assentos para selecionar (1x Inteira, 2x Meia)'; return; }
+            if (keys.length === 0) { sum.textContent = 'Clique nos assentos para selecionar ou desmarcar'; return; }
 
             let txt = `<strong style="color:var(--gold)">${keys.length} selecionado(s):</strong><br>`;
             keys.forEach(k => {
@@ -1277,8 +1619,8 @@
                 <td>${s.fileiras || 8}</td><td>${s.colunas || 10}</td>
                 <td><span class="badge badge-green">${s.capacidade}</span></td>
                 <td style="display:flex;gap:6px">
-                    <button class="btn btn-outline" onclick="openSeatMap(${JSON.stringify(s).replace(/"/g, '&quot;')})">🪑 Ver Mapa</button>
-                    <button class="btn btn-danger" onclick="deleteSala(${s.id})">🗑</button>
+                    <button class="btn btn-outline" onclick="openSeatMap(${JSON.stringify(s).replace(/"/g, '&quot;')})"><i class="bi bi-ui-checks-grid me-1"></i> Ver Mapa</button>
+                    <button class="btn btn-danger" onclick="deleteSala(${s.id})"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>`;
                 });
@@ -1286,27 +1628,27 @@
             } catch { el.innerHTML = renderEmpty('Erro ao carregar salas'); }
         }
 
-        function abrirMapaNoPdv() {
-            const sessaoId = document.getElementById('pdvSessao').value;
-            if (!sessaoId) return toast('Selecione uma sessão primeiro', 'error');
-
-            // Encontrar a sala desta sessão
-            // (Assumindo que temos as sessões carregadas globalmente ou buscamos agora)
-            api('GET', '/sessoes/' + sessaoId).then(sessao => {
-                openSeatMap(sessao.sala, sessao.id);
-            }).catch(() => toast('Erro ao carregar sessão', 'error'));
-        }
+        // abrirMapaNoPdv is defined below (single definition)
 
         function confirmarSelecaoPdv(sessaoId) {
             const keys = Object.keys(selectedSeats);
-            if (keys.length === 0) return toast('Nenhum assento selecionado', 'error');
+
+            // Remove previous selections for this session to prevent duplicates
+            cart.ingressos = cart.ingressos.filter(i => i.sessaoId !== parseInt(sessaoId));
+
+            if (keys.length === 0) {
+                toast('Assentos limpos para esta sessão.');
+                updateCartUI();
+                closeModal();
+                return;
+            }
 
             keys.forEach(assento => {
                 const tipo = selectedSeats[assento];
                 cart.ingressos.push({ sessaoId: parseInt(sessaoId), assento, tipo });
             });
 
-            toast(`${keys.length} ingresso(s) adicionado(s)!`);
+            toast(`${keys.length} ingresso(s) confirmado(s)!`);
             updateCartUI();
             closeModal();
         }
@@ -1332,7 +1674,7 @@
                 if (num) body.numero = parseInt(num);
 
                 await api('POST', '/salas', body);
-                toast('🏛️ Sala salva!'); e.target.reset();
+                toast('<i class="bi bi-check-circle me-1"></i> Sala salva!'); e.target.reset();
                 document.getElementById('salaCinemaId').value = "1";
                 loadSalas();
             } catch (err) { toast('❌ ' + err.message, 'error'); }
@@ -1340,7 +1682,7 @@
 
         async function deleteSala(id) {
             if (!confirm('Remover esta sala?')) return;
-            try { await api('DELETE', '/salas/' + id); toast('🗑 Sala removida'); loadSalas(); }
+            try { await api('DELETE', '/salas/' + id); toast('<i class="bi bi-trash"></i> Sala removida'); loadSalas(); }
             catch (err) { toast('❌ ' + err.message, 'error'); }
         }
 
@@ -1368,11 +1710,60 @@
                 <td>Sala ${sa?.numero || '?'}</td>
                 <td><span class="badge badge-gold">${fmtMoney(s.precoInteira)}</span></td>
                 <td>${fmtDate(s.horarioExibicao)}</td>
-                <td><button class="btn btn-danger" onclick="deleteSessao(${s.id})">🗑</button></td>
+                <td>
+                    <button class="btn btn-outline-primary btn-sm me-1" onclick='openSeatMap(${JSON.stringify(sa)}, ${s.id}, true)' title="Ver Mapa de Assentos"><i class="bi bi-grid-3x3"></i> Mapa</button>
+                    ${window.USER_ROLE === 'ADMIN' ? `<button class="btn btn-danger btn-sm" onclick="deleteSessao(${s.id})"><i class="bi bi-trash"></i></button>` : ''}
+                </td>
             </tr>`;
                 });
                 el.innerHTML = h + '</tbody></table>';
+
+                // 2. Render Gallery
+                renderSessoesGallery(data, filmes, salas);
+
             } catch (e) { console.error(e); el.innerHTML = renderEmpty('Erro ao carregar sessões'); }
+        }
+
+        function renderSessoesGallery(sessoes, filmes, salas) {
+            const el = document.getElementById('sessoes-gallery');
+            if (!sessoes.length) {
+                el.innerHTML = '<div class="text-center p-4 opacity-50 w-100">Nenhuma sessão disponível no momento.</div>';
+                return;
+            }
+
+            // Ordenar por horário
+            const sortedSessoes = [...sessoes].sort((a, b) => new Date(a.horarioExibicao) - new Date(b.horarioExibicao));
+
+            let html = '';
+            sortedSessoes.forEach(s => {
+                const f = filmes.find(ff => ff.id === s.filmeId);
+                const sa = salas.find(ss => ss.id === s.salaId);
+                const poster = f?.imagemUrl || 'https://via.placeholder.com/300x450?text=Sem+Poster';
+                const time = new Date(s.horarioExibicao).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+                html += `
+                    <div class="session-card">
+                        <div class="session-card-poster">
+                            <img src="${poster}" alt="${f?.titulo || 'Filme'}">
+                        </div>
+                        <div class="session-card-info">
+                            <div class="sc-time-badge">${time}</div>
+                            <div class="sc-movie-title">${f?.titulo || 'Título Indisponível'}</div>
+                            <div class="sc-meta">
+                                <span class="sc-room-pill">Sala ${sa?.numero || '?'}</span>
+                                <span><i class="bi bi-tag me-1"></i>${fmtMoney(s.precoInteira)}</span>
+                            </div>
+                            <div class="sc-actions">
+                                <button class="sc-btn-map" onclick='openSeatMap(${JSON.stringify(sa)}, ${s.id}, true)'>
+                                    <i class="bi bi-grid-3x3 me-1"></i> Mapa
+                                </button>
+                                ${window.USER_ROLE === 'ADMIN' ? `<button class="btn btn-danger btn-sm" onclick="deleteSessao(${s.id})"><i class="bi bi-trash"></i></button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            el.innerHTML = html;
         }
 
         document.getElementById('sessaoForm').addEventListener('submit', async e => {
@@ -1385,13 +1776,13 @@
                     precoInteira: parseFloat(document.getElementById('sessaoPreco').value),
                     cinemaId: 1 // Cinema padrão
                 });
-                toast('🎭 Sessão agendada!'); e.target.reset(); loadSessoes();
+                toast('<i class="bi bi-check-circle me-1"></i> Sessão agendada!'); e.target.reset(); loadSessoes();
             } catch (err) { toast('❌ ' + err.message, 'error'); }
         });
 
         async function deleteSessao(id) {
             if (!confirm('Cancelar esta sessão?')) return;
-            try { await api('DELETE', '/sessoes/' + id); toast('🗑 Sessão removida'); loadSessoes(); }
+            try { await api('DELETE', '/sessoes/' + id); toast('<i class="bi bi-trash"></i> Sessão removida'); loadSessoes(); }
             catch (err) { toast('❌ ' + err.message, 'error'); }
         }
 
@@ -1407,7 +1798,7 @@
             <div class="movie-meta">${l.descricao}</div>
             <div class="movie-meta" style="margin-top:4px; font-weight:700; color:var(--gold)">${fmtMoney(l.preco)}</div>
             <div class="movie-actions">
-                <button class="btn btn-danger" onclick="deleteLanche(${l.id})">🗑 Remover</button>
+                ${window.USER_ROLE === 'ADMIN' ? `<button class="btn btn-danger" onclick="deleteLanche(${l.id})"><i class="bi bi-trash"></i> Remover</button>` : ''}
             </div>
         </div>
     </div>`;
@@ -1435,7 +1826,7 @@
                     preco: parseFloat(document.getElementById('pdvLanchePreco')?.value || document.getElementById('lanchePreco')?.value),
                     imagemUrl
                 });
-                toast('🍿 Lanche cadastrado!');
+                toast('<i class="bi bi-cup-straw me-1"></i> Lanche cadastrado!');
                 e.target.reset();
                 document.getElementById('lancheImgPreview').style.display = 'none';
                 loadLanches();
@@ -1444,7 +1835,7 @@
 
         async function deleteLanche(id) {
             if (!confirm('Remover este lanche da vitrine?')) return;
-            try { await api('DELETE', '/lanches/' + id); toast('🗑 Lanche removido'); loadLanches(); }
+            try { await api('DELETE', '/lanches/' + id); toast('<i class="bi bi-trash"></i> Lanche removido'); loadLanches(); }
             catch (err) { toast('❌ ' + err.message, 'error'); }
         }
 
@@ -1466,36 +1857,119 @@
                     let h = `<table><thead><tr><th>Pedido</th><th>Data</th><th>Itens Comprados</th><th>Total</th><th>Status</th></tr></thead><tbody>`;
                     data.forEach(p => {
                         let itensStrs = [];
+                        let valorValido = 0;
+                        let invalidosNaoReembolsadosCount = 0;
+                        let validosCount = 0;
+                        let valorASerReembolsado = 0;
+                        let totalItensCount = 0;
+
                         if (p.ingressos) {
                             p.ingressos.forEach(ingPedido => {
-                                const ingBD = todosIngressos.find(i => i.id === ingPedido.id) || ingPedido;
-                                const sessao = sessoes.find(s => s.id === ingBD.sessaoId);
-                                const f = sessao ? filmes.find(f => f.id === sessao.filmeId) : null;
-                                const sa = sessao ? salas.find(sa => sa.id === sessao.salaId) : null;
-                                itensStrs.push(`🎟️ Ingr. #${ingBD.id}: <strong style="color:var(--gold)">${f?.titulo || '?'}</strong> (Sala ${sa?.numero})`);
+                                totalItensCount++;
+                                const ingAtivo = ingPedido.ativo !== false;
+                                const sessaoAtiva = ingPedido.sessao ? ingPedido.sessao.ativo !== false : false;
+                                const filmeAtivo = ingPedido.sessao?.filme ? ingPedido.sessao.filme.ativo !== false : false;
+                                const isValido = ingAtivo && sessaoAtiva && filmeAtivo;
+
+                                const fTitulo = ingPedido.sessao?.filme?.titulo || '?';
+                                const salaNum = ingPedido.sessao?.sala?.numero || '?';
+                                
+                                let textHtml = `<i class="bi bi-ticket-perforated me-1"></i> Ingr. #${ingPedido.id}: <strong style="color:var(--gold)">${fTitulo}</strong> (Sala ${salaNum})`;
+
+                                if (ingPedido.reembolsado) {
+                                    textHtml = `<del style="color:var(--muted)">${textHtml}</del> <span class="badge badge-gray" style="font-size:0.55rem; padding: 2px 4px; border:1px solid #7f8c8d; color:#7f8c8d; background:transparent">ESTORNADO</span>`;
+                                } else if (isValido) {
+                                    valorValido += ingPedido.valorPago;
+                                    validosCount++;
+                                    if (window.USER_ROLE === 'ADMIN') {
+                                        textHtml += ` <span style="cursor:pointer;color:#ff6b6b;font-weight:bold;margin-left:4px" onclick="deleteIngresso(${ingPedido.id})" title="Cancelar Ingresso (Libera Assento)">✕</span>`;
+                                    }
+                                } else {
+                                    invalidosNaoReembolsadosCount++;
+                                    valorASerReembolsado += ingPedido.valorPago;
+                                    textHtml = `<del style="color:var(--muted)">${textHtml}</del> <span class="badge badge-red" style="font-size:0.6rem; padding: 2px 4px;">CANCELADO / INVÁLIDO</span>`;
+                                }
+                                itensStrs.push(textHtml);
                             });
                         }
                         if (p.itens) {
                             p.itens.forEach(it => {
-                                const lanche = catLanches.find(l => l.id === it.lancheId);
-                                itensStrs.push(`🍿 ${it.quantidade}x ${lanche?.nome || 'Lanche'}`);
+                                totalItensCount++;
+                                const lancheValido = it.lanche ? it.lanche.ativo !== false : false;
+                                const lNome = it.lanche?.nome || 'Lanche / Item Removido';
+
+                                let textHtml = `<i class="bi bi-cup-straw me-1"></i> ${it.quantidade}x ${lNome}`;
+
+                                if (it.reembolsado) {
+                                    textHtml = `<del style="color:var(--muted)">${textHtml}</del> <span class="badge badge-gray" style="font-size:0.55rem; padding: 2px 4px; border:1px solid #7f8c8d; color:#7f8c8d; background:transparent">ESTORNADO</span>`;
+                                } else if (lancheValido) {
+                                    valorValido += it.subtotal;
+                                    validosCount++;
+                                } else {
+                                    invalidosNaoReembolsadosCount++;
+                                    valorASerReembolsado += it.subtotal;
+                                    textHtml = `<del style="color:var(--muted)">${textHtml}</del> <span class="badge badge-red" style="font-size:0.6rem; padding: 2px 4px;">INDISPONÍVEL</span>`;
+                                }
+                                itensStrs.push(textHtml);
                             });
                         }
 
-                        const statusBadge = p.status === 'PAGO'
-                            ? `<span class="badge badge-green" style="background:var(--green)">PAGO</span>`
-                            : `<span class="badge badge-red">PENDENTE</span>`;
+                        let statusBadge = '';
+                        let actionBtn = '';
+                        let deleteBtn = '';
 
-                        const actionBtn = p.status === 'PAGO'
-                            ? `<a href="${p.comprovanteUrl}" target="_blank" class="btn btn-outline" style="font-size:0.7rem; padding:4px 8px">📄 Recibo</a>`
-                            : `<button class="btn btn-primary" style="font-size:0.7rem; padding:4px 8px" onclick="pagarPedido(${p.id})">💲 Pagar</button>`;
+                        // Define badge
+                        if (p.status === 'REEMBOLSADO') {
+                            statusBadge = `<span class="badge badge-gray" style="background:#555">ESTORNO TOTAL</span>`;
+                        } else if (p.status === 'REEMBOLSADO_PARCIAL') {
+                            statusBadge = `<span class="badge badge-gold" style="background:#d35400">ESTORNO PARCIAL</span>`;
+                        } else if (p.status === 'PAGO') {
+                            statusBadge = `<span class="badge badge-green" style="background:var(--green)">PAGO</span>`;
+                        } else {
+                            statusBadge = `<span class="badge badge-red">PENDENTE</span>`;
+                        }
+
+                        // Define actions
+                        if (p.status === 'REEMBOLSADO' || p.status === 'REEMBOLSADO_PARCIAL' || p.status === 'PAGO') {
+                            actionBtn += `<a href="${p.comprovanteUrl}" target="_blank" class="btn btn-outline" style="font-size:0.7rem; padding:4px 8px; margin-bottom:4px; text-decoration:none"><i class="bi bi-receipt me-1"></i> Recibo Compra</a>`;
+                            if (p.comprovanteReembolsoUrl) {
+                                actionBtn += `<br><a href="${p.comprovanteReembolsoUrl}" target="_blank" class="btn btn-outline" style="font-size:0.7rem; padding:4px 8px; border-color:#e74c3c; color:#e74c3c; text-decoration:none; margin-top:4px; display:inline-block"><i class="bi bi-receipt-cutoff me-1"></i> Recibo Estorno</a>`;
+                            }
+                            if (window.USER_ROLE === 'ADMIN') {
+                                if (p.status === 'PAGO') {
+                                    deleteBtn = `<button class="btn btn-danger" style="font-size:0.7rem; padding:4px 8px; margin-top:4px; width:100%" onclick="deletePedido(${p.id})"><i class="bi bi-trash"></i> Excluir</button>`;
+                                }
+
+                                // Novo Reembolso?
+                                if (invalidosNaoReembolsadosCount > 0 && p.status !== 'REEMBOLSADO') {
+                                    let callStr = '';
+                                    if (validosCount === 0) {
+                                        callStr = `reembolsarPedido(${p.id}, 'TOTAL')`;
+                                    } else {
+                                        callStr = `promptReembolso(${p.id}, ${valorASerReembolsado})`;
+                                    }
+                                    actionBtn += `<br><button class="btn btn-danger" style="font-size:0.7rem; padding:4px 8px; margin-top:4px; background:#e74c3c; color:white; border:none; display:inline-block" onclick="${callStr}"><i class="bi bi-arrow-return-left me-1"></i> Reembolsar</button>`;
+                                }
+                            }
+                        } else {
+                            if (window.USER_ROLE === 'ADMIN') {
+                                actionBtn = `<button class="btn btn-primary" style="font-size:0.7rem; padding:4px 8px" onclick="pagarPedido(${p.id})"><i class="bi bi-wallet2 me-1"></i> Pagar</button>`;
+                                deleteBtn = `<button class="btn btn-danger" style="font-size:0.7rem; padding:4px 8px; margin-top:4px; width:100%" onclick="deletePedido(${p.id})"><i class="bi bi-trash"></i> Excluir</button>`;
+                            }
+                        }
+
+                        let totalDisplay = '';
+                        if (p.status === 'PENDENTE' && Math.abs(valorValido - p.valorTotal) > 0.01) {
+                            totalDisplay = `<del style="color:var(--muted); font-size:0.75rem">${fmtMoney(p.valorTotal)}</del><br>`;
+                        }
+                        totalDisplay += `<span class="badge badge-gold" style="font-weight:bold">${fmtMoney(valorValido)}</span>`;
 
                         h += `<tr>
                     <td><span class="badge badge-blue">#${p.id}</span></td>
                     <td>${fmtDate(p.dataPedido)}</td>
                     <td style="font-size:0.8rem; line-height:1.4">${itensStrs.join('<br>')}</td>
-                    <td><span class="badge badge-gold" style="font-weight:bold">${fmtMoney(p.valorTotal)}</span></td>
-                    <td>${statusBadge}<br><div style="margin-top:4px">${actionBtn}</div></td>
+                    <td>${totalDisplay}</td>
+                    <td>${statusBadge}<br><div style="margin-top:4px; display:flex; flex-direction:column; gap:4px; max-width: 100px;">${actionBtn} ${deleteBtn}</div></td>
                 </tr>`;
                     });
                     el.innerHTML = h + '</tbody></table>';
@@ -1528,6 +2002,34 @@
             } catch (e) { console.error(e); el.innerHTML = renderEmpty('Erro ao carregar PDV'); }
         }
 
+        async function deletePedido(id) {
+            if (!confirm('Excluir este pedido? TODOS os ingressos vinculados serão cancelados e os assentos serão liberados.')) return;
+            try { await api('DELETE', '/pedidos/' + id); toast('<i class="bi bi-trash"></i> Pedido excluído com sucesso'); loadPedidos(); }
+            catch (err) { toast('❌ ' + err.message, 'error'); }
+        }
+
+        async function deleteIngresso(id) {
+            if (!confirm('Cancelar este ingresso? O assento será liberado para nova venda.')) return;
+            try { await api('DELETE', '/ingressos/' + id); toast('<i class="bi bi-trash"></i> Ingresso cancelado'); loadPedidos(); }
+            catch (err) { toast('❌ ' + err.message, 'error'); }
+        }
+
+        async function reembolsarPedido(id, tipo) {
+            if (!confirm(`Confirmar estorno ${tipo}?`)) return;
+            try { 
+                await api('POST', '/pedidos/' + id + '/reembolso', { tipo }); 
+                toast('<i class="bi bi-check-circle me-1"></i> Estorno realizado com sucesso'); 
+                loadPedidos(); 
+            }
+            catch (err) { toast('❌ ' + err.message, 'error'); }
+        }
+
+        function promptReembolso(id, valorParcial) {
+            const res = prompt(`Escolha o modelo de estorno para o pedido #${id}:\n\n1 - Estorno Parcial (R$ ${valorParcial.toFixed(2)} dos itens inválidos)\n2 - Estorno TOTAL (Cancela todos os itens e libera todos \n\nDigite 1 para Parcial ou 2 para Total:`);
+            if (res === '1') reembolsarPedido(id, 'PARCIAL');
+            else if (res === '2') reembolsarPedido(id, 'TOTAL');
+        }
+
         function updateCartUI() {
             const list = document.getElementById('pdvCartList');
             const totalEl = document.getElementById('pdvTotal');
@@ -1557,7 +2059,7 @@
                 }
 
                 html += `<tr>
-                    <td>🎟️ Assento ${ing.assento}</td>
+                    <td><i class="bi bi-ticket-perforated me-1"></i> Assento ${ing.assento}</td>
                     <td><span class="badge ${ing.tipo === 'INTEIRA' ? 'badge-gold' : 'badge-green'}">${ing.tipo}</span></td>
                     <td>${precoStr}</td>
                     <td><button class="btn btn-danger" style="padding:2px 6px" onclick="removeFromCart('ingresso', ${index})">✕</button></td>
@@ -1568,7 +2070,7 @@
                 const sub = l.preco * l.quantidade;
                 total += sub;
                 html += `<tr>
-                    <td>🍿 ${l.quantidade}x ${l.nome}</td>
+                    <td><i class="bi bi-cup-straw me-1"></i> ${l.quantidade}x ${l.nome}</td>
                     <td>-</td>
                     <td>${fmtMoney(sub)}</td>
                     <td><button class="btn btn-danger" style="padding:2px 6px" onclick="removeFromCart('lanche', ${index})">✕</button></td>
@@ -1649,10 +2151,11 @@
 
         function abrirMapaNoPdv() {
             const sessaoId = document.getElementById('pdvSessao').value;
-            if (!sessaoId) return;
+            if (!sessaoId) return; // silently ignore when cleared
             api('GET', '/sessoes/' + sessaoId).then(sessao => {
+                if (!sessao?.sala) return toast('Sessão sem sala configurada', 'error');
                 openSeatMap(sessao.sala, sessao.id);
-            }).catch(() => toast('Erro ao carregar sessão', 'error'));
+            }).catch(err => toast('Erro ao carregar sessão: ' + err.message, 'error'));
         }
 
         // Fechar modal ao clicar fora

@@ -12,7 +12,7 @@ export class LanchesService {
     }
 
     findAll() {
-        return this.prisma.lanche.findMany();
+        return this.prisma.lanche.findMany({ where: { ativo: true } });
     }
 
     findOne(id: number) {
@@ -24,6 +24,6 @@ export class LanchesService {
     }
 
     remove(id: number) {
-        return this.prisma.lanche.delete({ where: { id } });
+        return this.prisma.lanche.update({ where: { id }, data: { ativo: false } });
     }
 }

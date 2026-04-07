@@ -1,5 +1,6 @@
 import { randomUUID } from 'crypto';
 import { PrismaClient } from '../src/generated/prisma';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -15,20 +16,22 @@ async function main() {
     });
   }
 
-  // Create admin user
+  // Create admin user with a hashed password
+  const hashedPassword = await bcrypt.hash('admin123', 10);
+
   const adminUser = await prisma.user.upsert({
-    where: { email: 'admin@email.com' },
-    update: {},
+    where: { email: 'admin@admin.com' },
+    update: { password: hashedPassword },
     create: {
       id: randomUUID(),
-      email: 'admin@email.com',
-      password: 'senha123',
+      email: 'admin@admin.com',
+      password: hashedPassword,
       name: 'Administrador',
       profileId: adminProfile.id,
     },
   });
 
-  console.log('Admin user created:', adminUser);
+  console.log('Admin user created:', adminUser.email);
 }
 
 main()

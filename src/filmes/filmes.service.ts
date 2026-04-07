@@ -12,7 +12,7 @@ export class FilmesService {
     }
 
     findAll() {
-        return this.prisma.filme.findMany({ include: { sessoes: true } });
+        return this.prisma.filme.findMany({ where: { ativo: true }, include: { sessoes: { where: { ativo: true } } } });
     }
 
     findOne(id: number) {
@@ -24,6 +24,6 @@ export class FilmesService {
     }
 
     remove(id: number) {
-        return this.prisma.filme.delete({ where: { id } });
+        return this.prisma.filme.update({ where: { id }, data: { ativo: false } });
     }
 }

@@ -1,7 +1,8 @@
 generator client {
-  provider     = "prisma-client-js"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+  provider       = "prisma-client-js"
+  output         = "../src/generated/prisma"
+  moduleFormat   = "cjs"
+  binaryTargets  = ["native", "windows", "linux-arm64-openssl-3.0.x", "linux-arm64-openssl-1.1.x", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -47,6 +48,7 @@ model Sala {
   cinemaId   Int
   cinema     Cinema   @relation(fields: [cinemaId], references: [id])
   sessoes    Sessao[]
+  ativo      Boolean  @default(true)
 
   @@unique([cinemaId, numero])
 }
@@ -65,6 +67,7 @@ model Filme {
   cinemaId           Int?
   cinema             Cinema?  @relation(fields: [cinemaId], references: [id])
   sessoes            Sessao[]
+  ativo              Boolean  @default(true)
 }
 
 model Sessao {
@@ -72,12 +75,13 @@ model Sessao {
   horarioExibicao DateTime
   precoInteira    Float      @default(0) // Preço base da sessão
   filmeId         Int
-  filme           Filme      @relation(fields: [filmeId], references: [id])
+  filme           Filme      @relation(fields: [filmeId], references: [id], onDelete: Cascade)
   salaId          Int
-  sala            Sala       @relation(fields: [salaId], references: [id])
+  sala            Sala       @relation(fields: [salaId], references: [id], onDelete: Cascade)
   cinemaId        Int?
-  cinema          Cinema?    @relation(fields: [cinemaId], references: [id])
+  cinema          Cinema?    @relation(fields: [cinemaId], references: [id], onDelete: Cascade)
   ingressos       Ingresso[]
+  ativo           Boolean    @default(true)
 }
 
 model Ingresso {
@@ -85,31 +89,37 @@ model Ingresso {
   assento   String // Ex: "A1", "B5"
   tipo      TipoIngresso @default(INTEIRA)
   valorPago Float
-  sessaoId  Int
-  sessao    Sessao       @relation(fields: [sessaoId], references: [id])
-  pedidos   Pedido[]     @relation("PedidoIngressos")
+  sessaoId    Int
+  sessao      Sessao       @relation(fields: [sessaoId], references: [id], onDelete: Cascade)
+  pedidos     Pedido[]     @relation("PedidoIngressos")
+  ativo       Boolean      @default(true)
+  reembolsado Boolean      @default(false)
 
   @@unique([sessaoId, assento]) // Não permite vender o mesmo assento na mesma sessão
 }
 
 model Pedido {
-  id             Int          @id @default(autoincrement())
-  dataPedido     DateTime     @default(now())
-  valorTotal     Float
-  status         String       @default("PENDENTE")
-  comprovanteUrl String?
-  ingressos      Ingresso[]   @relation("PedidoIngressos")
-  itens          ItemPedido[]
+  id                      Int          @id @default(autoincrement())
+  dataPedido              DateTime     @default(now())
+  valorTotal              Float
+  status                  String       @default("PENDENTE")
+  comprovanteUrl          String?
+  comprovanteReembolsoUrl String?
+  ingressos               Ingresso[]   @relation("PedidoIngressos")
+  itens                   ItemPedido[]
+  userId                  String?
+  user                    User?        @relation(fields: [userId], references: [id])
 }
 
 model ItemPedido {
   id         Int    @id @default(autoincrement())
   quantidade Int
   subtotal   Float
-  pedidoId   Int
-  pedido     Pedido @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
-  lancheId   Int
-  lanche     Lanche @relation(fields: [lancheId], references: [id])
+  pedidoId    Int
+  pedido      Pedido  @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  lancheId    Int
+  lanche      Lanche  @relation(fields: [lancheId], references: [id])
+  reembolsado Boolean @default(false)
 }
 
 model Lanche {
@@ -119,6 +129,7 @@ model Lanche {
   preco     Float
   imagemUrl String?
   itens     ItemPedido[]
+  ativo     Boolean      @default(true)
 }
 
 model User {
@@ -129,6 +140,8 @@ model User {
   profile   Profile   @relation(fields: [profileId], references: [id])
   profileId String
   address   Address?
+  role      String    @default("CUSTOMER")
+  pedidos   Pedido[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?

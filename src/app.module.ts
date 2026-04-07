@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { FilmesModule } from './filmes/filmes.module';
 import { SalasModule } from './salas/salas.module';
 import { SessoesModule } from './sessoes/sessoes.module';
@@ -29,9 +27,5 @@ import { AuthModule } from './auth/auth.module';
     PrismaModule,
     AuthModule,
   ],
-
-
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

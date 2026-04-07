@@ -44,6 +44,7 @@ export class SalasService {
 
     findAll() {
         return this.prisma.sala.findMany({ 
+            where: { ativo: true },
             include: { cinema: true },
             orderBy: { numero: 'asc' } 
         });
@@ -58,6 +59,6 @@ export class SalasService {
     }
 
     remove(id: number) {
-        return this.prisma.sala.delete({ where: { id } });
+        return this.prisma.sala.update({ where: { id }, data: { ativo: false } });
     }
 }

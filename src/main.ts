@@ -24,6 +24,18 @@ async function bootstrap() {
       });
       console.log('✅ Cinema padrão (ID: 1) criado no banco de dados!');
     }
+
+    const bcrypt = require('bcrypt');
+    if ((await prisma.user.count()) === 0) {
+      // Cria profile genérico
+      const p = await prisma.profile.create({ data: { name: 'Sistema' } });
+      const hashedPassAdmin = await bcrypt.hash('admin123', 10);
+      const hashedPassCliente = await bcrypt.hash('cliente123', 10);
+      
+      await prisma.user.create({ data: { email: 'admin@admin.com', name: 'Administrador', password: hashedPassAdmin, role: 'ADMIN', profileId: p.id } });
+      await prisma.user.create({ data: { email: 'cliente@cliente.com', name: 'Cliente Teste', password: hashedPassCliente, role: 'CUSTOMER', profileId: p.id } });
+      console.log('✅ Usuários admin e cliente criados no banco!');
+    }
   } catch (err) {
     console.warn('⚠️  Banco de dados não disponível no boot (cinema padrão não verificado):', err.message);
   }

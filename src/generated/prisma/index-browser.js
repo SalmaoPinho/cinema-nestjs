@@ -21,11 +21,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.19.2
+ * Prisma Client JS version: 6.19.3
  * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
  */
 Prisma.prismaVersion = {
-  client: "6.19.2",
+  client: "6.19.3",
   engine: "c2990dca591cba766e3b7ef5d9e8a84796e47ab7"
 }
 
@@ -133,7 +133,8 @@ exports.Prisma.SalaScalarFieldEnum = {
   capacidade: 'capacidade',
   fileiras: 'fileiras',
   colunas: 'colunas',
-  cinemaId: 'cinemaId'
+  cinemaId: 'cinemaId',
+  ativo: 'ativo'
 };
 
 exports.Prisma.FilmeScalarFieldEnum = {
@@ -147,7 +148,8 @@ exports.Prisma.FilmeScalarFieldEnum = {
   dataIniciaExibicao: 'dataIniciaExibicao',
   dataFinalExibicao: 'dataFinalExibicao',
   imagemUrl: 'imagemUrl',
-  cinemaId: 'cinemaId'
+  cinemaId: 'cinemaId',
+  ativo: 'ativo'
 };
 
 exports.Prisma.SessaoScalarFieldEnum = {
@@ -156,7 +158,8 @@ exports.Prisma.SessaoScalarFieldEnum = {
   precoInteira: 'precoInteira',
   filmeId: 'filmeId',
   salaId: 'salaId',
-  cinemaId: 'cinemaId'
+  cinemaId: 'cinemaId',
+  ativo: 'ativo'
 };
 
 exports.Prisma.IngressoScalarFieldEnum = {
@@ -164,7 +167,9 @@ exports.Prisma.IngressoScalarFieldEnum = {
   assento: 'assento',
   tipo: 'tipo',
   valorPago: 'valorPago',
-  sessaoId: 'sessaoId'
+  sessaoId: 'sessaoId',
+  ativo: 'ativo',
+  reembolsado: 'reembolsado'
 };
 
 exports.Prisma.PedidoScalarFieldEnum = {
@@ -172,7 +177,9 @@ exports.Prisma.PedidoScalarFieldEnum = {
   dataPedido: 'dataPedido',
   valorTotal: 'valorTotal',
   status: 'status',
-  comprovanteUrl: 'comprovanteUrl'
+  comprovanteUrl: 'comprovanteUrl',
+  comprovanteReembolsoUrl: 'comprovanteReembolsoUrl',
+  userId: 'userId'
 };
 
 exports.Prisma.ItemPedidoScalarFieldEnum = {
@@ -180,7 +187,8 @@ exports.Prisma.ItemPedidoScalarFieldEnum = {
   quantidade: 'quantidade',
   subtotal: 'subtotal',
   pedidoId: 'pedidoId',
-  lancheId: 'lancheId'
+  lancheId: 'lancheId',
+  reembolsado: 'reembolsado'
 };
 
 exports.Prisma.LancheScalarFieldEnum = {
@@ -188,7 +196,8 @@ exports.Prisma.LancheScalarFieldEnum = {
   nome: 'nome',
   descricao: 'descricao',
   preco: 'preco',
-  imagemUrl: 'imagemUrl'
+  imagemUrl: 'imagemUrl',
+  ativo: 'ativo'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -197,6 +206,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   name: 'name',
   profileId: 'profileId',
+  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'

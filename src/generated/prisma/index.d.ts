@@ -389,7 +389,7 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.19.2
+   * Prisma Client JS version: 6.19.3
    * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
    */
   export type PrismaVersion = {
@@ -2046,6 +2046,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    pedidos: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    pedidos?: boolean | UserCountOutputTypeCountPedidosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPedidosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PedidoWhereInput
+  }
+
+
+  /**
    * Count Type ProfileCountOutputType
    */
 
@@ -3251,6 +3282,7 @@ export namespace Prisma {
     fileiras: number | null
     colunas: number | null
     cinemaId: number | null
+    ativo: boolean | null
   }
 
   export type SalaMaxAggregateOutputType = {
@@ -3260,6 +3292,7 @@ export namespace Prisma {
     fileiras: number | null
     colunas: number | null
     cinemaId: number | null
+    ativo: boolean | null
   }
 
   export type SalaCountAggregateOutputType = {
@@ -3269,6 +3302,7 @@ export namespace Prisma {
     fileiras: number
     colunas: number
     cinemaId: number
+    ativo: number
     _all: number
   }
 
@@ -3298,6 +3332,7 @@ export namespace Prisma {
     fileiras?: true
     colunas?: true
     cinemaId?: true
+    ativo?: true
   }
 
   export type SalaMaxAggregateInputType = {
@@ -3307,6 +3342,7 @@ export namespace Prisma {
     fileiras?: true
     colunas?: true
     cinemaId?: true
+    ativo?: true
   }
 
   export type SalaCountAggregateInputType = {
@@ -3316,6 +3352,7 @@ export namespace Prisma {
     fileiras?: true
     colunas?: true
     cinemaId?: true
+    ativo?: true
     _all?: true
   }
 
@@ -3412,6 +3449,7 @@ export namespace Prisma {
     fileiras: number
     colunas: number
     cinemaId: number
+    ativo: boolean
     _count: SalaCountAggregateOutputType | null
     _avg: SalaAvgAggregateOutputType | null
     _sum: SalaSumAggregateOutputType | null
@@ -3440,6 +3478,7 @@ export namespace Prisma {
     fileiras?: boolean
     colunas?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     cinema?: boolean | CinemaDefaultArgs<ExtArgs>
     sessoes?: boolean | Sala$sessoesArgs<ExtArgs>
     _count?: boolean | SalaCountOutputTypeDefaultArgs<ExtArgs>
@@ -3452,6 +3491,7 @@ export namespace Prisma {
     fileiras?: boolean
     colunas?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     cinema?: boolean | CinemaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sala"]>
 
@@ -3462,6 +3502,7 @@ export namespace Prisma {
     fileiras?: boolean
     colunas?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     cinema?: boolean | CinemaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sala"]>
 
@@ -3472,9 +3513,10 @@ export namespace Prisma {
     fileiras?: boolean
     colunas?: boolean
     cinemaId?: boolean
+    ativo?: boolean
   }
 
-  export type SalaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numero" | "capacidade" | "fileiras" | "colunas" | "cinemaId", ExtArgs["result"]["sala"]>
+  export type SalaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "numero" | "capacidade" | "fileiras" | "colunas" | "cinemaId" | "ativo", ExtArgs["result"]["sala"]>
   export type SalaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cinema?: boolean | CinemaDefaultArgs<ExtArgs>
     sessoes?: boolean | Sala$sessoesArgs<ExtArgs>
@@ -3500,6 +3542,7 @@ export namespace Prisma {
       fileiras: number
       colunas: number
       cinemaId: number
+      ativo: boolean
     }, ExtArgs["result"]["sala"]>
     composites: {}
   }
@@ -3931,6 +3974,7 @@ export namespace Prisma {
     readonly fileiras: FieldRef<"Sala", 'Int'>
     readonly colunas: FieldRef<"Sala", 'Int'>
     readonly cinemaId: FieldRef<"Sala", 'Int'>
+    readonly ativo: FieldRef<"Sala", 'Boolean'>
   }
     
 
@@ -4405,6 +4449,7 @@ export namespace Prisma {
     dataFinalExibicao: Date | null
     imagemUrl: string | null
     cinemaId: number | null
+    ativo: boolean | null
   }
 
   export type FilmeMaxAggregateOutputType = {
@@ -4419,6 +4464,7 @@ export namespace Prisma {
     dataFinalExibicao: Date | null
     imagemUrl: string | null
     cinemaId: number | null
+    ativo: boolean | null
   }
 
   export type FilmeCountAggregateOutputType = {
@@ -4433,6 +4479,7 @@ export namespace Prisma {
     dataFinalExibicao: number
     imagemUrl: number
     cinemaId: number
+    ativo: number
     _all: number
   }
 
@@ -4461,6 +4508,7 @@ export namespace Prisma {
     dataFinalExibicao?: true
     imagemUrl?: true
     cinemaId?: true
+    ativo?: true
   }
 
   export type FilmeMaxAggregateInputType = {
@@ -4475,6 +4523,7 @@ export namespace Prisma {
     dataFinalExibicao?: true
     imagemUrl?: true
     cinemaId?: true
+    ativo?: true
   }
 
   export type FilmeCountAggregateInputType = {
@@ -4489,6 +4538,7 @@ export namespace Prisma {
     dataFinalExibicao?: true
     imagemUrl?: true
     cinemaId?: true
+    ativo?: true
     _all?: true
   }
 
@@ -4590,6 +4640,7 @@ export namespace Prisma {
     dataFinalExibicao: Date
     imagemUrl: string | null
     cinemaId: number | null
+    ativo: boolean
     _count: FilmeCountAggregateOutputType | null
     _avg: FilmeAvgAggregateOutputType | null
     _sum: FilmeSumAggregateOutputType | null
@@ -4623,6 +4674,7 @@ export namespace Prisma {
     dataFinalExibicao?: boolean
     imagemUrl?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     cinema?: boolean | Filme$cinemaArgs<ExtArgs>
     sessoes?: boolean | Filme$sessoesArgs<ExtArgs>
     _count?: boolean | FilmeCountOutputTypeDefaultArgs<ExtArgs>
@@ -4640,6 +4692,7 @@ export namespace Prisma {
     dataFinalExibicao?: boolean
     imagemUrl?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     cinema?: boolean | Filme$cinemaArgs<ExtArgs>
   }, ExtArgs["result"]["filme"]>
 
@@ -4655,6 +4708,7 @@ export namespace Prisma {
     dataFinalExibicao?: boolean
     imagemUrl?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     cinema?: boolean | Filme$cinemaArgs<ExtArgs>
   }, ExtArgs["result"]["filme"]>
 
@@ -4670,9 +4724,10 @@ export namespace Prisma {
     dataFinalExibicao?: boolean
     imagemUrl?: boolean
     cinemaId?: boolean
+    ativo?: boolean
   }
 
-  export type FilmeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titulo" | "sinopse" | "classificacao" | "duracao" | "elenco" | "genero" | "dataIniciaExibicao" | "dataFinalExibicao" | "imagemUrl" | "cinemaId", ExtArgs["result"]["filme"]>
+  export type FilmeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "titulo" | "sinopse" | "classificacao" | "duracao" | "elenco" | "genero" | "dataIniciaExibicao" | "dataFinalExibicao" | "imagemUrl" | "cinemaId" | "ativo", ExtArgs["result"]["filme"]>
   export type FilmeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cinema?: boolean | Filme$cinemaArgs<ExtArgs>
     sessoes?: boolean | Filme$sessoesArgs<ExtArgs>
@@ -4703,6 +4758,7 @@ export namespace Prisma {
       dataFinalExibicao: Date
       imagemUrl: string | null
       cinemaId: number | null
+      ativo: boolean
     }, ExtArgs["result"]["filme"]>
     composites: {}
   }
@@ -5139,6 +5195,7 @@ export namespace Prisma {
     readonly dataFinalExibicao: FieldRef<"Filme", 'DateTime'>
     readonly imagemUrl: FieldRef<"Filme", 'String'>
     readonly cinemaId: FieldRef<"Filme", 'Int'>
+    readonly ativo: FieldRef<"Filme", 'Boolean'>
   }
     
 
@@ -5631,6 +5688,7 @@ export namespace Prisma {
     filmeId: number | null
     salaId: number | null
     cinemaId: number | null
+    ativo: boolean | null
   }
 
   export type SessaoMaxAggregateOutputType = {
@@ -5640,6 +5698,7 @@ export namespace Prisma {
     filmeId: number | null
     salaId: number | null
     cinemaId: number | null
+    ativo: boolean | null
   }
 
   export type SessaoCountAggregateOutputType = {
@@ -5649,6 +5708,7 @@ export namespace Prisma {
     filmeId: number
     salaId: number
     cinemaId: number
+    ativo: number
     _all: number
   }
 
@@ -5676,6 +5736,7 @@ export namespace Prisma {
     filmeId?: true
     salaId?: true
     cinemaId?: true
+    ativo?: true
   }
 
   export type SessaoMaxAggregateInputType = {
@@ -5685,6 +5746,7 @@ export namespace Prisma {
     filmeId?: true
     salaId?: true
     cinemaId?: true
+    ativo?: true
   }
 
   export type SessaoCountAggregateInputType = {
@@ -5694,6 +5756,7 @@ export namespace Prisma {
     filmeId?: true
     salaId?: true
     cinemaId?: true
+    ativo?: true
     _all?: true
   }
 
@@ -5790,6 +5853,7 @@ export namespace Prisma {
     filmeId: number
     salaId: number
     cinemaId: number | null
+    ativo: boolean
     _count: SessaoCountAggregateOutputType | null
     _avg: SessaoAvgAggregateOutputType | null
     _sum: SessaoSumAggregateOutputType | null
@@ -5818,6 +5882,7 @@ export namespace Prisma {
     filmeId?: boolean
     salaId?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     filme?: boolean | FilmeDefaultArgs<ExtArgs>
     sala?: boolean | SalaDefaultArgs<ExtArgs>
     cinema?: boolean | Sessao$cinemaArgs<ExtArgs>
@@ -5832,6 +5897,7 @@ export namespace Prisma {
     filmeId?: boolean
     salaId?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     filme?: boolean | FilmeDefaultArgs<ExtArgs>
     sala?: boolean | SalaDefaultArgs<ExtArgs>
     cinema?: boolean | Sessao$cinemaArgs<ExtArgs>
@@ -5844,6 +5910,7 @@ export namespace Prisma {
     filmeId?: boolean
     salaId?: boolean
     cinemaId?: boolean
+    ativo?: boolean
     filme?: boolean | FilmeDefaultArgs<ExtArgs>
     sala?: boolean | SalaDefaultArgs<ExtArgs>
     cinema?: boolean | Sessao$cinemaArgs<ExtArgs>
@@ -5856,9 +5923,10 @@ export namespace Prisma {
     filmeId?: boolean
     salaId?: boolean
     cinemaId?: boolean
+    ativo?: boolean
   }
 
-  export type SessaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "horarioExibicao" | "precoInteira" | "filmeId" | "salaId" | "cinemaId", ExtArgs["result"]["sessao"]>
+  export type SessaoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "horarioExibicao" | "precoInteira" | "filmeId" | "salaId" | "cinemaId" | "ativo", ExtArgs["result"]["sessao"]>
   export type SessaoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     filme?: boolean | FilmeDefaultArgs<ExtArgs>
     sala?: boolean | SalaDefaultArgs<ExtArgs>
@@ -5892,6 +5960,7 @@ export namespace Prisma {
       filmeId: number
       salaId: number
       cinemaId: number | null
+      ativo: boolean
     }, ExtArgs["result"]["sessao"]>
     composites: {}
   }
@@ -6325,6 +6394,7 @@ export namespace Prisma {
     readonly filmeId: FieldRef<"Sessao", 'Int'>
     readonly salaId: FieldRef<"Sessao", 'Int'>
     readonly cinemaId: FieldRef<"Sessao", 'Int'>
+    readonly ativo: FieldRef<"Sessao", 'Boolean'>
   }
     
 
@@ -6812,6 +6882,8 @@ export namespace Prisma {
     tipo: $Enums.TipoIngresso | null
     valorPago: number | null
     sessaoId: number | null
+    ativo: boolean | null
+    reembolsado: boolean | null
   }
 
   export type IngressoMaxAggregateOutputType = {
@@ -6820,6 +6892,8 @@ export namespace Prisma {
     tipo: $Enums.TipoIngresso | null
     valorPago: number | null
     sessaoId: number | null
+    ativo: boolean | null
+    reembolsado: boolean | null
   }
 
   export type IngressoCountAggregateOutputType = {
@@ -6828,6 +6902,8 @@ export namespace Prisma {
     tipo: number
     valorPago: number
     sessaoId: number
+    ativo: number
+    reembolsado: number
     _all: number
   }
 
@@ -6850,6 +6926,8 @@ export namespace Prisma {
     tipo?: true
     valorPago?: true
     sessaoId?: true
+    ativo?: true
+    reembolsado?: true
   }
 
   export type IngressoMaxAggregateInputType = {
@@ -6858,6 +6936,8 @@ export namespace Prisma {
     tipo?: true
     valorPago?: true
     sessaoId?: true
+    ativo?: true
+    reembolsado?: true
   }
 
   export type IngressoCountAggregateInputType = {
@@ -6866,6 +6946,8 @@ export namespace Prisma {
     tipo?: true
     valorPago?: true
     sessaoId?: true
+    ativo?: true
+    reembolsado?: true
     _all?: true
   }
 
@@ -6961,6 +7043,8 @@ export namespace Prisma {
     tipo: $Enums.TipoIngresso
     valorPago: number
     sessaoId: number
+    ativo: boolean
+    reembolsado: boolean
     _count: IngressoCountAggregateOutputType | null
     _avg: IngressoAvgAggregateOutputType | null
     _sum: IngressoSumAggregateOutputType | null
@@ -6988,6 +7072,8 @@ export namespace Prisma {
     tipo?: boolean
     valorPago?: boolean
     sessaoId?: boolean
+    ativo?: boolean
+    reembolsado?: boolean
     sessao?: boolean | SessaoDefaultArgs<ExtArgs>
     pedidos?: boolean | Ingresso$pedidosArgs<ExtArgs>
     _count?: boolean | IngressoCountOutputTypeDefaultArgs<ExtArgs>
@@ -6999,6 +7085,8 @@ export namespace Prisma {
     tipo?: boolean
     valorPago?: boolean
     sessaoId?: boolean
+    ativo?: boolean
+    reembolsado?: boolean
     sessao?: boolean | SessaoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ingresso"]>
 
@@ -7008,6 +7096,8 @@ export namespace Prisma {
     tipo?: boolean
     valorPago?: boolean
     sessaoId?: boolean
+    ativo?: boolean
+    reembolsado?: boolean
     sessao?: boolean | SessaoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ingresso"]>
 
@@ -7017,9 +7107,11 @@ export namespace Prisma {
     tipo?: boolean
     valorPago?: boolean
     sessaoId?: boolean
+    ativo?: boolean
+    reembolsado?: boolean
   }
 
-  export type IngressoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assento" | "tipo" | "valorPago" | "sessaoId", ExtArgs["result"]["ingresso"]>
+  export type IngressoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "assento" | "tipo" | "valorPago" | "sessaoId" | "ativo" | "reembolsado", ExtArgs["result"]["ingresso"]>
   export type IngressoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessao?: boolean | SessaoDefaultArgs<ExtArgs>
     pedidos?: boolean | Ingresso$pedidosArgs<ExtArgs>
@@ -7044,6 +7136,8 @@ export namespace Prisma {
       tipo: $Enums.TipoIngresso
       valorPago: number
       sessaoId: number
+      ativo: boolean
+      reembolsado: boolean
     }, ExtArgs["result"]["ingresso"]>
     composites: {}
   }
@@ -7474,6 +7568,8 @@ export namespace Prisma {
     readonly tipo: FieldRef<"Ingresso", 'TipoIngresso'>
     readonly valorPago: FieldRef<"Ingresso", 'Float'>
     readonly sessaoId: FieldRef<"Ingresso", 'Int'>
+    readonly ativo: FieldRef<"Ingresso", 'Boolean'>
+    readonly reembolsado: FieldRef<"Ingresso", 'Boolean'>
   }
     
 
@@ -7940,6 +8036,8 @@ export namespace Prisma {
     valorTotal: number | null
     status: string | null
     comprovanteUrl: string | null
+    comprovanteReembolsoUrl: string | null
+    userId: string | null
   }
 
   export type PedidoMaxAggregateOutputType = {
@@ -7948,6 +8046,8 @@ export namespace Prisma {
     valorTotal: number | null
     status: string | null
     comprovanteUrl: string | null
+    comprovanteReembolsoUrl: string | null
+    userId: string | null
   }
 
   export type PedidoCountAggregateOutputType = {
@@ -7956,6 +8056,8 @@ export namespace Prisma {
     valorTotal: number
     status: number
     comprovanteUrl: number
+    comprovanteReembolsoUrl: number
+    userId: number
     _all: number
   }
 
@@ -7976,6 +8078,8 @@ export namespace Prisma {
     valorTotal?: true
     status?: true
     comprovanteUrl?: true
+    comprovanteReembolsoUrl?: true
+    userId?: true
   }
 
   export type PedidoMaxAggregateInputType = {
@@ -7984,6 +8088,8 @@ export namespace Prisma {
     valorTotal?: true
     status?: true
     comprovanteUrl?: true
+    comprovanteReembolsoUrl?: true
+    userId?: true
   }
 
   export type PedidoCountAggregateInputType = {
@@ -7992,6 +8098,8 @@ export namespace Prisma {
     valorTotal?: true
     status?: true
     comprovanteUrl?: true
+    comprovanteReembolsoUrl?: true
+    userId?: true
     _all?: true
   }
 
@@ -8087,6 +8195,8 @@ export namespace Prisma {
     valorTotal: number
     status: string
     comprovanteUrl: string | null
+    comprovanteReembolsoUrl: string | null
+    userId: string | null
     _count: PedidoCountAggregateOutputType | null
     _avg: PedidoAvgAggregateOutputType | null
     _sum: PedidoSumAggregateOutputType | null
@@ -8114,8 +8224,11 @@ export namespace Prisma {
     valorTotal?: boolean
     status?: boolean
     comprovanteUrl?: boolean
+    comprovanteReembolsoUrl?: boolean
+    userId?: boolean
     ingressos?: boolean | Pedido$ingressosArgs<ExtArgs>
     itens?: boolean | Pedido$itensArgs<ExtArgs>
+    user?: boolean | Pedido$userArgs<ExtArgs>
     _count?: boolean | PedidoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pedido"]>
 
@@ -8125,6 +8238,9 @@ export namespace Prisma {
     valorTotal?: boolean
     status?: boolean
     comprovanteUrl?: boolean
+    comprovanteReembolsoUrl?: boolean
+    userId?: boolean
+    user?: boolean | Pedido$userArgs<ExtArgs>
   }, ExtArgs["result"]["pedido"]>
 
   export type PedidoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8133,6 +8249,9 @@ export namespace Prisma {
     valorTotal?: boolean
     status?: boolean
     comprovanteUrl?: boolean
+    comprovanteReembolsoUrl?: boolean
+    userId?: boolean
+    user?: boolean | Pedido$userArgs<ExtArgs>
   }, ExtArgs["result"]["pedido"]>
 
   export type PedidoSelectScalar = {
@@ -8141,22 +8260,30 @@ export namespace Prisma {
     valorTotal?: boolean
     status?: boolean
     comprovanteUrl?: boolean
+    comprovanteReembolsoUrl?: boolean
+    userId?: boolean
   }
 
-  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dataPedido" | "valorTotal" | "status" | "comprovanteUrl", ExtArgs["result"]["pedido"]>
+  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dataPedido" | "valorTotal" | "status" | "comprovanteUrl" | "comprovanteReembolsoUrl" | "userId", ExtArgs["result"]["pedido"]>
   export type PedidoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ingressos?: boolean | Pedido$ingressosArgs<ExtArgs>
     itens?: boolean | Pedido$itensArgs<ExtArgs>
+    user?: boolean | Pedido$userArgs<ExtArgs>
     _count?: boolean | PedidoCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type PedidoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type PedidoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PedidoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Pedido$userArgs<ExtArgs>
+  }
+  export type PedidoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Pedido$userArgs<ExtArgs>
+  }
 
   export type $PedidoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Pedido"
     objects: {
       ingressos: Prisma.$IngressoPayload<ExtArgs>[]
       itens: Prisma.$ItemPedidoPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8164,6 +8291,8 @@ export namespace Prisma {
       valorTotal: number
       status: string
       comprovanteUrl: string | null
+      comprovanteReembolsoUrl: string | null
+      userId: string | null
     }, ExtArgs["result"]["pedido"]>
     composites: {}
   }
@@ -8560,6 +8689,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ingressos<T extends Pedido$ingressosArgs<ExtArgs> = {}>(args?: Subset<T, Pedido$ingressosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IngressoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     itens<T extends Pedido$itensArgs<ExtArgs> = {}>(args?: Subset<T, Pedido$itensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ItemPedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends Pedido$userArgs<ExtArgs> = {}>(args?: Subset<T, Pedido$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8594,6 +8724,8 @@ export namespace Prisma {
     readonly valorTotal: FieldRef<"Pedido", 'Float'>
     readonly status: FieldRef<"Pedido", 'String'>
     readonly comprovanteUrl: FieldRef<"Pedido", 'String'>
+    readonly comprovanteReembolsoUrl: FieldRef<"Pedido", 'String'>
+    readonly userId: FieldRef<"Pedido", 'String'>
   }
     
 
@@ -8843,6 +8975,10 @@ export namespace Prisma {
      */
     data: PedidoCreateManyInput | PedidoCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PedidoIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8913,6 +9049,10 @@ export namespace Prisma {
      * Limit how many Pedidos to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PedidoIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9030,6 +9170,25 @@ export namespace Prisma {
   }
 
   /**
+   * Pedido.user
+   */
+  export type Pedido$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Pedido without action
    */
   export type PedidoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9082,6 +9241,7 @@ export namespace Prisma {
     subtotal: number | null
     pedidoId: number | null
     lancheId: number | null
+    reembolsado: boolean | null
   }
 
   export type ItemPedidoMaxAggregateOutputType = {
@@ -9090,6 +9250,7 @@ export namespace Prisma {
     subtotal: number | null
     pedidoId: number | null
     lancheId: number | null
+    reembolsado: boolean | null
   }
 
   export type ItemPedidoCountAggregateOutputType = {
@@ -9098,6 +9259,7 @@ export namespace Prisma {
     subtotal: number
     pedidoId: number
     lancheId: number
+    reembolsado: number
     _all: number
   }
 
@@ -9124,6 +9286,7 @@ export namespace Prisma {
     subtotal?: true
     pedidoId?: true
     lancheId?: true
+    reembolsado?: true
   }
 
   export type ItemPedidoMaxAggregateInputType = {
@@ -9132,6 +9295,7 @@ export namespace Prisma {
     subtotal?: true
     pedidoId?: true
     lancheId?: true
+    reembolsado?: true
   }
 
   export type ItemPedidoCountAggregateInputType = {
@@ -9140,6 +9304,7 @@ export namespace Prisma {
     subtotal?: true
     pedidoId?: true
     lancheId?: true
+    reembolsado?: true
     _all?: true
   }
 
@@ -9235,6 +9400,7 @@ export namespace Prisma {
     subtotal: number
     pedidoId: number
     lancheId: number
+    reembolsado: boolean
     _count: ItemPedidoCountAggregateOutputType | null
     _avg: ItemPedidoAvgAggregateOutputType | null
     _sum: ItemPedidoSumAggregateOutputType | null
@@ -9262,6 +9428,7 @@ export namespace Prisma {
     subtotal?: boolean
     pedidoId?: boolean
     lancheId?: boolean
+    reembolsado?: boolean
     pedido?: boolean | PedidoDefaultArgs<ExtArgs>
     lanche?: boolean | LancheDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["itemPedido"]>
@@ -9272,6 +9439,7 @@ export namespace Prisma {
     subtotal?: boolean
     pedidoId?: boolean
     lancheId?: boolean
+    reembolsado?: boolean
     pedido?: boolean | PedidoDefaultArgs<ExtArgs>
     lanche?: boolean | LancheDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["itemPedido"]>
@@ -9282,6 +9450,7 @@ export namespace Prisma {
     subtotal?: boolean
     pedidoId?: boolean
     lancheId?: boolean
+    reembolsado?: boolean
     pedido?: boolean | PedidoDefaultArgs<ExtArgs>
     lanche?: boolean | LancheDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["itemPedido"]>
@@ -9292,9 +9461,10 @@ export namespace Prisma {
     subtotal?: boolean
     pedidoId?: boolean
     lancheId?: boolean
+    reembolsado?: boolean
   }
 
-  export type ItemPedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantidade" | "subtotal" | "pedidoId" | "lancheId", ExtArgs["result"]["itemPedido"]>
+  export type ItemPedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quantidade" | "subtotal" | "pedidoId" | "lancheId" | "reembolsado", ExtArgs["result"]["itemPedido"]>
   export type ItemPedidoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     pedido?: boolean | PedidoDefaultArgs<ExtArgs>
     lanche?: boolean | LancheDefaultArgs<ExtArgs>
@@ -9320,6 +9490,7 @@ export namespace Prisma {
       subtotal: number
       pedidoId: number
       lancheId: number
+      reembolsado: boolean
     }, ExtArgs["result"]["itemPedido"]>
     composites: {}
   }
@@ -9750,6 +9921,7 @@ export namespace Prisma {
     readonly subtotal: FieldRef<"ItemPedido", 'Float'>
     readonly pedidoId: FieldRef<"ItemPedido", 'Int'>
     readonly lancheId: FieldRef<"ItemPedido", 'Int'>
+    readonly reembolsado: FieldRef<"ItemPedido", 'Boolean'>
   }
     
 
@@ -10192,6 +10364,7 @@ export namespace Prisma {
     descricao: string | null
     preco: number | null
     imagemUrl: string | null
+    ativo: boolean | null
   }
 
   export type LancheMaxAggregateOutputType = {
@@ -10200,6 +10373,7 @@ export namespace Prisma {
     descricao: string | null
     preco: number | null
     imagemUrl: string | null
+    ativo: boolean | null
   }
 
   export type LancheCountAggregateOutputType = {
@@ -10208,6 +10382,7 @@ export namespace Prisma {
     descricao: number
     preco: number
     imagemUrl: number
+    ativo: number
     _all: number
   }
 
@@ -10228,6 +10403,7 @@ export namespace Prisma {
     descricao?: true
     preco?: true
     imagemUrl?: true
+    ativo?: true
   }
 
   export type LancheMaxAggregateInputType = {
@@ -10236,6 +10412,7 @@ export namespace Prisma {
     descricao?: true
     preco?: true
     imagemUrl?: true
+    ativo?: true
   }
 
   export type LancheCountAggregateInputType = {
@@ -10244,6 +10421,7 @@ export namespace Prisma {
     descricao?: true
     preco?: true
     imagemUrl?: true
+    ativo?: true
     _all?: true
   }
 
@@ -10339,6 +10517,7 @@ export namespace Prisma {
     descricao: string
     preco: number
     imagemUrl: string | null
+    ativo: boolean
     _count: LancheCountAggregateOutputType | null
     _avg: LancheAvgAggregateOutputType | null
     _sum: LancheSumAggregateOutputType | null
@@ -10366,6 +10545,7 @@ export namespace Prisma {
     descricao?: boolean
     preco?: boolean
     imagemUrl?: boolean
+    ativo?: boolean
     itens?: boolean | Lanche$itensArgs<ExtArgs>
     _count?: boolean | LancheCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["lanche"]>
@@ -10376,6 +10556,7 @@ export namespace Prisma {
     descricao?: boolean
     preco?: boolean
     imagemUrl?: boolean
+    ativo?: boolean
   }, ExtArgs["result"]["lanche"]>
 
   export type LancheSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10384,6 +10565,7 @@ export namespace Prisma {
     descricao?: boolean
     preco?: boolean
     imagemUrl?: boolean
+    ativo?: boolean
   }, ExtArgs["result"]["lanche"]>
 
   export type LancheSelectScalar = {
@@ -10392,9 +10574,10 @@ export namespace Prisma {
     descricao?: boolean
     preco?: boolean
     imagemUrl?: boolean
+    ativo?: boolean
   }
 
-  export type LancheOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "preco" | "imagemUrl", ExtArgs["result"]["lanche"]>
+  export type LancheOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "preco" | "imagemUrl" | "ativo", ExtArgs["result"]["lanche"]>
   export type LancheInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     itens?: boolean | Lanche$itensArgs<ExtArgs>
     _count?: boolean | LancheCountOutputTypeDefaultArgs<ExtArgs>
@@ -10413,6 +10596,7 @@ export namespace Prisma {
       descricao: string
       preco: number
       imagemUrl: string | null
+      ativo: boolean
     }, ExtArgs["result"]["lanche"]>
     composites: {}
   }
@@ -10842,6 +11026,7 @@ export namespace Prisma {
     readonly descricao: FieldRef<"Lanche", 'String'>
     readonly preco: FieldRef<"Lanche", 'Float'>
     readonly imagemUrl: FieldRef<"Lanche", 'String'>
+    readonly ativo: FieldRef<"Lanche", 'Boolean'>
   }
     
 
@@ -11288,6 +11473,7 @@ export namespace Prisma {
     password: string | null
     name: string | null
     profileId: string | null
+    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
@@ -11299,6 +11485,7 @@ export namespace Prisma {
     password: string | null
     name: string | null
     profileId: string | null
+    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
     deletedAt: Date | null
@@ -11310,6 +11497,7 @@ export namespace Prisma {
     password: number
     name: number
     profileId: number
+    role: number
     createdAt: number
     updatedAt: number
     deletedAt: number
@@ -11323,6 +11511,7 @@ export namespace Prisma {
     password?: true
     name?: true
     profileId?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -11334,6 +11523,7 @@ export namespace Prisma {
     password?: true
     name?: true
     profileId?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -11345,6 +11535,7 @@ export namespace Prisma {
     password?: true
     name?: true
     profileId?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     deletedAt?: true
@@ -11429,6 +11620,7 @@ export namespace Prisma {
     password: string
     name: string
     profileId: string
+    role: string
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -11457,11 +11649,14 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     profileId?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
     profile?: boolean | ProfileDefaultArgs<ExtArgs>
     address?: boolean | User$addressArgs<ExtArgs>
+    pedidos?: boolean | User$pedidosArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11470,6 +11665,7 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     profileId?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -11482,6 +11678,7 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     profileId?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
@@ -11494,15 +11691,18 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     profileId?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deletedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "profileId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "profileId" | "role" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     profile?: boolean | ProfileDefaultArgs<ExtArgs>
     address?: boolean | User$addressArgs<ExtArgs>
+    pedidos?: boolean | User$pedidosArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     profile?: boolean | ProfileDefaultArgs<ExtArgs>
@@ -11516,6 +11716,7 @@ export namespace Prisma {
     objects: {
       profile: Prisma.$ProfilePayload<ExtArgs>
       address: Prisma.$AddressPayload<ExtArgs> | null
+      pedidos: Prisma.$PedidoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11523,6 +11724,7 @@ export namespace Prisma {
       password: string
       name: string
       profileId: string
+      role: string
       createdAt: Date
       updatedAt: Date
       deletedAt: Date | null
@@ -11922,6 +12124,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     profile<T extends ProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfileDefaultArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     address<T extends User$addressArgs<ExtArgs> = {}>(args?: Subset<T, User$addressArgs<ExtArgs>>): Prisma__AddressClient<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    pedidos<T extends User$pedidosArgs<ExtArgs> = {}>(args?: Subset<T, User$pedidosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11956,6 +12159,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly profileId: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly deletedAt: FieldRef<"User", 'DateTime'>
@@ -12371,6 +12575,30 @@ export namespace Prisma {
      */
     include?: AddressInclude<ExtArgs> | null
     where?: AddressWhereInput
+  }
+
+  /**
+   * User.pedidos
+   */
+  export type User$pedidosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pedido
+     */
+    select?: PedidoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pedido
+     */
+    omit?: PedidoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PedidoInclude<ExtArgs> | null
+    where?: PedidoWhereInput
+    orderBy?: PedidoOrderByWithRelationInput | PedidoOrderByWithRelationInput[]
+    cursor?: PedidoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PedidoScalarFieldEnum | PedidoScalarFieldEnum[]
   }
 
   /**
@@ -14622,7 +14850,8 @@ export namespace Prisma {
     capacidade: 'capacidade',
     fileiras: 'fileiras',
     colunas: 'colunas',
-    cinemaId: 'cinemaId'
+    cinemaId: 'cinemaId',
+    ativo: 'ativo'
   };
 
   export type SalaScalarFieldEnum = (typeof SalaScalarFieldEnum)[keyof typeof SalaScalarFieldEnum]
@@ -14639,7 +14868,8 @@ export namespace Prisma {
     dataIniciaExibicao: 'dataIniciaExibicao',
     dataFinalExibicao: 'dataFinalExibicao',
     imagemUrl: 'imagemUrl',
-    cinemaId: 'cinemaId'
+    cinemaId: 'cinemaId',
+    ativo: 'ativo'
   };
 
   export type FilmeScalarFieldEnum = (typeof FilmeScalarFieldEnum)[keyof typeof FilmeScalarFieldEnum]
@@ -14651,7 +14881,8 @@ export namespace Prisma {
     precoInteira: 'precoInteira',
     filmeId: 'filmeId',
     salaId: 'salaId',
-    cinemaId: 'cinemaId'
+    cinemaId: 'cinemaId',
+    ativo: 'ativo'
   };
 
   export type SessaoScalarFieldEnum = (typeof SessaoScalarFieldEnum)[keyof typeof SessaoScalarFieldEnum]
@@ -14662,7 +14893,9 @@ export namespace Prisma {
     assento: 'assento',
     tipo: 'tipo',
     valorPago: 'valorPago',
-    sessaoId: 'sessaoId'
+    sessaoId: 'sessaoId',
+    ativo: 'ativo',
+    reembolsado: 'reembolsado'
   };
 
   export type IngressoScalarFieldEnum = (typeof IngressoScalarFieldEnum)[keyof typeof IngressoScalarFieldEnum]
@@ -14673,7 +14906,9 @@ export namespace Prisma {
     dataPedido: 'dataPedido',
     valorTotal: 'valorTotal',
     status: 'status',
-    comprovanteUrl: 'comprovanteUrl'
+    comprovanteUrl: 'comprovanteUrl',
+    comprovanteReembolsoUrl: 'comprovanteReembolsoUrl',
+    userId: 'userId'
   };
 
   export type PedidoScalarFieldEnum = (typeof PedidoScalarFieldEnum)[keyof typeof PedidoScalarFieldEnum]
@@ -14684,7 +14919,8 @@ export namespace Prisma {
     quantidade: 'quantidade',
     subtotal: 'subtotal',
     pedidoId: 'pedidoId',
-    lancheId: 'lancheId'
+    lancheId: 'lancheId',
+    reembolsado: 'reembolsado'
   };
 
   export type ItemPedidoScalarFieldEnum = (typeof ItemPedidoScalarFieldEnum)[keyof typeof ItemPedidoScalarFieldEnum]
@@ -14695,7 +14931,8 @@ export namespace Prisma {
     nome: 'nome',
     descricao: 'descricao',
     preco: 'preco',
-    imagemUrl: 'imagemUrl'
+    imagemUrl: 'imagemUrl',
+    ativo: 'ativo'
   };
 
   export type LancheScalarFieldEnum = (typeof LancheScalarFieldEnum)[keyof typeof LancheScalarFieldEnum]
@@ -14707,6 +14944,7 @@ export namespace Prisma {
     password: 'password',
     name: 'name',
     profileId: 'profileId',
+    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     deletedAt: 'deletedAt'
@@ -14794,6 +15032,13 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -14919,6 +15164,7 @@ export namespace Prisma {
     fileiras?: IntFilter<"Sala"> | number
     colunas?: IntFilter<"Sala"> | number
     cinemaId?: IntFilter<"Sala"> | number
+    ativo?: BoolFilter<"Sala"> | boolean
     cinema?: XOR<CinemaScalarRelationFilter, CinemaWhereInput>
     sessoes?: SessaoListRelationFilter
   }
@@ -14930,6 +15176,7 @@ export namespace Prisma {
     fileiras?: SortOrder
     colunas?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
     cinema?: CinemaOrderByWithRelationInput
     sessoes?: SessaoOrderByRelationAggregateInput
   }
@@ -14945,6 +15192,7 @@ export namespace Prisma {
     fileiras?: IntFilter<"Sala"> | number
     colunas?: IntFilter<"Sala"> | number
     cinemaId?: IntFilter<"Sala"> | number
+    ativo?: BoolFilter<"Sala"> | boolean
     cinema?: XOR<CinemaScalarRelationFilter, CinemaWhereInput>
     sessoes?: SessaoListRelationFilter
   }, "id" | "cinemaId_numero">
@@ -14956,6 +15204,7 @@ export namespace Prisma {
     fileiras?: SortOrder
     colunas?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
     _count?: SalaCountOrderByAggregateInput
     _avg?: SalaAvgOrderByAggregateInput
     _max?: SalaMaxOrderByAggregateInput
@@ -14973,6 +15222,7 @@ export namespace Prisma {
     fileiras?: IntWithAggregatesFilter<"Sala"> | number
     colunas?: IntWithAggregatesFilter<"Sala"> | number
     cinemaId?: IntWithAggregatesFilter<"Sala"> | number
+    ativo?: BoolWithAggregatesFilter<"Sala"> | boolean
   }
 
   export type FilmeWhereInput = {
@@ -14990,6 +15240,7 @@ export namespace Prisma {
     dataFinalExibicao?: DateTimeFilter<"Filme"> | Date | string
     imagemUrl?: StringNullableFilter<"Filme"> | string | null
     cinemaId?: IntNullableFilter<"Filme"> | number | null
+    ativo?: BoolFilter<"Filme"> | boolean
     cinema?: XOR<CinemaNullableScalarRelationFilter, CinemaWhereInput> | null
     sessoes?: SessaoListRelationFilter
   }
@@ -15006,6 +15257,7 @@ export namespace Prisma {
     dataFinalExibicao?: SortOrder
     imagemUrl?: SortOrderInput | SortOrder
     cinemaId?: SortOrderInput | SortOrder
+    ativo?: SortOrder
     cinema?: CinemaOrderByWithRelationInput
     sessoes?: SessaoOrderByRelationAggregateInput
   }
@@ -15025,6 +15277,7 @@ export namespace Prisma {
     dataFinalExibicao?: DateTimeFilter<"Filme"> | Date | string
     imagemUrl?: StringNullableFilter<"Filme"> | string | null
     cinemaId?: IntNullableFilter<"Filme"> | number | null
+    ativo?: BoolFilter<"Filme"> | boolean
     cinema?: XOR<CinemaNullableScalarRelationFilter, CinemaWhereInput> | null
     sessoes?: SessaoListRelationFilter
   }, "id">
@@ -15041,6 +15294,7 @@ export namespace Prisma {
     dataFinalExibicao?: SortOrder
     imagemUrl?: SortOrderInput | SortOrder
     cinemaId?: SortOrderInput | SortOrder
+    ativo?: SortOrder
     _count?: FilmeCountOrderByAggregateInput
     _avg?: FilmeAvgOrderByAggregateInput
     _max?: FilmeMaxOrderByAggregateInput
@@ -15063,6 +15317,7 @@ export namespace Prisma {
     dataFinalExibicao?: DateTimeWithAggregatesFilter<"Filme"> | Date | string
     imagemUrl?: StringNullableWithAggregatesFilter<"Filme"> | string | null
     cinemaId?: IntNullableWithAggregatesFilter<"Filme"> | number | null
+    ativo?: BoolWithAggregatesFilter<"Filme"> | boolean
   }
 
   export type SessaoWhereInput = {
@@ -15075,6 +15330,7 @@ export namespace Prisma {
     filmeId?: IntFilter<"Sessao"> | number
     salaId?: IntFilter<"Sessao"> | number
     cinemaId?: IntNullableFilter<"Sessao"> | number | null
+    ativo?: BoolFilter<"Sessao"> | boolean
     filme?: XOR<FilmeScalarRelationFilter, FilmeWhereInput>
     sala?: XOR<SalaScalarRelationFilter, SalaWhereInput>
     cinema?: XOR<CinemaNullableScalarRelationFilter, CinemaWhereInput> | null
@@ -15088,6 +15344,7 @@ export namespace Prisma {
     filmeId?: SortOrder
     salaId?: SortOrder
     cinemaId?: SortOrderInput | SortOrder
+    ativo?: SortOrder
     filme?: FilmeOrderByWithRelationInput
     sala?: SalaOrderByWithRelationInput
     cinema?: CinemaOrderByWithRelationInput
@@ -15104,6 +15361,7 @@ export namespace Prisma {
     filmeId?: IntFilter<"Sessao"> | number
     salaId?: IntFilter<"Sessao"> | number
     cinemaId?: IntNullableFilter<"Sessao"> | number | null
+    ativo?: BoolFilter<"Sessao"> | boolean
     filme?: XOR<FilmeScalarRelationFilter, FilmeWhereInput>
     sala?: XOR<SalaScalarRelationFilter, SalaWhereInput>
     cinema?: XOR<CinemaNullableScalarRelationFilter, CinemaWhereInput> | null
@@ -15117,6 +15375,7 @@ export namespace Prisma {
     filmeId?: SortOrder
     salaId?: SortOrder
     cinemaId?: SortOrderInput | SortOrder
+    ativo?: SortOrder
     _count?: SessaoCountOrderByAggregateInput
     _avg?: SessaoAvgOrderByAggregateInput
     _max?: SessaoMaxOrderByAggregateInput
@@ -15134,6 +15393,7 @@ export namespace Prisma {
     filmeId?: IntWithAggregatesFilter<"Sessao"> | number
     salaId?: IntWithAggregatesFilter<"Sessao"> | number
     cinemaId?: IntNullableWithAggregatesFilter<"Sessao"> | number | null
+    ativo?: BoolWithAggregatesFilter<"Sessao"> | boolean
   }
 
   export type IngressoWhereInput = {
@@ -15145,6 +15405,8 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoFilter<"Ingresso"> | $Enums.TipoIngresso
     valorPago?: FloatFilter<"Ingresso"> | number
     sessaoId?: IntFilter<"Ingresso"> | number
+    ativo?: BoolFilter<"Ingresso"> | boolean
+    reembolsado?: BoolFilter<"Ingresso"> | boolean
     sessao?: XOR<SessaoScalarRelationFilter, SessaoWhereInput>
     pedidos?: PedidoListRelationFilter
   }
@@ -15155,6 +15417,8 @@ export namespace Prisma {
     tipo?: SortOrder
     valorPago?: SortOrder
     sessaoId?: SortOrder
+    ativo?: SortOrder
+    reembolsado?: SortOrder
     sessao?: SessaoOrderByWithRelationInput
     pedidos?: PedidoOrderByRelationAggregateInput
   }
@@ -15169,6 +15433,8 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoFilter<"Ingresso"> | $Enums.TipoIngresso
     valorPago?: FloatFilter<"Ingresso"> | number
     sessaoId?: IntFilter<"Ingresso"> | number
+    ativo?: BoolFilter<"Ingresso"> | boolean
+    reembolsado?: BoolFilter<"Ingresso"> | boolean
     sessao?: XOR<SessaoScalarRelationFilter, SessaoWhereInput>
     pedidos?: PedidoListRelationFilter
   }, "id" | "sessaoId_assento">
@@ -15179,6 +15445,8 @@ export namespace Prisma {
     tipo?: SortOrder
     valorPago?: SortOrder
     sessaoId?: SortOrder
+    ativo?: SortOrder
+    reembolsado?: SortOrder
     _count?: IngressoCountOrderByAggregateInput
     _avg?: IngressoAvgOrderByAggregateInput
     _max?: IngressoMaxOrderByAggregateInput
@@ -15195,6 +15463,8 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoWithAggregatesFilter<"Ingresso"> | $Enums.TipoIngresso
     valorPago?: FloatWithAggregatesFilter<"Ingresso"> | number
     sessaoId?: IntWithAggregatesFilter<"Ingresso"> | number
+    ativo?: BoolWithAggregatesFilter<"Ingresso"> | boolean
+    reembolsado?: BoolWithAggregatesFilter<"Ingresso"> | boolean
   }
 
   export type PedidoWhereInput = {
@@ -15206,8 +15476,11 @@ export namespace Prisma {
     valorTotal?: FloatFilter<"Pedido"> | number
     status?: StringFilter<"Pedido"> | string
     comprovanteUrl?: StringNullableFilter<"Pedido"> | string | null
+    comprovanteReembolsoUrl?: StringNullableFilter<"Pedido"> | string | null
+    userId?: StringNullableFilter<"Pedido"> | string | null
     ingressos?: IngressoListRelationFilter
     itens?: ItemPedidoListRelationFilter
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type PedidoOrderByWithRelationInput = {
@@ -15216,8 +15489,11 @@ export namespace Prisma {
     valorTotal?: SortOrder
     status?: SortOrder
     comprovanteUrl?: SortOrderInput | SortOrder
+    comprovanteReembolsoUrl?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
     ingressos?: IngressoOrderByRelationAggregateInput
     itens?: ItemPedidoOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type PedidoWhereUniqueInput = Prisma.AtLeast<{
@@ -15229,8 +15505,11 @@ export namespace Prisma {
     valorTotal?: FloatFilter<"Pedido"> | number
     status?: StringFilter<"Pedido"> | string
     comprovanteUrl?: StringNullableFilter<"Pedido"> | string | null
+    comprovanteReembolsoUrl?: StringNullableFilter<"Pedido"> | string | null
+    userId?: StringNullableFilter<"Pedido"> | string | null
     ingressos?: IngressoListRelationFilter
     itens?: ItemPedidoListRelationFilter
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type PedidoOrderByWithAggregationInput = {
@@ -15239,6 +15518,8 @@ export namespace Prisma {
     valorTotal?: SortOrder
     status?: SortOrder
     comprovanteUrl?: SortOrderInput | SortOrder
+    comprovanteReembolsoUrl?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
     _count?: PedidoCountOrderByAggregateInput
     _avg?: PedidoAvgOrderByAggregateInput
     _max?: PedidoMaxOrderByAggregateInput
@@ -15255,6 +15536,8 @@ export namespace Prisma {
     valorTotal?: FloatWithAggregatesFilter<"Pedido"> | number
     status?: StringWithAggregatesFilter<"Pedido"> | string
     comprovanteUrl?: StringNullableWithAggregatesFilter<"Pedido"> | string | null
+    comprovanteReembolsoUrl?: StringNullableWithAggregatesFilter<"Pedido"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"Pedido"> | string | null
   }
 
   export type ItemPedidoWhereInput = {
@@ -15266,6 +15549,7 @@ export namespace Prisma {
     subtotal?: FloatFilter<"ItemPedido"> | number
     pedidoId?: IntFilter<"ItemPedido"> | number
     lancheId?: IntFilter<"ItemPedido"> | number
+    reembolsado?: BoolFilter<"ItemPedido"> | boolean
     pedido?: XOR<PedidoScalarRelationFilter, PedidoWhereInput>
     lanche?: XOR<LancheScalarRelationFilter, LancheWhereInput>
   }
@@ -15276,6 +15560,7 @@ export namespace Prisma {
     subtotal?: SortOrder
     pedidoId?: SortOrder
     lancheId?: SortOrder
+    reembolsado?: SortOrder
     pedido?: PedidoOrderByWithRelationInput
     lanche?: LancheOrderByWithRelationInput
   }
@@ -15289,6 +15574,7 @@ export namespace Prisma {
     subtotal?: FloatFilter<"ItemPedido"> | number
     pedidoId?: IntFilter<"ItemPedido"> | number
     lancheId?: IntFilter<"ItemPedido"> | number
+    reembolsado?: BoolFilter<"ItemPedido"> | boolean
     pedido?: XOR<PedidoScalarRelationFilter, PedidoWhereInput>
     lanche?: XOR<LancheScalarRelationFilter, LancheWhereInput>
   }, "id">
@@ -15299,6 +15585,7 @@ export namespace Prisma {
     subtotal?: SortOrder
     pedidoId?: SortOrder
     lancheId?: SortOrder
+    reembolsado?: SortOrder
     _count?: ItemPedidoCountOrderByAggregateInput
     _avg?: ItemPedidoAvgOrderByAggregateInput
     _max?: ItemPedidoMaxOrderByAggregateInput
@@ -15315,6 +15602,7 @@ export namespace Prisma {
     subtotal?: FloatWithAggregatesFilter<"ItemPedido"> | number
     pedidoId?: IntWithAggregatesFilter<"ItemPedido"> | number
     lancheId?: IntWithAggregatesFilter<"ItemPedido"> | number
+    reembolsado?: BoolWithAggregatesFilter<"ItemPedido"> | boolean
   }
 
   export type LancheWhereInput = {
@@ -15326,6 +15614,7 @@ export namespace Prisma {
     descricao?: StringFilter<"Lanche"> | string
     preco?: FloatFilter<"Lanche"> | number
     imagemUrl?: StringNullableFilter<"Lanche"> | string | null
+    ativo?: BoolFilter<"Lanche"> | boolean
     itens?: ItemPedidoListRelationFilter
   }
 
@@ -15335,6 +15624,7 @@ export namespace Prisma {
     descricao?: SortOrder
     preco?: SortOrder
     imagemUrl?: SortOrderInput | SortOrder
+    ativo?: SortOrder
     itens?: ItemPedidoOrderByRelationAggregateInput
   }
 
@@ -15347,6 +15637,7 @@ export namespace Prisma {
     descricao?: StringFilter<"Lanche"> | string
     preco?: FloatFilter<"Lanche"> | number
     imagemUrl?: StringNullableFilter<"Lanche"> | string | null
+    ativo?: BoolFilter<"Lanche"> | boolean
     itens?: ItemPedidoListRelationFilter
   }, "id">
 
@@ -15356,6 +15647,7 @@ export namespace Prisma {
     descricao?: SortOrder
     preco?: SortOrder
     imagemUrl?: SortOrderInput | SortOrder
+    ativo?: SortOrder
     _count?: LancheCountOrderByAggregateInput
     _avg?: LancheAvgOrderByAggregateInput
     _max?: LancheMaxOrderByAggregateInput
@@ -15372,6 +15664,7 @@ export namespace Prisma {
     descricao?: StringWithAggregatesFilter<"Lanche"> | string
     preco?: FloatWithAggregatesFilter<"Lanche"> | number
     imagemUrl?: StringNullableWithAggregatesFilter<"Lanche"> | string | null
+    ativo?: BoolWithAggregatesFilter<"Lanche"> | boolean
   }
 
   export type UserWhereInput = {
@@ -15383,11 +15676,13 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     profileId?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
     address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
+    pedidos?: PedidoListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -15396,11 +15691,13 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     profileId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
     profile?: ProfileOrderByWithRelationInput
     address?: AddressOrderByWithRelationInput
+    pedidos?: PedidoOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -15412,11 +15709,13 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     profileId?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     profile?: XOR<ProfileScalarRelationFilter, ProfileWhereInput>
     address?: XOR<AddressNullableScalarRelationFilter, AddressWhereInput> | null
+    pedidos?: PedidoListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -15425,6 +15724,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     profileId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrderInput | SortOrder
@@ -15442,6 +15742,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     profileId?: StringWithAggregatesFilter<"User"> | string
+    role?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -15630,6 +15931,7 @@ export namespace Prisma {
     capacidade: number
     fileiras?: number
     colunas?: number
+    ativo?: boolean
     cinema: CinemaCreateNestedOneWithoutSalasInput
     sessoes?: SessaoCreateNestedManyWithoutSalaInput
   }
@@ -15641,6 +15943,7 @@ export namespace Prisma {
     fileiras?: number
     colunas?: number
     cinemaId: number
+    ativo?: boolean
     sessoes?: SessaoUncheckedCreateNestedManyWithoutSalaInput
   }
 
@@ -15649,6 +15952,7 @@ export namespace Prisma {
     capacidade?: IntFieldUpdateOperationsInput | number
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     cinema?: CinemaUpdateOneRequiredWithoutSalasNestedInput
     sessoes?: SessaoUpdateManyWithoutSalaNestedInput
   }
@@ -15660,6 +15964,7 @@ export namespace Prisma {
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
     cinemaId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     sessoes?: SessaoUncheckedUpdateManyWithoutSalaNestedInput
   }
 
@@ -15670,6 +15975,7 @@ export namespace Prisma {
     fileiras?: number
     colunas?: number
     cinemaId: number
+    ativo?: boolean
   }
 
   export type SalaUpdateManyMutationInput = {
@@ -15677,6 +15983,7 @@ export namespace Prisma {
     capacidade?: IntFieldUpdateOperationsInput | number
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SalaUncheckedUpdateManyInput = {
@@ -15686,6 +15993,7 @@ export namespace Prisma {
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
     cinemaId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type FilmeCreateInput = {
@@ -15698,6 +16006,7 @@ export namespace Prisma {
     dataIniciaExibicao: Date | string
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
+    ativo?: boolean
     cinema?: CinemaCreateNestedOneWithoutFilmesInput
     sessoes?: SessaoCreateNestedManyWithoutFilmeInput
   }
@@ -15714,6 +16023,7 @@ export namespace Prisma {
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
     cinemaId?: number | null
+    ativo?: boolean
     sessoes?: SessaoUncheckedCreateNestedManyWithoutFilmeInput
   }
 
@@ -15727,6 +16037,7 @@ export namespace Prisma {
     dataIniciaExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     cinema?: CinemaUpdateOneWithoutFilmesNestedInput
     sessoes?: SessaoUpdateManyWithoutFilmeNestedInput
   }
@@ -15743,6 +16054,7 @@ export namespace Prisma {
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     sessoes?: SessaoUncheckedUpdateManyWithoutFilmeNestedInput
   }
 
@@ -15758,6 +16070,7 @@ export namespace Prisma {
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
     cinemaId?: number | null
+    ativo?: boolean
   }
 
   export type FilmeUpdateManyMutationInput = {
@@ -15770,6 +16083,7 @@ export namespace Prisma {
     dataIniciaExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type FilmeUncheckedUpdateManyInput = {
@@ -15784,11 +16098,13 @@ export namespace Prisma {
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SessaoCreateInput = {
     horarioExibicao: Date | string
     precoInteira?: number
+    ativo?: boolean
     filme: FilmeCreateNestedOneWithoutSessoesInput
     sala: SalaCreateNestedOneWithoutSessoesInput
     cinema?: CinemaCreateNestedOneWithoutSessoesInput
@@ -15802,12 +16118,14 @@ export namespace Prisma {
     filmeId: number
     salaId: number
     cinemaId?: number | null
+    ativo?: boolean
     ingressos?: IngressoUncheckedCreateNestedManyWithoutSessaoInput
   }
 
   export type SessaoUpdateInput = {
     horarioExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     precoInteira?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     filme?: FilmeUpdateOneRequiredWithoutSessoesNestedInput
     sala?: SalaUpdateOneRequiredWithoutSessoesNestedInput
     cinema?: CinemaUpdateOneWithoutSessoesNestedInput
@@ -15821,6 +16139,7 @@ export namespace Prisma {
     filmeId?: IntFieldUpdateOperationsInput | number
     salaId?: IntFieldUpdateOperationsInput | number
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     ingressos?: IngressoUncheckedUpdateManyWithoutSessaoNestedInput
   }
 
@@ -15831,11 +16150,13 @@ export namespace Prisma {
     filmeId: number
     salaId: number
     cinemaId?: number | null
+    ativo?: boolean
   }
 
   export type SessaoUpdateManyMutationInput = {
     horarioExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     precoInteira?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SessaoUncheckedUpdateManyInput = {
@@ -15845,12 +16166,15 @@ export namespace Prisma {
     filmeId?: IntFieldUpdateOperationsInput | number
     salaId?: IntFieldUpdateOperationsInput | number
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IngressoCreateInput = {
     assento: string
     tipo?: $Enums.TipoIngresso
     valorPago: number
+    ativo?: boolean
+    reembolsado?: boolean
     sessao: SessaoCreateNestedOneWithoutIngressosInput
     pedidos?: PedidoCreateNestedManyWithoutIngressosInput
   }
@@ -15861,6 +16185,8 @@ export namespace Prisma {
     tipo?: $Enums.TipoIngresso
     valorPago: number
     sessaoId: number
+    ativo?: boolean
+    reembolsado?: boolean
     pedidos?: PedidoUncheckedCreateNestedManyWithoutIngressosInput
   }
 
@@ -15868,6 +16194,8 @@ export namespace Prisma {
     assento?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     sessao?: SessaoUpdateOneRequiredWithoutIngressosNestedInput
     pedidos?: PedidoUpdateManyWithoutIngressosNestedInput
   }
@@ -15878,6 +16206,8 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
     sessaoId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     pedidos?: PedidoUncheckedUpdateManyWithoutIngressosNestedInput
   }
 
@@ -15887,12 +16217,16 @@ export namespace Prisma {
     tipo?: $Enums.TipoIngresso
     valorPago: number
     sessaoId: number
+    ativo?: boolean
+    reembolsado?: boolean
   }
 
   export type IngressoUpdateManyMutationInput = {
     assento?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IngressoUncheckedUpdateManyInput = {
@@ -15901,6 +16235,8 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
     sessaoId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PedidoCreateInput = {
@@ -15908,8 +16244,10 @@ export namespace Prisma {
     valorTotal: number
     status?: string
     comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
     ingressos?: IngressoCreateNestedManyWithoutPedidosInput
     itens?: ItemPedidoCreateNestedManyWithoutPedidoInput
+    user?: UserCreateNestedOneWithoutPedidosInput
   }
 
   export type PedidoUncheckedCreateInput = {
@@ -15918,6 +16256,8 @@ export namespace Prisma {
     valorTotal: number
     status?: string
     comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
+    userId?: string | null
     ingressos?: IngressoUncheckedCreateNestedManyWithoutPedidosInput
     itens?: ItemPedidoUncheckedCreateNestedManyWithoutPedidoInput
   }
@@ -15927,8 +16267,10 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ingressos?: IngressoUpdateManyWithoutPedidosNestedInput
     itens?: ItemPedidoUpdateManyWithoutPedidoNestedInput
+    user?: UserUpdateOneWithoutPedidosNestedInput
   }
 
   export type PedidoUncheckedUpdateInput = {
@@ -15937,6 +16279,8 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     ingressos?: IngressoUncheckedUpdateManyWithoutPedidosNestedInput
     itens?: ItemPedidoUncheckedUpdateManyWithoutPedidoNestedInput
   }
@@ -15947,6 +16291,8 @@ export namespace Prisma {
     valorTotal: number
     status?: string
     comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
+    userId?: string | null
   }
 
   export type PedidoUpdateManyMutationInput = {
@@ -15954,6 +16300,7 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PedidoUncheckedUpdateManyInput = {
@@ -15962,11 +16309,14 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ItemPedidoCreateInput = {
     quantidade: number
     subtotal: number
+    reembolsado?: boolean
     pedido: PedidoCreateNestedOneWithoutItensInput
     lanche: LancheCreateNestedOneWithoutItensInput
   }
@@ -15977,11 +16327,13 @@ export namespace Prisma {
     subtotal: number
     pedidoId: number
     lancheId: number
+    reembolsado?: boolean
   }
 
   export type ItemPedidoUpdateInput = {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     pedido?: PedidoUpdateOneRequiredWithoutItensNestedInput
     lanche?: LancheUpdateOneRequiredWithoutItensNestedInput
   }
@@ -15992,6 +16344,7 @@ export namespace Prisma {
     subtotal?: FloatFieldUpdateOperationsInput | number
     pedidoId?: IntFieldUpdateOperationsInput | number
     lancheId?: IntFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ItemPedidoCreateManyInput = {
@@ -16000,11 +16353,13 @@ export namespace Prisma {
     subtotal: number
     pedidoId: number
     lancheId: number
+    reembolsado?: boolean
   }
 
   export type ItemPedidoUpdateManyMutationInput = {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ItemPedidoUncheckedUpdateManyInput = {
@@ -16013,6 +16368,7 @@ export namespace Prisma {
     subtotal?: FloatFieldUpdateOperationsInput | number
     pedidoId?: IntFieldUpdateOperationsInput | number
     lancheId?: IntFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type LancheCreateInput = {
@@ -16020,6 +16376,7 @@ export namespace Prisma {
     descricao: string
     preco: number
     imagemUrl?: string | null
+    ativo?: boolean
     itens?: ItemPedidoCreateNestedManyWithoutLancheInput
   }
 
@@ -16029,6 +16386,7 @@ export namespace Prisma {
     descricao: string
     preco: number
     imagemUrl?: string | null
+    ativo?: boolean
     itens?: ItemPedidoUncheckedCreateNestedManyWithoutLancheInput
   }
 
@@ -16037,6 +16395,7 @@ export namespace Prisma {
     descricao?: StringFieldUpdateOperationsInput | string
     preco?: FloatFieldUpdateOperationsInput | number
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     itens?: ItemPedidoUpdateManyWithoutLancheNestedInput
   }
 
@@ -16046,6 +16405,7 @@ export namespace Prisma {
     descricao?: StringFieldUpdateOperationsInput | string
     preco?: FloatFieldUpdateOperationsInput | number
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     itens?: ItemPedidoUncheckedUpdateManyWithoutLancheNestedInput
   }
 
@@ -16055,6 +16415,7 @@ export namespace Prisma {
     descricao: string
     preco: number
     imagemUrl?: string | null
+    ativo?: boolean
   }
 
   export type LancheUpdateManyMutationInput = {
@@ -16062,6 +16423,7 @@ export namespace Prisma {
     descricao?: StringFieldUpdateOperationsInput | string
     preco?: FloatFieldUpdateOperationsInput | number
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type LancheUncheckedUpdateManyInput = {
@@ -16070,6 +16432,7 @@ export namespace Prisma {
     descricao?: StringFieldUpdateOperationsInput | string
     preco?: FloatFieldUpdateOperationsInput | number
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserCreateInput = {
@@ -16077,11 +16440,13 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     profile: ProfileCreateNestedOneWithoutUsersInput
     address?: AddressCreateNestedOneWithoutUserInput
+    pedidos?: PedidoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -16090,10 +16455,12 @@ export namespace Prisma {
     password: string
     name: string
     profileId: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     address?: AddressUncheckedCreateNestedOneWithoutUserInput
+    pedidos?: PedidoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -16101,11 +16468,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile?: ProfileUpdateOneRequiredWithoutUsersNestedInput
     address?: AddressUpdateOneWithoutUserNestedInput
+    pedidos?: PedidoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -16114,10 +16483,12 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     profileId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: AddressUncheckedUpdateOneWithoutUserNestedInput
+    pedidos?: PedidoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -16126,6 +16497,7 @@ export namespace Prisma {
     password: string
     name: string
     profileId: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -16136,6 +16508,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -16147,6 +16520,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     profileId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -16404,6 +16778,11 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type CinemaScalarRelationFilter = {
     is?: CinemaWhereInput
     isNot?: CinemaWhereInput
@@ -16421,6 +16800,7 @@ export namespace Prisma {
     fileiras?: SortOrder
     colunas?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type SalaAvgOrderByAggregateInput = {
@@ -16439,6 +16819,7 @@ export namespace Prisma {
     fileiras?: SortOrder
     colunas?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type SalaMinOrderByAggregateInput = {
@@ -16448,6 +16829,7 @@ export namespace Prisma {
     fileiras?: SortOrder
     colunas?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type SalaSumOrderByAggregateInput = {
@@ -16457,6 +16839,14 @@ export namespace Prisma {
     fileiras?: SortOrder
     colunas?: SortOrder
     cinemaId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumGeneroFilter<$PrismaModel = never> = {
@@ -16525,6 +16915,7 @@ export namespace Prisma {
     dataFinalExibicao?: SortOrder
     imagemUrl?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type FilmeAvgOrderByAggregateInput = {
@@ -16545,6 +16936,7 @@ export namespace Prisma {
     dataFinalExibicao?: SortOrder
     imagemUrl?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type FilmeMinOrderByAggregateInput = {
@@ -16559,6 +16951,7 @@ export namespace Prisma {
     dataFinalExibicao?: SortOrder
     imagemUrl?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type FilmeSumOrderByAggregateInput = {
@@ -16663,6 +17056,7 @@ export namespace Prisma {
     filmeId?: SortOrder
     salaId?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type SessaoAvgOrderByAggregateInput = {
@@ -16680,6 +17074,7 @@ export namespace Prisma {
     filmeId?: SortOrder
     salaId?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type SessaoMinOrderByAggregateInput = {
@@ -16689,6 +17084,7 @@ export namespace Prisma {
     filmeId?: SortOrder
     salaId?: SortOrder
     cinemaId?: SortOrder
+    ativo?: SortOrder
   }
 
   export type SessaoSumOrderByAggregateInput = {
@@ -16748,6 +17144,8 @@ export namespace Prisma {
     tipo?: SortOrder
     valorPago?: SortOrder
     sessaoId?: SortOrder
+    ativo?: SortOrder
+    reembolsado?: SortOrder
   }
 
   export type IngressoAvgOrderByAggregateInput = {
@@ -16762,6 +17160,8 @@ export namespace Prisma {
     tipo?: SortOrder
     valorPago?: SortOrder
     sessaoId?: SortOrder
+    ativo?: SortOrder
+    reembolsado?: SortOrder
   }
 
   export type IngressoMinOrderByAggregateInput = {
@@ -16770,6 +17170,8 @@ export namespace Prisma {
     tipo?: SortOrder
     valorPago?: SortOrder
     sessaoId?: SortOrder
+    ativo?: SortOrder
+    reembolsado?: SortOrder
   }
 
   export type IngressoSumOrderByAggregateInput = {
@@ -16794,6 +17196,11 @@ export namespace Prisma {
     none?: ItemPedidoWhereInput
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type ItemPedidoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -16804,6 +17211,8 @@ export namespace Prisma {
     valorTotal?: SortOrder
     status?: SortOrder
     comprovanteUrl?: SortOrder
+    comprovanteReembolsoUrl?: SortOrder
+    userId?: SortOrder
   }
 
   export type PedidoAvgOrderByAggregateInput = {
@@ -16817,6 +17226,8 @@ export namespace Prisma {
     valorTotal?: SortOrder
     status?: SortOrder
     comprovanteUrl?: SortOrder
+    comprovanteReembolsoUrl?: SortOrder
+    userId?: SortOrder
   }
 
   export type PedidoMinOrderByAggregateInput = {
@@ -16825,6 +17236,8 @@ export namespace Prisma {
     valorTotal?: SortOrder
     status?: SortOrder
     comprovanteUrl?: SortOrder
+    comprovanteReembolsoUrl?: SortOrder
+    userId?: SortOrder
   }
 
   export type PedidoSumOrderByAggregateInput = {
@@ -16848,6 +17261,7 @@ export namespace Prisma {
     subtotal?: SortOrder
     pedidoId?: SortOrder
     lancheId?: SortOrder
+    reembolsado?: SortOrder
   }
 
   export type ItemPedidoAvgOrderByAggregateInput = {
@@ -16864,6 +17278,7 @@ export namespace Prisma {
     subtotal?: SortOrder
     pedidoId?: SortOrder
     lancheId?: SortOrder
+    reembolsado?: SortOrder
   }
 
   export type ItemPedidoMinOrderByAggregateInput = {
@@ -16872,6 +17287,7 @@ export namespace Prisma {
     subtotal?: SortOrder
     pedidoId?: SortOrder
     lancheId?: SortOrder
+    reembolsado?: SortOrder
   }
 
   export type ItemPedidoSumOrderByAggregateInput = {
@@ -16888,6 +17304,7 @@ export namespace Prisma {
     descricao?: SortOrder
     preco?: SortOrder
     imagemUrl?: SortOrder
+    ativo?: SortOrder
   }
 
   export type LancheAvgOrderByAggregateInput = {
@@ -16901,6 +17318,7 @@ export namespace Prisma {
     descricao?: SortOrder
     preco?: SortOrder
     imagemUrl?: SortOrder
+    ativo?: SortOrder
   }
 
   export type LancheMinOrderByAggregateInput = {
@@ -16909,6 +17327,7 @@ export namespace Prisma {
     descricao?: SortOrder
     preco?: SortOrder
     imagemUrl?: SortOrder
+    ativo?: SortOrder
   }
 
   export type LancheSumOrderByAggregateInput = {
@@ -16943,6 +17362,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     profileId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -16954,6 +17374,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     profileId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -16965,6 +17386,7 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     profileId?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deletedAt?: SortOrder
@@ -17220,6 +17642,10 @@ export namespace Prisma {
     connectOrCreate?: SessaoCreateOrConnectWithoutSalaInput | SessaoCreateOrConnectWithoutSalaInput[]
     createMany?: SessaoCreateManySalaInputEnvelope
     connect?: SessaoWhereUniqueInput | SessaoWhereUniqueInput[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type CinemaUpdateOneRequiredWithoutSalasNestedInput = {
@@ -17499,6 +17925,12 @@ export namespace Prisma {
     connect?: ItemPedidoWhereUniqueInput | ItemPedidoWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutPedidosInput = {
+    create?: XOR<UserCreateWithoutPedidosInput, UserUncheckedCreateWithoutPedidosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPedidosInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type IngressoUncheckedCreateNestedManyWithoutPedidosInput = {
     create?: XOR<IngressoCreateWithoutPedidosInput, IngressoUncheckedCreateWithoutPedidosInput> | IngressoCreateWithoutPedidosInput[] | IngressoUncheckedCreateWithoutPedidosInput[]
     connectOrCreate?: IngressoCreateOrConnectWithoutPedidosInput | IngressoCreateOrConnectWithoutPedidosInput[]
@@ -17537,6 +17969,16 @@ export namespace Prisma {
     update?: ItemPedidoUpdateWithWhereUniqueWithoutPedidoInput | ItemPedidoUpdateWithWhereUniqueWithoutPedidoInput[]
     updateMany?: ItemPedidoUpdateManyWithWhereWithoutPedidoInput | ItemPedidoUpdateManyWithWhereWithoutPedidoInput[]
     deleteMany?: ItemPedidoScalarWhereInput | ItemPedidoScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutPedidosNestedInput = {
+    create?: XOR<UserCreateWithoutPedidosInput, UserUncheckedCreateWithoutPedidosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPedidosInput
+    upsert?: UserUpsertWithoutPedidosInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPedidosInput, UserUpdateWithoutPedidosInput>, UserUncheckedUpdateWithoutPedidosInput>
   }
 
   export type IngressoUncheckedUpdateManyWithoutPedidosNestedInput = {
@@ -17648,10 +18090,24 @@ export namespace Prisma {
     connect?: AddressWhereUniqueInput
   }
 
+  export type PedidoCreateNestedManyWithoutUserInput = {
+    create?: XOR<PedidoCreateWithoutUserInput, PedidoUncheckedCreateWithoutUserInput> | PedidoCreateWithoutUserInput[] | PedidoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PedidoCreateOrConnectWithoutUserInput | PedidoCreateOrConnectWithoutUserInput[]
+    createMany?: PedidoCreateManyUserInputEnvelope
+    connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+  }
+
   export type AddressUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<AddressCreateWithoutUserInput, AddressUncheckedCreateWithoutUserInput>
     connectOrCreate?: AddressCreateOrConnectWithoutUserInput
     connect?: AddressWhereUniqueInput
+  }
+
+  export type PedidoUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PedidoCreateWithoutUserInput, PedidoUncheckedCreateWithoutUserInput> | PedidoCreateWithoutUserInput[] | PedidoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PedidoCreateOrConnectWithoutUserInput | PedidoCreateOrConnectWithoutUserInput[]
+    createMany?: PedidoCreateManyUserInputEnvelope
+    connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -17676,6 +18132,20 @@ export namespace Prisma {
     update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutUserInput, AddressUpdateWithoutUserInput>, AddressUncheckedUpdateWithoutUserInput>
   }
 
+  export type PedidoUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PedidoCreateWithoutUserInput, PedidoUncheckedCreateWithoutUserInput> | PedidoCreateWithoutUserInput[] | PedidoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PedidoCreateOrConnectWithoutUserInput | PedidoCreateOrConnectWithoutUserInput[]
+    upsert?: PedidoUpsertWithWhereUniqueWithoutUserInput | PedidoUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PedidoCreateManyUserInputEnvelope
+    set?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    disconnect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    delete?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    update?: PedidoUpdateWithWhereUniqueWithoutUserInput | PedidoUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PedidoUpdateManyWithWhereWithoutUserInput | PedidoUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
+  }
+
   export type AddressUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<AddressCreateWithoutUserInput, AddressUncheckedCreateWithoutUserInput>
     connectOrCreate?: AddressCreateOrConnectWithoutUserInput
@@ -17684,6 +18154,20 @@ export namespace Prisma {
     delete?: AddressWhereInput | boolean
     connect?: AddressWhereUniqueInput
     update?: XOR<XOR<AddressUpdateToOneWithWhereWithoutUserInput, AddressUpdateWithoutUserInput>, AddressUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PedidoUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PedidoCreateWithoutUserInput, PedidoUncheckedCreateWithoutUserInput> | PedidoCreateWithoutUserInput[] | PedidoUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PedidoCreateOrConnectWithoutUserInput | PedidoCreateOrConnectWithoutUserInput[]
+    upsert?: PedidoUpsertWithWhereUniqueWithoutUserInput | PedidoUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PedidoCreateManyUserInputEnvelope
+    set?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    disconnect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    delete?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    connect?: PedidoWhereUniqueInput | PedidoWhereUniqueInput[]
+    update?: PedidoUpdateWithWhereUniqueWithoutUserInput | PedidoUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PedidoUpdateManyWithWhereWithoutUserInput | PedidoUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
   }
 
   export type UserCreateNestedManyWithoutProfileInput = {
@@ -17809,6 +18293,19 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumGeneroFilter<$PrismaModel = never> = {
@@ -17985,6 +18482,7 @@ export namespace Prisma {
     capacidade: number
     fileiras?: number
     colunas?: number
+    ativo?: boolean
     sessoes?: SessaoCreateNestedManyWithoutSalaInput
   }
 
@@ -17994,6 +18492,7 @@ export namespace Prisma {
     capacidade: number
     fileiras?: number
     colunas?: number
+    ativo?: boolean
     sessoes?: SessaoUncheckedCreateNestedManyWithoutSalaInput
   }
 
@@ -18017,6 +18516,7 @@ export namespace Prisma {
     dataIniciaExibicao: Date | string
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
+    ativo?: boolean
     sessoes?: SessaoCreateNestedManyWithoutFilmeInput
   }
 
@@ -18031,6 +18531,7 @@ export namespace Prisma {
     dataIniciaExibicao: Date | string
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
+    ativo?: boolean
     sessoes?: SessaoUncheckedCreateNestedManyWithoutFilmeInput
   }
 
@@ -18047,6 +18548,7 @@ export namespace Prisma {
   export type SessaoCreateWithoutCinemaInput = {
     horarioExibicao: Date | string
     precoInteira?: number
+    ativo?: boolean
     filme: FilmeCreateNestedOneWithoutSessoesInput
     sala: SalaCreateNestedOneWithoutSessoesInput
     ingressos?: IngressoCreateNestedManyWithoutSessaoInput
@@ -18058,6 +18560,7 @@ export namespace Prisma {
     precoInteira?: number
     filmeId: number
     salaId: number
+    ativo?: boolean
     ingressos?: IngressoUncheckedCreateNestedManyWithoutSessaoInput
   }
 
@@ -18097,6 +18600,7 @@ export namespace Prisma {
     fileiras?: IntFilter<"Sala"> | number
     colunas?: IntFilter<"Sala"> | number
     cinemaId?: IntFilter<"Sala"> | number
+    ativo?: BoolFilter<"Sala"> | boolean
   }
 
   export type FilmeUpsertWithWhereUniqueWithoutCinemaInput = {
@@ -18130,6 +18634,7 @@ export namespace Prisma {
     dataFinalExibicao?: DateTimeFilter<"Filme"> | Date | string
     imagemUrl?: StringNullableFilter<"Filme"> | string | null
     cinemaId?: IntNullableFilter<"Filme"> | number | null
+    ativo?: BoolFilter<"Filme"> | boolean
   }
 
   export type SessaoUpsertWithWhereUniqueWithoutCinemaInput = {
@@ -18158,6 +18663,7 @@ export namespace Prisma {
     filmeId?: IntFilter<"Sessao"> | number
     salaId?: IntFilter<"Sessao"> | number
     cinemaId?: IntNullableFilter<"Sessao"> | number | null
+    ativo?: BoolFilter<"Sessao"> | boolean
   }
 
   export type CinemaCreateWithoutSalasInput = {
@@ -18183,6 +18689,7 @@ export namespace Prisma {
   export type SessaoCreateWithoutSalaInput = {
     horarioExibicao: Date | string
     precoInteira?: number
+    ativo?: boolean
     filme: FilmeCreateNestedOneWithoutSessoesInput
     cinema?: CinemaCreateNestedOneWithoutSessoesInput
     ingressos?: IngressoCreateNestedManyWithoutSessaoInput
@@ -18194,6 +18701,7 @@ export namespace Prisma {
     precoInteira?: number
     filmeId: number
     cinemaId?: number | null
+    ativo?: boolean
     ingressos?: IngressoUncheckedCreateNestedManyWithoutSessaoInput
   }
 
@@ -18272,6 +18780,7 @@ export namespace Prisma {
   export type SessaoCreateWithoutFilmeInput = {
     horarioExibicao: Date | string
     precoInteira?: number
+    ativo?: boolean
     sala: SalaCreateNestedOneWithoutSessoesInput
     cinema?: CinemaCreateNestedOneWithoutSessoesInput
     ingressos?: IngressoCreateNestedManyWithoutSessaoInput
@@ -18283,6 +18792,7 @@ export namespace Prisma {
     precoInteira?: number
     salaId: number
     cinemaId?: number | null
+    ativo?: boolean
     ingressos?: IngressoUncheckedCreateNestedManyWithoutSessaoInput
   }
 
@@ -18348,6 +18858,7 @@ export namespace Prisma {
     dataIniciaExibicao: Date | string
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
+    ativo?: boolean
     cinema?: CinemaCreateNestedOneWithoutFilmesInput
   }
 
@@ -18363,6 +18874,7 @@ export namespace Prisma {
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
     cinemaId?: number | null
+    ativo?: boolean
   }
 
   export type FilmeCreateOrConnectWithoutSessoesInput = {
@@ -18375,6 +18887,7 @@ export namespace Prisma {
     capacidade: number
     fileiras?: number
     colunas?: number
+    ativo?: boolean
     cinema: CinemaCreateNestedOneWithoutSalasInput
   }
 
@@ -18385,6 +18898,7 @@ export namespace Prisma {
     fileiras?: number
     colunas?: number
     cinemaId: number
+    ativo?: boolean
   }
 
   export type SalaCreateOrConnectWithoutSessoesInput = {
@@ -18416,6 +18930,8 @@ export namespace Prisma {
     assento: string
     tipo?: $Enums.TipoIngresso
     valorPago: number
+    ativo?: boolean
+    reembolsado?: boolean
     pedidos?: PedidoCreateNestedManyWithoutIngressosInput
   }
 
@@ -18424,6 +18940,8 @@ export namespace Prisma {
     assento: string
     tipo?: $Enums.TipoIngresso
     valorPago: number
+    ativo?: boolean
+    reembolsado?: boolean
     pedidos?: PedidoUncheckedCreateNestedManyWithoutIngressosInput
   }
 
@@ -18458,6 +18976,7 @@ export namespace Prisma {
     dataIniciaExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     cinema?: CinemaUpdateOneWithoutFilmesNestedInput
   }
 
@@ -18473,6 +18992,7 @@ export namespace Prisma {
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SalaUpsertWithoutSessoesInput = {
@@ -18491,6 +19011,7 @@ export namespace Prisma {
     capacidade?: IntFieldUpdateOperationsInput | number
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     cinema?: CinemaUpdateOneRequiredWithoutSalasNestedInput
   }
 
@@ -18501,6 +19022,7 @@ export namespace Prisma {
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
     cinemaId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CinemaUpsertWithoutSessoesInput = {
@@ -18554,11 +19076,14 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoFilter<"Ingresso"> | $Enums.TipoIngresso
     valorPago?: FloatFilter<"Ingresso"> | number
     sessaoId?: IntFilter<"Ingresso"> | number
+    ativo?: BoolFilter<"Ingresso"> | boolean
+    reembolsado?: BoolFilter<"Ingresso"> | boolean
   }
 
   export type SessaoCreateWithoutIngressosInput = {
     horarioExibicao: Date | string
     precoInteira?: number
+    ativo?: boolean
     filme: FilmeCreateNestedOneWithoutSessoesInput
     sala: SalaCreateNestedOneWithoutSessoesInput
     cinema?: CinemaCreateNestedOneWithoutSessoesInput
@@ -18571,6 +19096,7 @@ export namespace Prisma {
     filmeId: number
     salaId: number
     cinemaId?: number | null
+    ativo?: boolean
   }
 
   export type SessaoCreateOrConnectWithoutIngressosInput = {
@@ -18583,7 +19109,9 @@ export namespace Prisma {
     valorTotal: number
     status?: string
     comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
     itens?: ItemPedidoCreateNestedManyWithoutPedidoInput
+    user?: UserCreateNestedOneWithoutPedidosInput
   }
 
   export type PedidoUncheckedCreateWithoutIngressosInput = {
@@ -18592,6 +19120,8 @@ export namespace Prisma {
     valorTotal: number
     status?: string
     comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
+    userId?: string | null
     itens?: ItemPedidoUncheckedCreateNestedManyWithoutPedidoInput
   }
 
@@ -18614,6 +19144,7 @@ export namespace Prisma {
   export type SessaoUpdateWithoutIngressosInput = {
     horarioExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     precoInteira?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     filme?: FilmeUpdateOneRequiredWithoutSessoesNestedInput
     sala?: SalaUpdateOneRequiredWithoutSessoesNestedInput
     cinema?: CinemaUpdateOneWithoutSessoesNestedInput
@@ -18626,6 +19157,7 @@ export namespace Prisma {
     filmeId?: IntFieldUpdateOperationsInput | number
     salaId?: IntFieldUpdateOperationsInput | number
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PedidoUpsertWithWhereUniqueWithoutIngressosInput = {
@@ -18653,12 +19185,16 @@ export namespace Prisma {
     valorTotal?: FloatFilter<"Pedido"> | number
     status?: StringFilter<"Pedido"> | string
     comprovanteUrl?: StringNullableFilter<"Pedido"> | string | null
+    comprovanteReembolsoUrl?: StringNullableFilter<"Pedido"> | string | null
+    userId?: StringNullableFilter<"Pedido"> | string | null
   }
 
   export type IngressoCreateWithoutPedidosInput = {
     assento: string
     tipo?: $Enums.TipoIngresso
     valorPago: number
+    ativo?: boolean
+    reembolsado?: boolean
     sessao: SessaoCreateNestedOneWithoutIngressosInput
   }
 
@@ -18668,6 +19204,8 @@ export namespace Prisma {
     tipo?: $Enums.TipoIngresso
     valorPago: number
     sessaoId: number
+    ativo?: boolean
+    reembolsado?: boolean
   }
 
   export type IngressoCreateOrConnectWithoutPedidosInput = {
@@ -18678,6 +19216,7 @@ export namespace Prisma {
   export type ItemPedidoCreateWithoutPedidoInput = {
     quantidade: number
     subtotal: number
+    reembolsado?: boolean
     lanche: LancheCreateNestedOneWithoutItensInput
   }
 
@@ -18686,6 +19225,7 @@ export namespace Prisma {
     quantidade: number
     subtotal: number
     lancheId: number
+    reembolsado?: boolean
   }
 
   export type ItemPedidoCreateOrConnectWithoutPedidoInput = {
@@ -18696,6 +19236,37 @@ export namespace Prisma {
   export type ItemPedidoCreateManyPedidoInputEnvelope = {
     data: ItemPedidoCreateManyPedidoInput | ItemPedidoCreateManyPedidoInput[]
     skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutPedidosInput = {
+    id?: string
+    email: string
+    password: string
+    name: string
+    role?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    profile: ProfileCreateNestedOneWithoutUsersInput
+    address?: AddressCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPedidosInput = {
+    id?: string
+    email: string
+    password: string
+    name: string
+    profileId: string
+    role?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deletedAt?: Date | string | null
+    address?: AddressUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPedidosInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPedidosInput, UserUncheckedCreateWithoutPedidosInput>
   }
 
   export type IngressoUpsertWithWhereUniqueWithoutPedidosInput = {
@@ -18739,6 +19310,44 @@ export namespace Prisma {
     subtotal?: FloatFilter<"ItemPedido"> | number
     pedidoId?: IntFilter<"ItemPedido"> | number
     lancheId?: IntFilter<"ItemPedido"> | number
+    reembolsado?: BoolFilter<"ItemPedido"> | boolean
+  }
+
+  export type UserUpsertWithoutPedidosInput = {
+    update: XOR<UserUpdateWithoutPedidosInput, UserUncheckedUpdateWithoutPedidosInput>
+    create: XOR<UserCreateWithoutPedidosInput, UserUncheckedCreateWithoutPedidosInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPedidosInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPedidosInput, UserUncheckedUpdateWithoutPedidosInput>
+  }
+
+  export type UserUpdateWithoutPedidosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profile?: ProfileUpdateOneRequiredWithoutUsersNestedInput
+    address?: AddressUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPedidosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    profileId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    address?: AddressUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type PedidoCreateWithoutItensInput = {
@@ -18746,7 +19355,9 @@ export namespace Prisma {
     valorTotal: number
     status?: string
     comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
     ingressos?: IngressoCreateNestedManyWithoutPedidosInput
+    user?: UserCreateNestedOneWithoutPedidosInput
   }
 
   export type PedidoUncheckedCreateWithoutItensInput = {
@@ -18755,6 +19366,8 @@ export namespace Prisma {
     valorTotal: number
     status?: string
     comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
+    userId?: string | null
     ingressos?: IngressoUncheckedCreateNestedManyWithoutPedidosInput
   }
 
@@ -18768,6 +19381,7 @@ export namespace Prisma {
     descricao: string
     preco: number
     imagemUrl?: string | null
+    ativo?: boolean
   }
 
   export type LancheUncheckedCreateWithoutItensInput = {
@@ -18776,6 +19390,7 @@ export namespace Prisma {
     descricao: string
     preco: number
     imagemUrl?: string | null
+    ativo?: boolean
   }
 
   export type LancheCreateOrConnectWithoutItensInput = {
@@ -18799,7 +19414,9 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     ingressos?: IngressoUpdateManyWithoutPedidosNestedInput
+    user?: UserUpdateOneWithoutPedidosNestedInput
   }
 
   export type PedidoUncheckedUpdateWithoutItensInput = {
@@ -18808,6 +19425,8 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     ingressos?: IngressoUncheckedUpdateManyWithoutPedidosNestedInput
   }
 
@@ -18827,6 +19446,7 @@ export namespace Prisma {
     descricao?: StringFieldUpdateOperationsInput | string
     preco?: FloatFieldUpdateOperationsInput | number
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type LancheUncheckedUpdateWithoutItensInput = {
@@ -18835,11 +19455,13 @@ export namespace Prisma {
     descricao?: StringFieldUpdateOperationsInput | string
     preco?: FloatFieldUpdateOperationsInput | number
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ItemPedidoCreateWithoutLancheInput = {
     quantidade: number
     subtotal: number
+    reembolsado?: boolean
     pedido: PedidoCreateNestedOneWithoutItensInput
   }
 
@@ -18848,6 +19470,7 @@ export namespace Prisma {
     quantidade: number
     subtotal: number
     pedidoId: number
+    reembolsado?: boolean
   }
 
   export type ItemPedidoCreateOrConnectWithoutLancheInput = {
@@ -18922,6 +19545,37 @@ export namespace Prisma {
     create: XOR<AddressCreateWithoutUserInput, AddressUncheckedCreateWithoutUserInput>
   }
 
+  export type PedidoCreateWithoutUserInput = {
+    dataPedido?: Date | string
+    valorTotal: number
+    status?: string
+    comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
+    ingressos?: IngressoCreateNestedManyWithoutPedidosInput
+    itens?: ItemPedidoCreateNestedManyWithoutPedidoInput
+  }
+
+  export type PedidoUncheckedCreateWithoutUserInput = {
+    id?: number
+    dataPedido?: Date | string
+    valorTotal: number
+    status?: string
+    comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
+    ingressos?: IngressoUncheckedCreateNestedManyWithoutPedidosInput
+    itens?: ItemPedidoUncheckedCreateNestedManyWithoutPedidoInput
+  }
+
+  export type PedidoCreateOrConnectWithoutUserInput = {
+    where: PedidoWhereUniqueInput
+    create: XOR<PedidoCreateWithoutUserInput, PedidoUncheckedCreateWithoutUserInput>
+  }
+
+  export type PedidoCreateManyUserInputEnvelope = {
+    data: PedidoCreateManyUserInput | PedidoCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ProfileUpsertWithoutUsersInput = {
     update: XOR<ProfileUpdateWithoutUsersInput, ProfileUncheckedUpdateWithoutUsersInput>
     create: XOR<ProfileCreateWithoutUsersInput, ProfileUncheckedCreateWithoutUsersInput>
@@ -18980,15 +19634,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PedidoUpsertWithWhereUniqueWithoutUserInput = {
+    where: PedidoWhereUniqueInput
+    update: XOR<PedidoUpdateWithoutUserInput, PedidoUncheckedUpdateWithoutUserInput>
+    create: XOR<PedidoCreateWithoutUserInput, PedidoUncheckedCreateWithoutUserInput>
+  }
+
+  export type PedidoUpdateWithWhereUniqueWithoutUserInput = {
+    where: PedidoWhereUniqueInput
+    data: XOR<PedidoUpdateWithoutUserInput, PedidoUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PedidoUpdateManyWithWhereWithoutUserInput = {
+    where: PedidoScalarWhereInput
+    data: XOR<PedidoUpdateManyMutationInput, PedidoUncheckedUpdateManyWithoutUserInput>
+  }
+
   export type UserCreateWithoutProfileInput = {
     id?: string
     email: string
     password: string
     name: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     address?: AddressCreateNestedOneWithoutUserInput
+    pedidos?: PedidoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -18996,10 +19668,12 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     address?: AddressUncheckedCreateNestedOneWithoutUserInput
+    pedidos?: PedidoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -19037,6 +19711,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     profileId?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deletedAt?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -19047,10 +19722,12 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
     profile: ProfileCreateNestedOneWithoutUsersInput
+    pedidos?: PedidoCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAddressInput = {
@@ -19059,9 +19736,11 @@ export namespace Prisma {
     password: string
     name: string
     profileId: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
+    pedidos?: PedidoUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAddressInput = {
@@ -19085,10 +19764,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile?: ProfileUpdateOneRequiredWithoutUsersNestedInput
+    pedidos?: PedidoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAddressInput = {
@@ -19097,9 +19778,11 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     profileId?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pedidos?: PedidoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SalaCreateManyCinemaInput = {
@@ -19108,6 +19791,7 @@ export namespace Prisma {
     capacidade: number
     fileiras?: number
     colunas?: number
+    ativo?: boolean
   }
 
   export type FilmeCreateManyCinemaInput = {
@@ -19121,6 +19805,7 @@ export namespace Prisma {
     dataIniciaExibicao: Date | string
     dataFinalExibicao: Date | string
     imagemUrl?: string | null
+    ativo?: boolean
   }
 
   export type SessaoCreateManyCinemaInput = {
@@ -19129,6 +19814,7 @@ export namespace Prisma {
     precoInteira?: number
     filmeId: number
     salaId: number
+    ativo?: boolean
   }
 
   export type SalaUpdateWithoutCinemaInput = {
@@ -19136,6 +19822,7 @@ export namespace Prisma {
     capacidade?: IntFieldUpdateOperationsInput | number
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     sessoes?: SessaoUpdateManyWithoutSalaNestedInput
   }
 
@@ -19145,6 +19832,7 @@ export namespace Prisma {
     capacidade?: IntFieldUpdateOperationsInput | number
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     sessoes?: SessaoUncheckedUpdateManyWithoutSalaNestedInput
   }
 
@@ -19154,6 +19842,7 @@ export namespace Prisma {
     capacidade?: IntFieldUpdateOperationsInput | number
     fileiras?: IntFieldUpdateOperationsInput | number
     colunas?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type FilmeUpdateWithoutCinemaInput = {
@@ -19166,6 +19855,7 @@ export namespace Prisma {
     dataIniciaExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     sessoes?: SessaoUpdateManyWithoutFilmeNestedInput
   }
 
@@ -19180,6 +19870,7 @@ export namespace Prisma {
     dataIniciaExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     sessoes?: SessaoUncheckedUpdateManyWithoutFilmeNestedInput
   }
 
@@ -19194,11 +19885,13 @@ export namespace Prisma {
     dataIniciaExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     dataFinalExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SessaoUpdateWithoutCinemaInput = {
     horarioExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     precoInteira?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     filme?: FilmeUpdateOneRequiredWithoutSessoesNestedInput
     sala?: SalaUpdateOneRequiredWithoutSessoesNestedInput
     ingressos?: IngressoUpdateManyWithoutSessaoNestedInput
@@ -19210,6 +19903,7 @@ export namespace Prisma {
     precoInteira?: FloatFieldUpdateOperationsInput | number
     filmeId?: IntFieldUpdateOperationsInput | number
     salaId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     ingressos?: IngressoUncheckedUpdateManyWithoutSessaoNestedInput
   }
 
@@ -19219,6 +19913,7 @@ export namespace Prisma {
     precoInteira?: FloatFieldUpdateOperationsInput | number
     filmeId?: IntFieldUpdateOperationsInput | number
     salaId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SessaoCreateManySalaInput = {
@@ -19227,11 +19922,13 @@ export namespace Prisma {
     precoInteira?: number
     filmeId: number
     cinemaId?: number | null
+    ativo?: boolean
   }
 
   export type SessaoUpdateWithoutSalaInput = {
     horarioExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     precoInteira?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     filme?: FilmeUpdateOneRequiredWithoutSessoesNestedInput
     cinema?: CinemaUpdateOneWithoutSessoesNestedInput
     ingressos?: IngressoUpdateManyWithoutSessaoNestedInput
@@ -19243,6 +19940,7 @@ export namespace Prisma {
     precoInteira?: FloatFieldUpdateOperationsInput | number
     filmeId?: IntFieldUpdateOperationsInput | number
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     ingressos?: IngressoUncheckedUpdateManyWithoutSessaoNestedInput
   }
 
@@ -19252,6 +19950,7 @@ export namespace Prisma {
     precoInteira?: FloatFieldUpdateOperationsInput | number
     filmeId?: IntFieldUpdateOperationsInput | number
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SessaoCreateManyFilmeInput = {
@@ -19260,11 +19959,13 @@ export namespace Prisma {
     precoInteira?: number
     salaId: number
     cinemaId?: number | null
+    ativo?: boolean
   }
 
   export type SessaoUpdateWithoutFilmeInput = {
     horarioExibicao?: DateTimeFieldUpdateOperationsInput | Date | string
     precoInteira?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     sala?: SalaUpdateOneRequiredWithoutSessoesNestedInput
     cinema?: CinemaUpdateOneWithoutSessoesNestedInput
     ingressos?: IngressoUpdateManyWithoutSessaoNestedInput
@@ -19276,6 +19977,7 @@ export namespace Prisma {
     precoInteira?: FloatFieldUpdateOperationsInput | number
     salaId?: IntFieldUpdateOperationsInput | number
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
     ingressos?: IngressoUncheckedUpdateManyWithoutSessaoNestedInput
   }
 
@@ -19285,6 +19987,7 @@ export namespace Prisma {
     precoInteira?: FloatFieldUpdateOperationsInput | number
     salaId?: IntFieldUpdateOperationsInput | number
     cinemaId?: NullableIntFieldUpdateOperationsInput | number | null
+    ativo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IngressoCreateManySessaoInput = {
@@ -19292,12 +19995,16 @@ export namespace Prisma {
     assento: string
     tipo?: $Enums.TipoIngresso
     valorPago: number
+    ativo?: boolean
+    reembolsado?: boolean
   }
 
   export type IngressoUpdateWithoutSessaoInput = {
     assento?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     pedidos?: PedidoUpdateManyWithoutIngressosNestedInput
   }
 
@@ -19306,6 +20013,8 @@ export namespace Prisma {
     assento?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     pedidos?: PedidoUncheckedUpdateManyWithoutIngressosNestedInput
   }
 
@@ -19314,6 +20023,8 @@ export namespace Prisma {
     assento?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PedidoUpdateWithoutIngressosInput = {
@@ -19321,7 +20032,9 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     itens?: ItemPedidoUpdateManyWithoutPedidoNestedInput
+    user?: UserUpdateOneWithoutPedidosNestedInput
   }
 
   export type PedidoUncheckedUpdateWithoutIngressosInput = {
@@ -19330,6 +20043,8 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     itens?: ItemPedidoUncheckedUpdateManyWithoutPedidoNestedInput
   }
 
@@ -19339,6 +20054,8 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
     comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ItemPedidoCreateManyPedidoInput = {
@@ -19346,12 +20063,15 @@ export namespace Prisma {
     quantidade: number
     subtotal: number
     lancheId: number
+    reembolsado?: boolean
   }
 
   export type IngressoUpdateWithoutPedidosInput = {
     assento?: StringFieldUpdateOperationsInput | string
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     sessao?: SessaoUpdateOneRequiredWithoutIngressosNestedInput
   }
 
@@ -19361,6 +20081,8 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
     sessaoId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type IngressoUncheckedUpdateManyWithoutPedidosInput = {
@@ -19369,11 +20091,14 @@ export namespace Prisma {
     tipo?: EnumTipoIngressoFieldUpdateOperationsInput | $Enums.TipoIngresso
     valorPago?: FloatFieldUpdateOperationsInput | number
     sessaoId?: IntFieldUpdateOperationsInput | number
+    ativo?: BoolFieldUpdateOperationsInput | boolean
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ItemPedidoUpdateWithoutPedidoInput = {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     lanche?: LancheUpdateOneRequiredWithoutItensNestedInput
   }
 
@@ -19382,6 +20107,7 @@ export namespace Prisma {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     lancheId?: IntFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ItemPedidoUncheckedUpdateManyWithoutPedidoInput = {
@@ -19389,6 +20115,7 @@ export namespace Prisma {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     lancheId?: IntFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ItemPedidoCreateManyLancheInput = {
@@ -19396,11 +20123,13 @@ export namespace Prisma {
     quantidade: number
     subtotal: number
     pedidoId: number
+    reembolsado?: boolean
   }
 
   export type ItemPedidoUpdateWithoutLancheInput = {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
     pedido?: PedidoUpdateOneRequiredWithoutItensNestedInput
   }
 
@@ -19409,6 +20138,7 @@ export namespace Prisma {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     pedidoId?: IntFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ItemPedidoUncheckedUpdateManyWithoutLancheInput = {
@@ -19416,6 +20146,46 @@ export namespace Prisma {
     quantidade?: IntFieldUpdateOperationsInput | number
     subtotal?: FloatFieldUpdateOperationsInput | number
     pedidoId?: IntFieldUpdateOperationsInput | number
+    reembolsado?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PedidoCreateManyUserInput = {
+    id?: number
+    dataPedido?: Date | string
+    valorTotal: number
+    status?: string
+    comprovanteUrl?: string | null
+    comprovanteReembolsoUrl?: string | null
+  }
+
+  export type PedidoUpdateWithoutUserInput = {
+    dataPedido?: DateTimeFieldUpdateOperationsInput | Date | string
+    valorTotal?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ingressos?: IngressoUpdateManyWithoutPedidosNestedInput
+    itens?: ItemPedidoUpdateManyWithoutPedidoNestedInput
+  }
+
+  export type PedidoUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dataPedido?: DateTimeFieldUpdateOperationsInput | Date | string
+    valorTotal?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    ingressos?: IngressoUncheckedUpdateManyWithoutPedidosNestedInput
+    itens?: ItemPedidoUncheckedUpdateManyWithoutPedidoNestedInput
+  }
+
+  export type PedidoUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dataPedido?: DateTimeFieldUpdateOperationsInput | Date | string
+    valorTotal?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    comprovanteUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    comprovanteReembolsoUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateManyProfileInput = {
@@ -19423,6 +20193,7 @@ export namespace Prisma {
     email: string
     password: string
     name: string
+    role?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     deletedAt?: Date | string | null
@@ -19433,10 +20204,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: AddressUpdateOneWithoutUserNestedInput
+    pedidos?: PedidoUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -19444,10 +20217,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     address?: AddressUncheckedUpdateOneWithoutUserNestedInput
+    pedidos?: PedidoUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutProfileInput = {
@@ -19455,6 +20230,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
