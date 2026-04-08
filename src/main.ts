@@ -18,7 +18,7 @@ async function bootstrap() {
     if ((await prisma.cinema.count()) === 0) {
       await prisma.cinema.create({
         data: {
-          nome: 'CineManager Principal',
+          nome: '123Filmes Central',
           endereco: 'Av. Paulista, 1000 - São Paulo, SP',
         },
       });
@@ -40,8 +40,12 @@ async function bootstrap() {
     console.warn('⚠️  Banco de dados não disponível no boot (cinema padrão não verificado):', err.message);
   }
 
-  // Ativar validação global dos DTOs (class-validator)
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  // Ativar validação global dos DTOs (class-validator) e conversão automática de tipos
+  app.useGlobalPipes(new ValidationPipe({ 
+    whitelist: true, 
+    transform: true, 
+    transformOptions: { enableImplicitConversion: true } 
+  }));
 
   // Configuração do Swagger
   const config = new DocumentBuilder()

@@ -1,155 +1,96 @@
-# Cinema NestJS API
+# 🌊 123Filmes - Modern Cinema Management
 
-API REST para gerenciamento de cinema com NestJS, Prisma e PostgreSQL.
+Uma plataforma completa e visualmente deslumbrante para gerenciamento de cinemas, construída com **NestJS**, **Prisma** e uma interface inspirada na estética **Frutiger Aero**.
 
-## Stack
+![Aesthetic](https://frutigeraeroarchive.org/images/wallpapers/asadal_stock/asadal_stock_63.jpg)
 
-- NestJS
-- Prisma ORM
-- PostgreSQL (Docker)
-- Swagger (OpenAPI)
-- Class Validator
+## ✨ Destaques do Projeto
 
-## O que cada stack faz
+- **Estética Frutiger Aero**: Interface moderna com glassmorphism, gradientes vibrantes, ícones Bootstrap e scrollbars personalizados.
+- **Sistema de Papéis (RBAC)**: Diferenciação completa entre **Administradores** e **Clientes**.
+- **Galeria Visual de Sessões**: Vitrine de filmes com posters, horários e informações de sala em tempo real.
+- **PDV Interativo**: Sistema de ponto de venda com mapa de assentos dinâmico e suporte a lanches (Bomboniere).
+- **Pronto para Raspberry Pi 5**: Configurado para cross-platform (Windows/Linux ARM64).
 
-- NestJS: framework backend que organiza a API em modulos, controllers e services, com injecao de dependencia e estrutura escalavel.
-- Prisma ORM: camada de acesso ao banco com tipagem forte, CRUD facil e gerenciamento de migracoes.
-- PostgreSQL (Docker): banco de dados relacional onde os dados ficam persistidos; o Docker simplifica subir e manter o ambiente.
-- Swagger (OpenAPI): documentacao interativa da API para visualizar e testar endpoints no navegador.
-- class-validator: valida os DTOs de entrada para garantir dados corretos antes de chegar na regra de negocio.
-- class-transformer: transforma payloads em objetos tipados e ajuda na serializacao/deserializacao dos dados.
+---
 
-## Requisitos
+## 🚀 Tecnologias
 
+- **Backend**: NestJS (Node.js framework)
+- **Banco de Dados**: PostgreSQL + Prisma ORM
+- **Frontend**: Vanilla HTML5/JS + Bootstrap 5
+- **Iconografia**: Bootstrap Icons
+- **Segurança**: JWT (JSON Web Tokens) & Bcrypt
+
+---
+
+## 🛠️ Configuração e Instalação
+
+### 1. Requisitos
 - Node.js 18+
-- npm
-- Docker e Docker Compose
+- Docker & Docker Compose
+- NPM
 
-## Configuracao do ambiente
-
-1. Instalar dependencias:
-
+### 2. Instalação e Banco de Dados
 ```bash
+# 1. Instalar dependências
 npm install
-```
 
-2. Subir o banco PostgreSQL via Docker:
-
-```bash
+# 2. Subir o banco PostgreSQL
 docker compose up -d
-```
 
-3. Confirmar se o container subiu:
-
-```bash
-docker ps
-```
-
-Container esperado: `cinema-postgres` na porta `5432`.
-
-4. Verificar `DATABASE_URL` no arquivo `.env`:
-
-```env
-DATABASE_URL="postgresql://cinema:cinema123@localhost:5432/cinema_db?schema=public"
-```
-
-## Prisma
-
-1. Aplicar migracoes:
-
-```bash
-npx prisma migrate dev
-```
-
-2. (Opcional) Abrir Prisma Studio:
-
-```bash
-npx prisma studio
-```
-
-## Executar a API
-
-Modo desenvolvimento:
-
-```bash
-npm run start:dev
-```
-
-A API sobe por padrao em:
-
-- `http://localhost:3000`
-
-## Acessar Swagger e pagina HTML
-
-Com a API rodando:
-
-- Swagger: `http://localhost:3000/api/docs`
-- Pagina publica: `http://localhost:3000/index.html`
-
-Observacao: o projeto ja esta configurado para servir arquivos estaticos da pasta `public` via `src/main.ts`.
-
-## Fluxo rapido (comandos em ordem)
-
-```bash
-npm install
-docker compose up -d
-npx prisma migrate dev
-npm run start:dev
-```
-
-Depois acesse:
-
-- `http://localhost:3000/api/docs`
-- `http://localhost:3000/index.html`
-
-## Scripts uteis
-
-```bash
-npm run start
-npm run start:dev
-npm run start:prod
-npm run build
-npm run test
-npm run test:e2e
-npm run lint
-```
-
-## Troubleshooting
-
-### Erro: "The table public.Profile does not exist"
-
-Esse erro indica que o Prisma Client tentou consultar a tabela `Profile`, mas ela nao existe no banco conectado.
-
-Checklist:
-
-1. O model `Profile` esta no `prisma/schema.prisma`.
-2. O banco correto esta no `.env` (`DATABASE_URL`).
-3. A migracao foi aplicada no mesmo banco:
-
-```bash
-npx prisma migrate dev
-```
-
-4. Se o schema mudou e ficou inconsistente, resetar (apaga dados locais):
-
-```bash
-npx prisma migrate reset
-```
-
-5. Regenerar client, se necessario:
-
-```bash
+# 3. Sincronizar o banco e gerar o client
+npx prisma db push
 npx prisma generate
 ```
 
-### Docker esta rodando, mas nao abre a API
+### 3. Rodar o Projeto
+```bash
+npm run start:dev
+```
 
-- Docker sobe apenas o banco. A API NestJS precisa estar rodando com `npm run start:dev`.
-- Verifique se a porta 3000 esta livre.
+Acesse:
+- **Página Inicial**: `http://localhost:3000`
+- **Documentação API (Swagger)**: `http://localhost:3000/api/docs`
 
-## Estrutura relevante
+---
 
-- `prisma/schema.prisma`: modelos e relacoes
-- `src/main.ts`: bootstrap, Swagger e arquivos estaticos
-- `public/index.html`: pagina publica
-- `docker-compose.yml`: servico do PostgreSQL
+## 👤 Contas de Teste
+
+O sistema pré-configura dois perfis padrão para testes:
+
+| Perfil | E-mail | Senha | Acesso |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin@admin.com` | `admin123` | Total (Filmes, Salas, Gestão) |
+| **Cliente** | `cliente@cliente.com` | `cliente123` | Consulta e Reservas |
+
+---
+
+## 🍓 Notas de Deploy (Raspberry Pi 5)
+
+Este projeto foi otimizado para rodar em hardware ARM64:
+- O `prisma/schema.prisma` já inclui `binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]`.
+- Ao instalar no Pi 5, certifique-se de usar `npm install` localmente no dispositivo para compilar os binários nativos.
+
+---
+
+## 📂 Estrutura de Pastas
+
+- `/src`: Lógica backend (NestJS Modules)
+- `/public`: Interface web (Single Page Application)
+- `/prisma`: Definição de modelos e migrações
+- `/artifacts`: Documentação e logs de implementação
+
+---
+
+## 🖼️ Funcionalidades UI
+
+1. **Dashboard Hero**: Atalhos inteligentes baseados no perfil do usuário.
+2. **Mapa de Assentos**: Visualização em tempo real da ocupação das salas.
+3. **Gestão de Sessões**: Galeria de "Destaques do Dia" com interatividade total.
+4. **Resumo de Pedidos**: Histórico de compras com geração de recibos.
+
+---
+
+*Desenvolvido com foco em estética premium e performance local.*
+

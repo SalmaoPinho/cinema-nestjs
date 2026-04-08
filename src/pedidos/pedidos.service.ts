@@ -175,7 +175,7 @@ export class PedidosService {
         </head>
         <body>
             <div class="cupom">
-                <h2><i class="bi bi-film me-2"></i>CINEMA NESTJS</h2>
+                <h2><i class="bi bi-film me-2"></i>123FILMES</h2>
                 <div style="text-align: center">Comprovante de Pagamento</div>
                 <div class="traco"></div>
                 <p><strong>Pedido:</strong> #${pedido.id}</p>
