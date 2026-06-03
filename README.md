@@ -6,8 +6,9 @@ Uma plataforma completa e visualmente deslumbrante para gerenciamento de cinemas
 
 ## ✨ Destaques do Projeto
 
-- **Estética Frutiger Aero**: Interface moderna com glassmorphism, gradientes vibrantes, ícones Bootstrap e scrollbars personalizados.
-- **Sistema de Papéis (RBAC)**: Diferenciação completa entre **Administradores** e **Clientes**.
+- **Estética Frutiger Aero Unificada**: Interface moderna com glassmorphism, gradientes vibrantes, ícones e visual "brilhante" orgânico implementado de forma consistente tanto na Web quanto no aplicativo Mobile.
+- **Aplicativo Mobile (Expo)**: App completo em React Native contendo fluxos integrados de login (JWT), compras, mapa de assentos, bomboniere, painel de controle administrativo completo (CRUD) e persistência local com sincronização automática (**DB Sync**).
+- **Sistema de Papéis (RBAC)**: Diferenciação completa entre **Administradores** e **Clientes** na Web e no Mobile.
 - **Galeria Visual de Sessões**: Vitrine de filmes com posters, horários e informações de sala em tempo real.
 - **PDV Interativo**: Sistema de ponto de venda com mapa de assentos dinâmico e suporte a lanches (Bomboniere).
 - **Pronto para Raspberry Pi 5**: Configurado para cross-platform (Windows/Linux ARM64).
@@ -18,9 +19,11 @@ Uma plataforma completa e visualmente deslumbrante para gerenciamento de cinemas
 
 - **Backend**: NestJS (Node.js framework)
 - **Banco de Dados**: PostgreSQL + Prisma ORM
-- **Frontend**: Vanilla HTML5/JS + Bootstrap 5
-- **Iconografia**: Bootstrap Icons
-- **Segurança**: JWT (JSON Web Tokens) & Bcrypt
+- **Frontend Web**: Vanilla HTML5/JS + Bootstrap 5
+- **Frontend Mobile**: React Native & Expo SDK 54 + TypeScript
+- **Iconografia**: Bootstrap Icons & Ionicons
+- **Segurança & Sessão**: JWT (JSON Web Tokens), Bcrypt & AsyncStorage
+- **Sincronização**: DB Sync (Mecanismo customizado de fila de rede offline)
 
 ---
 
@@ -44,7 +47,7 @@ npx prisma db push
 npx prisma generate
 ```
 
-### 3. Rodar o Projeto
+### 3. Rodar o Projeto (Backend)
 ```bash
 npm run start:dev
 ```
@@ -52,6 +55,18 @@ npm run start:dev
 Acesse:
 - **Página Inicial**: `http://localhost:3000`
 - **Documentação API (Swagger)**: `http://localhost:3000/api/docs`
+
+### 4. Rodar o Aplicativo Mobile (Expo)
+```bash
+# 1. Navegar até a pasta do app
+cd mobile
+
+# 2. Instalar dependências
+npm install
+
+# 3. Iniciar o servidor Expo (Use o app Expo Go para testar em seu celular)
+npx expo start
+```
 
 ---
 
@@ -77,8 +92,10 @@ Este projeto foi otimizado para rodar em hardware ARM64:
 ## 📂 Estrutura de Pastas
 
 - `/src`: Lógica backend (NestJS Modules)
-- `/public`: Interface web (Single Page Application)
-- `/prisma`: Definição de modelos e migrações
+- `/mobile`: Código-fonte do aplicativo móvel (React Native + Expo)
+- `/frontend`: Interface web alternativa (Vite React SPA)
+- `/public`: Interface web estática padrão
+- `/prisma`: Definição de modelos e sementes do banco
 - `/artifacts`: Documentação e logs de implementação
 
 ---

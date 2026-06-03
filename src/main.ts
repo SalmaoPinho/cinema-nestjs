@@ -61,6 +61,10 @@ async function bootstrap() {
     ? join(__dirname, '..', 'public')
     : join(process.cwd(), 'public');
 
+  app.use('/favicon.ico', (_req, res) => {
+    res.status(204).end();
+  });
+
   app.useStaticAssets(publicPath);
 
   const PORT = process.env.PORT ?? 3000;
